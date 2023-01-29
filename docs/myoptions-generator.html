@@ -2,7 +2,8 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.2.2";
+    var GVERSION="v0.3.0";
+    var debug = true;
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, minimum-scale=0.25">
@@ -95,6 +96,49 @@
       margin: 10px 40px 0 40px;
       border-top: #444 1px solid;
       padding-top: 10px;
+    }
+    .href {
+      color: #e3d25f;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+      margin: 30px 0 -20px 0;
+    }
+    .href:hover{
+      text-decoration: underline;
+    }
+    #alert {
+      width: 600px;
+      box-sizing: border-box;
+      margin: 0px -300px 0 0;
+      padding: 20px;
+      position: fixed;
+      right: 50%;
+      z-index: 99;
+      border: #e3d25f 3px solid;
+      background-color: #beb051;
+      color: #000;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #alert.info {
+      border-color: #76db5b;
+      background-color: #62b74b;
+      color: #23431a;
+    }
+    #alert.warning {
+      border-color: #e3aa5f;
+      background-color: #c59453;
+      color: #43341a;
+    }
+    #alert.error {
+      border-color: #e35f5f;
+      background-color: #ca5555;
+      color: #431a1a;
     }
     section {
       border: #333 1px solid;
@@ -301,6 +345,7 @@
   </head>
 <body>
   <div id="content">
+    <div id="alert" class="hidden" onclick="dontAlert();"></div>
     <h1 id="pagetitle">ёRadio - myoptions generator</h1>
     <h2 id="slogan">feel difference</h2>
     <!-- INFO -->
@@ -326,16 +371,16 @@
     <section id="setup">
       <div class="title"><span>i need to set up</span></div>
       <div class="scontent scontent-setup evenly" id="scontent-setup1">
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-language"/><span class="checkmark box"></span>language</label>
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-display"/><span class="checkmark box"></span>DISPLAY</label>
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-buttons"/><span class="checkmark box"></span>BUTTONS</label>
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-encoders"/><span class="checkmark box"></span>ENCODERS</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r1" data-target="setup-language"/><span class="checkmark box"></span>language</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r2" data-target="setup-display"/><span class="checkmark box"></span>DISPLAY</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r3" data-target="setup-buttons"/><span class="checkmark box"></span>BUTTONS</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r4" data-target="setup-encoders"/><span class="checkmark box"></span>ENCODERS</label>
       </div>
       <hr />
       <div class="scontent scontent-setup evenly" id="scontent-setup2">
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-touchscreen"/><span class="checkmark box"></span>TOUCHSCREEN</label>
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-sdcard"/><span class="checkmark box"></span>SD CARD</label>
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" data-target="setup-etc"/><span class="checkmark box"></span>IR, LED, ETC.</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r5" data-target="setup-touchscreen"/><span class="checkmark box"></span>TOUCHSCREEN</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r6" data-target="setup-sdcard"/><span class="checkmark box"></span>SD CARD</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r7" data-target="setup-etc"/><span class="checkmark box"></span>IR, LED, ETC.</label>
       </div>
     </section><!-- SETUP -->
     <!-- LANGUAGE -->
@@ -344,8 +389,8 @@
       <section id="language">
         <div class="title"><span>language</span></div>
         <div class="scontent scontent-language evenly forexport" id="scontent-language" data-define="L10N_LANGUAGE" data-export="RADIO">
-          <label class="dsplabel"><input type="radio" class="radio" name="rlanguage" data-type="default" checked /><span class="checkmark"></span>EN</label>
-          <label class="dsplabel"><input type="radio" class="radio" name="rlanguage" data-type="RU" /><span class="checkmark"></span>RU</label>
+          <label class="dsplabel"><input type="radio" class="radio rbox" name="rlanguage" id="r8" data-type="default" checked /><span class="checkmark"></span>EN</label>
+          <label class="dsplabel"><input type="radio" class="radio rbox" name="rlanguage" id="r9" data-type="RU" /><span class="checkmark"></span>RU</label>
         </div>
       </section>
     </div><!-- LANGUAGE -->
@@ -355,35 +400,35 @@
       <section id="display">
         <div class="title"><span>display</span></div>
         <div class="scontent scontent-displays forexport" id="scontent-displays" data-define="DSP_MODEL" data-export="RADIO" data-displays="true">
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="dmy" data-type="default" checked /><span class="checkmark"></span>no display</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-st="ST7735" data-type="DSP_ST7735" /><span class="checkmark"></span>ST7735</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_SSD1306" data-invert="true"/><span class="checkmark"></span>SSD1306</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_NOKIA5110" /><span class="checkmark"></span>NOKIA 5110</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ST7789" /><span class="checkmark"></span>ST7789</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_SH1106" data-invert="true" /><span class="checkmark"></span>SH1106</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_1602I2C" /><span class="checkmark"></span>1602 I2C</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_SSD1306x32" /><span class="checkmark"></span>SSD1306x32</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_SSD1327" data-rotate="true" /><span class="checkmark"></span>SSD1327</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ILI9341" /><span class="checkmark"></span>ILI9341</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_SSD1305" data-invert="true" /><span class="checkmark"></span>SSD1305</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_SH1107" /><span class="checkmark"></span>SH1107</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="lcd" data-type="DSP_1602" /><span class="checkmark"></span>LCD 1602</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_GC9106" /><span class="checkmark"></span>GC9106</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_2004I2C" /><span class="checkmark"></span>2004 I2C</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="lcd" data-type="DSP_2004" /><span class="checkmark"></span>LCD 2004</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="i2c" data-type="DSP_SSD1305I2C" data-invert="true" /><span class="checkmark"></span>SSD1305 I2C</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ILI9225" /><span class="checkmark"></span>ILI9225</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ST7789_240" data-rotate="true" /><span class="checkmark"></span>ST7789x240</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ST7796" /><span class="checkmark"></span>ST7796</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_GC9A01A" /><span class="checkmark"></span>GC9A01A</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ILI9488" /><span class="checkmark"></span>ILI9488</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio" name="dspradio" data-target="spi" data-type="DSP_ILI9486" /><span class="checkmark"></span>ILI9486</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r10" data-target="dmy" data-type="default" checked /><span class="checkmark"></span>no display</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r11" data-target="spi" data-st="ST7735" data-type="DSP_ST7735" /><span class="checkmark"></span>ST7735</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r12" data-target="i2c" data-type="DSP_SSD1306" data-invert="true"/><span class="checkmark"></span>SSD1306</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r13" data-target="spi" data-type="DSP_NOKIA5110" /><span class="checkmark"></span>NOKIA 5110</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r14" data-target="spi" data-type="DSP_ST7789" /><span class="checkmark"></span>ST7789</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r15" data-target="i2c" data-type="DSP_SH1106" data-invert="true" /><span class="checkmark"></span>SH1106</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r16" data-target="i2c" data-type="DSP_1602I2C" /><span class="checkmark"></span>1602 I2C</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r17" data-target="i2c" data-type="DSP_SSD1306x32" /><span class="checkmark"></span>SSD1306x32</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r18" data-target="i2c" data-type="DSP_SSD1327" data-rotate="true" /><span class="checkmark"></span>SSD1327</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r19" data-target="spi" data-type="DSP_ILI9341" /><span class="checkmark"></span>ILI9341</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r20" data-target="spi" data-type="DSP_SSD1305" data-invert="true" /><span class="checkmark"></span>SSD1305</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r21" data-target="i2c" data-type="DSP_SH1107" /><span class="checkmark"></span>SH1107</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r22" data-target="lcd" data-type="DSP_1602" /><span class="checkmark"></span>LCD 1602</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r23" data-target="spi" data-type="DSP_GC9106" /><span class="checkmark"></span>GC9106</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r24" data-target="i2c" data-type="DSP_2004I2C" /><span class="checkmark"></span>2004 I2C</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r25" data-target="lcd" data-type="DSP_2004" /><span class="checkmark"></span>LCD 2004</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r26" data-target="i2c" data-type="DSP_SSD1305I2C" data-invert="true" /><span class="checkmark"></span>SSD1305 I2C</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r27" data-target="spi" data-type="DSP_ILI9225" /><span class="checkmark"></span>ILI9225</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r28" data-target="spi" data-type="DSP_ST7789_240" data-rotate="true" /><span class="checkmark"></span>ST7789x240</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r29" data-target="spi" data-type="DSP_ST7796" /><span class="checkmark"></span>ST7796</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r30" data-target="spi" data-type="DSP_GC9A01A" /><span class="checkmark"></span>GC9A01A</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r31" data-target="spi" data-type="DSP_ILI9488" /><span class="checkmark"></span>ILI9488</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r32" data-target="spi" data-type="DSP_ILI9486" /><span class="checkmark"></span>ILI9486</label>
         </div>
         <hr style="margin: 10px 40px 20px 40px;" />
         <div class="evenly">
-          <label class="dsplabel"><input type="checkbox" class="checkbox" id="nextion-box" name="dspbox" /><span class="checkmark box"></span>+ NEXTION</label>
-          <label class="dsplabel hidden" id="dsp-rotate" title="Optional 90 degree rotation for square displays"><input type="checkbox" class="checkbox" id="rotate-box" name="dspbox" /><span class="checkmark box"></span>ROTATE 90&#176;</label>
-          <label class="dsplabel hidden" id="dsp-invert" title="Invert title colors for OLED displays"><input type="checkbox" class="checkbox" id="invert-box" name="dspbox" /><span class="checkmark box"></span>INVERT TITLE</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox rbox plus-nextion" name="dspbox" id="r33" /><span class="checkmark box"></span>+ NEXTION</label>
+          <label class="dsplabel hidden" id="dsp-rotate" title="Optional 90 degree rotation for square displays"><input type="checkbox" class="checkbox rbox rotate90" id="r34" name="dspbox" /><span class="checkmark box"></span>ROTATE 90&#176;</label>
+          <label class="dsplabel hidden" id="dsp-invert" title="Invert title colors for OLED displays"><input type="checkbox" class="checkbox rbox invert-title" id="r35" name="dspbox" /><span class="checkmark box"></span>INVERT TITLE</label>
         </div>
         <div class="description"><a href="https://github.com/e2002/yoradio/wiki/Available-display-models" target="_blank">Available display models</a></div>
       </section>
@@ -393,11 +438,11 @@
           <div id="pins-7735" class="hidden">
             <h3 class="subtitle">ST7735 display type</h3>
             <div class="evenly forexport" data-define="DTYPE" data-export="RADIO">
-              <label class="dsplabel" title="1.8' display. If the display is cut off or has extra 'random' pixels on the top & left, try the other option!"><input type="radio" id="blacktab-7735" class="radio dspradio" name="initrradio" data-type="default" checked /><span class="checkmark"></span>BLACKTAB</label>
-              <label class="dsplabel" title="1.8' display. If the display is cut off or has extra 'random' pixels on the top & left, try the other option!"><input type="radio" class="radio dspradio" name="initrradio" data-type="INITR_GREENTAB" /><span class="checkmark"></span>GREENTAB</label>
-              <label class="dsplabel" title="1.8' display. If the display is cut off or has extra 'random' pixels on the top & left, try the other option!"><input type="radio" class="radio dspradio" name="initrradio" data-type="INITR_REDTAB" /><span class="checkmark"></span>REDTAB</label>
-              <label class="dsplabel" title="1.44' display."><input type="radio" class="radio dspradio" name="initrradio" data-rotate="true" data-type="INITR_144GREENTAB" /><span class="checkmark"></span>144GREENTAB</label>
-              <label class="dsplabel" title="0.96' display."><input type="radio" class="radio dspradio" name="initrradio" data-type="INITR_MINI160x80" /><span class="checkmark"></span>MINI160x80</label>
+              <label class="dsplabel" title="1.8' display. If the display is cut off or has extra 'random' pixels on the top & left, try the other option!"><input type="radio" id="r36" class="radio dspradio rbox initr-blacktab" name="initrradio" data-type="default" checked /><span class="checkmark"></span>BLACKTAB</label>
+              <label class="dsplabel" title="1.8' display. If the display is cut off or has extra 'random' pixels on the top & left, try the other option!"><input type="radio" class="radio dspradio rbox" id="r37" name="initrradio" data-type="INITR_GREENTAB" /><span class="checkmark"></span>GREENTAB</label>
+              <label class="dsplabel" title="1.8' display. If the display is cut off or has extra 'random' pixels on the top & left, try the other option!"><input type="radio" class="radio dspradio rbox" id="r38" name="initrradio" data-type="INITR_REDTAB" /><span class="checkmark"></span>REDTAB</label>
+              <label class="dsplabel" title="1.44' display."><input type="radio" class="radio dspradio rbox" id="r39" name="initrradio" data-rotate="true" data-type="INITR_144GREENTAB" /><span class="checkmark"></span>144GREENTAB</label>
+              <label class="dsplabel" title="0.96' display."><input type="radio" class="radio dspradio rbox" id="r40" name="initrradio" data-type="INITR_MINI160x80" /><span class="checkmark"></span>MINI160x80</label>
             </div>
             <hr />
           </div>
@@ -405,37 +450,37 @@
             <div id="display-spi-mode-wrap">
               <h3 class="subtitle">DISPLAY SPI BUS</h3>
               <div id="display-spi-mode" class="forexport" data-define="DSP_HSPI" data-export="RADIO">
-                <label class="dsplabel"><input type="radio" class="radio" name="dspspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-                <label class="dsplabel"><input type="radio" class="radio" name="dspspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+                <label class="dsplabel"><input type="radio" class="radio rbox" id="r41" name="dspspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+                <label class="dsplabel"><input type="radio" class="radio rbox" id="r42" name="dspspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
               </div>
               <hr />
             </div>
             <div id="display-pins-spi" class="forexport" data-export="PINS">
-              <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" data-define="TFT_DC" value="5" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" data-define="TFT_CS" value="4" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" data-define="TFT_RST" value="-1" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">BACKLIGHT</span><input type="text" class="textinput" data-define="BRIGHTNESS_PIN" value="255" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" id="i1" data-define="TFT_DC" value="5" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i2" data-define="TFT_CS" value="4" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i3" data-define="TFT_RST" value="-1" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">BACKLIGHT</span><input type="text" class="textinput" id="i4" data-define="BRIGHTNESS_PIN" value="255" maxlength="3"></div>
             </div>
           </div>
           <div id="pins-i2c" class="hidden displays-pins forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" data-define="I2C_SDA" value="21" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" data-define="I2C_SCL" value="22" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i5" data-define="I2C_SDA" value="21" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i6" data-define="I2C_SCL" value="22" maxlength="3"></div>
           </div>
           <div id="pins-lcd" class="hidden displays-pins forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">RS</span><input type="text" class="textinput" data-define="LCD_RS" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">E</span><input type="text" class="textinput" data-define="LCD_E" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D4</span><input type="text" class="textinput" data-define="LCD_D4" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D5</span><input type="text" class="textinput" data-define="LCD_D5" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D6</span><input type="text" class="textinput" data-define="LCD_D6" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D7</span><input type="text" class="textinput" data-define="LCD_D7" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">RS</span><input type="text" class="textinput" id="i7" data-define="LCD_RS" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">E</span><input type="text" class="textinput" id="i8" data-define="LCD_E" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D4</span><input type="text" class="textinput" id="i9" data-define="LCD_D4" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D5</span><input type="text" class="textinput" id="i10" data-define="LCD_D5" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D6</span><input type="text" class="textinput" id="i11" data-define="LCD_D6" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D7</span><input type="text" class="textinput" id="i12" data-define="LCD_D7" value="" maxlength="3"></div>
           </div>
         </div>
       </section>
       <section id="nextion" class="hidden">
         <div class="title"><span>nextion pins</span></div>
         <div id="pins-nextion" class="displays-pins forexport" data-export="PINS">
-          <div class="inputwrap"><span class="inputtitle">RX</span><input type="text" class="textinput" data-define="NEXTION_RX" value="" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">TX</span><input type="text" class="textinput" data-define="NEXTION_TX" value="" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">RX</span><input type="text" class="textinput" id="i13" data-define="NEXTION_RX" value="" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">TX</span><input type="text" class="textinput" id="i14" data-define="NEXTION_TX" value="" maxlength="3"></div>
         </div>
       </section>
     </div><!-- DISPLAY -->
@@ -444,34 +489,34 @@
     <section id="audio">
       <div class="title"><span>audio</span></div>
       <div class="scontent scontent-audio forexport" id="scontent-audio" data-export="AUDIO">
-        <label class="dsplabel"><input type="radio" class="radio" id="audioi2s" name="audioradio" data-target="i2s" checked /><span class="checkmark"></span>I2S EXTERNAL</label>
-        <label class="dsplabel"><input type="radio" class="radio" id="audiovs" name="audioradio" data-target="vs"  /><span class="checkmark"></span>VS1053</label>
-        <label class="dsplabel"><input type="radio" class="radio" id="audioint" name="audioradio" data-target="int"  /><span class="checkmark"></span>INTERNAL</label>
-        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup" id="audio-mono" data-target="PLAYER_FORCE_MONO"/><span class="checkmark box"></span>MONO</label>
+        <label class="dsplabel"><input type="radio" class="radio rbox" id="r43" name="audioradio" data-target="i2s" checked /><span class="checkmark"></span>I2S EXTERNAL</label>
+        <label class="dsplabel"><input type="radio" class="radio rbox vs1053" id="r44" name="audioradio" data-target="vs"  /><span class="checkmark"></span>VS1053</label>
+        <label class="dsplabel"><input type="radio" class="radio rbox i2s-internal" id="r45" name="audioradio" data-target="int"  /><span class="checkmark"></span>INTERNAL</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox force-mono" id="r46" data-target="PLAYER_FORCE_MONO"/><span class="checkmark box"></span>MONO</label>
       </div>
     </section>
     <section id="audio-pins">
       <div class="title"><span>audio pins</span></div>
       <div class="scontent scontent-audio-pins">
         <div id="audio-pins-i2s" class="audio-pins forexport" data-export="PINS">
-          <div class="inputwrap"><span class="inputtitle">DIN | DOUT</span><input type="text" class="textinput" data-define="I2S_DOUT" value="27" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">BCLK</span><input type="text" class="textinput" data-define="I2S_BCLK" value="26" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">LRC | WSEL</span><input type="text" class="textinput" data-define="I2S_LRC" value="25" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">DIN | DOUT</span><input type="text" class="textinput" id="i15" data-define="I2S_DOUT" value="27" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">BCLK</span><input type="text" class="textinput" id="i16" data-define="I2S_BCLK" value="26" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">LRC | WSEL</span><input type="text" class="textinput" id="i17" data-define="I2S_LRC" value="25" maxlength="3"></div>
         </div>
         <div id="audio-pins-spi-wrap" class="hidden audio-pins">
           <div id="audio-spi-mode-wrap">
             <h3 class="subtitle">AUDIO SPI BUS</h3>
             <div id="audio-spi-mode" class="forexport" data-define="VS_HSPI" data-export="RADIO">
-              <label class="dsplabel"><input type="radio" class="radio" name="audiospitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-              <label class="dsplabel"><input type="radio" class="radio" name="audiospitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+              <label class="dsplabel"><input type="radio" class="radio rbox" id="r47" name="audiospitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+              <label class="dsplabel"><input type="radio" class="radio rbox" id="r48" name="audiospitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
             </div>
             <hr />
           </div>
           <div id="audio-pins-spi" class="forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" data-define="VS1053_CS" value="27" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">DCS</span><input type="text" class="textinput" data-define="VS1053_DCS" value="25" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">DREQ</span><input type="text" class="textinput" data-define="VS1053_DREQ" value="26" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" data-define="VS1053_RST" value="-1" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i18" data-define="VS1053_CS" value="27" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">DCS</span><input type="text" class="textinput" id="i19" data-define="VS1053_DCS" value="25" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">DREQ</span><input type="text" class="textinput" id="i20" data-define="VS1053_DREQ" value="26" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i21" data-define="VS1053_RST" value="-1" maxlength="3"></div>
           </div>
         </div>
       </div>
@@ -482,24 +527,24 @@
       <section id="buttons">
         <div class="title"><span>buttons</span></div>
         <div class="scontent scontent-buttons evenly" id="scontent-buttons">
-          <label class="dsplabel"><input type="checkbox" class="checkbox" name="buttonsuse" id="buttonsuse" /><span class="checkmark box"></span>control buttons</label>
-          <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio" name="buttonsnum" id="treebuttons" data-target="treebuttons" checked /><span class="checkmark"></span>THREE BUTTONS</label>
-          <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio" name="buttonsnum" id="fivebuttons" data-target="fivebuttons"  /><span class="checkmark"></span>FIVE BUTTONS</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox" name="buttonmode" id="buttonmode" /><span class="checkmark box"></span>MODE BUTTON</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox rbox control-buttons" name="buttonsuse" id="r49" /><span class="checkmark box"></span>control buttons</label>
+          <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio rbox" id="r50" name="buttonsnum" data-target="treebuttons" checked /><span class="checkmark"></span>THREE BUTTONS</label>
+          <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio rbox five-buttons" id="r51" name="buttonsnum" data-target="fivebuttons"  /><span class="checkmark"></span>FIVE BUTTONS</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox rbox mode-button" name="buttonmode" id="r52" /><span class="checkmark box"></span>MODE BUTTON</label>
         </div>
       </section>
       <section id="buttons-pins" class="hidden">
         <div class="title"><span>buttons pins</span></div>
         <div id="pins-buttons" class="buttons-pins evenly forexport" data-export="PINS">
-          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PREV</span><input type="text" class="textinput" data-define="BTN_LEFT" value="" maxlength="3"></div>
-          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PLAY</span><input type="text" class="textinput" data-define="BTN_CENTER" value="" maxlength="3"></div>
-          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">NEXT</span><input type="text" class="textinput" data-define="BTN_RIGHT" value="" maxlength="3"></div>
-          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">UP</span><input type="text" class="textinput" data-define="BTN_UP" value="" maxlength="3"></div>
-          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">DOWN</span><input type="text" class="textinput" data-define="BTN_DOWN" value="" maxlength="3"></div>
-          <div class="inputwrap hidden" id="modebutton"><span class="inputtitle">MODE</span><input type="text" class="textinput" data-define="BTN_MODE" value="" maxlength="3"></div>
+          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PREV</span><input type="text" class="textinput" id="i22" data-define="BTN_LEFT" value="" maxlength="3"></div>
+          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PLAY</span><input type="text" class="textinput" id="i23" data-define="BTN_CENTER" value="" maxlength="3"></div>
+          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">NEXT</span><input type="text" class="textinput" id="i24" data-define="BTN_RIGHT" value="" maxlength="3"></div>
+          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">UP</span><input type="text" class="textinput" id="i25" data-define="BTN_UP" value="" maxlength="3"></div>
+          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">DOWN</span><input type="text" class="textinput" id="i26" data-define="BTN_DOWN" value="" maxlength="3"></div>
+          <div class="inputwrap hidden" id="modebutton"><span class="inputtitle">MODE</span><input type="text" class="textinput" id="i27" data-define="BTN_MODE" value="" maxlength="3"></div>
         </div>
         <hr />
-        <div class="evenly"><label class="dsplabel"><input type="checkbox" class="checkbox" name="buttonpullup" id="buttonpullup" checked /><span class="checkmark box"></span>INTERNAL PULLUP</label></div>
+        <div class="evenly"><label class="dsplabel"><input type="checkbox" class="checkbox rbox buttonspullup" name="buttonpullup" id="r53" checked /><span class="checkmark box"></span>INTERNAL PULLUP</label></div>
       </section>
     </div><!-- BUTTONS -->
     <!-- ENCODERS -->
@@ -508,8 +553,8 @@
       <section id="encoders">
         <div class="title"><span>encoders</span></div>
         <div class="scontent scontent-encoders evenly" id="scontent-encoders">
-          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox" name="encoder1" id="encoder1" /><span class="checkmark box"></span>ENCODER #1</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox" name="encoder2" id="encoder2" /><span class="checkmark box"></span>ENCODER #2</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box1" name="encoder1" id="r54" /><span class="checkmark box"></span>ENCODER #1</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box2" name="encoder2" id="r55" /><span class="checkmark box"></span>ENCODER #2</label>
         </div>
       </section>
       <section id="encoders-pins" class="hidden">
@@ -517,26 +562,26 @@
         <div id="epins1" class="hidden">
           <h3 class="subtitle">Encoder #1</h3>
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" data-define="ENC_BTNR" value="36" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" data-define="ENC_BTNL" value="34" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" data-define="ENC_BTNB" value="39" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i28" data-define="ENC_BTNR" value="36" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i29" data-define="ENC_BTNL" value="34" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i30" data-define="ENC_BTNB" value="39" maxlength="3"></div>
           </div>
           <div class="encoder-set evenly forexport" data-export="SET">
-            <label class="dsplabel"><input type="checkbox" class="checkbox setitem" name="enc1pullup" id="enc1pullup" data-default="true" data-define="ENC_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
-            <label class="dsplabel"><input type="checkbox" class="checkbox setitem" name="enc1half" id="enc1pullup" data-default="false" data-define="ENC_HALFQUARD" /><span class="checkmark box"></span>HALFQUARD</label>
+            <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc1pullup" id="r56" data-default="true" data-define="ENC_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
+            <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc1half" id="r57" data-default="false" data-define="ENC_HALFQUARD" /><span class="checkmark box"></span>HALFQUARD</label>
           </div>
         </div>
         <hr id="ehr" class="hidden" />
         <div id="epins2" class="hidden">
           <h3 class="subtitle">Encoder #2</h3>
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" data-define="ENC2_BTNR" value="35" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" data-define="ENC2_BTNL" value="33" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" data-define="ENC2_BTNB" value="32" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i31" data-define="ENC2_BTNR" value="35" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i32" data-define="ENC2_BTNL" value="33" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i33" data-define="ENC2_BTNB" value="32" maxlength="3"></div>
           </div>
           <div class="encoder-set evenly forexport" data-export="SET">
-            <label class="dsplabel"><input type="checkbox" class="checkbox setitem" name="enc2pullup" id="enc2pullup" data-default="true" data-define="ENC2_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
-            <label class="dsplabel"><input type="checkbox" class="checkbox setitem" name="enc2half" id="enc2pullup" data-default="false" data-define="ENC2_HALFQUARD" /><span class="checkmark box"></span>HALFQUARD</label>
+            <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc2pullup" id="r58" data-default="true" data-define="ENC2_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
+            <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc2half" id="r59" data-default="false" data-define="ENC2_HALFQUARD" /><span class="checkmark box"></span>HALFQUARD</label>
           </div>
         </div>
       </section>
@@ -547,26 +592,26 @@
       <section id="touchscreen">
         <div class="title"><span>touch screen</span></div>
         <div class="evenly forexport" data-define="TS_MODEL" data-export="RADIO">
-          <label class="dsplabel"><input type="radio" class="radio tsradio" name="touchscreenmodel" id="xpt2046" data-target="ts-res" data-type="TS_MODEL_XPT2046" checked /><span class="checkmark"></span>XPT2046</label>
-          <label class="dsplabel"><input type="radio" class="radio tsradio" name="touchscreenmodel" id="gt911" data-target="ts-cap" data-type="TS_MODEL_GT911"  /><span class="checkmark"></span>GT911</label>
+          <label class="dsplabel"><input type="radio" class="radio tsradio rbox" name="touchscreenmodel" id="r60" data-target="ts-res" data-type="TS_MODEL_XPT2046" checked /><span class="checkmark"></span>XPT2046</label>
+          <label class="dsplabel"><input type="radio" class="radio tsradio rbox" name="touchscreenmodel" id="r61" data-target="ts-cap" data-type="TS_MODEL_GT911"  /><span class="checkmark"></span>GT911</label>
         </div>
         <hr />
         <div class="ts-pins" id="ts-res">
           <h3 class="subtitle" style="margin-top: -30px;">TS SPI BUS</h3>
           <div class="evenly forexport" data-define="TS_HSPI" data-export="RADIO">
-            <label class="dsplabel"><input type="radio" class="radio" name="tsspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-            <label class="dsplabel"><input type="radio" class="radio" name="tsspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox" id="r62" name="tsspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox" id="r63" name="tsspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
           </div>
           <hr class="simple" />
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" data-define="TS_CS" value="13" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i34" data-define="TS_CS" value="13" maxlength="3"></div>
           </div>
         </div>
         <div class="ts-pins evenly hidden forexport" id="ts-cap" data-export="PINS">
-          <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" data-define="TS_SDA" value="33" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" data-define="TS_SCL" value="32" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">INT</span><input type="text" class="textinput" data-define="TS_INT" value="21" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" data-define="TS_RST" value="22" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i35" data-define="TS_SDA" value="33" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i36" data-define="TS_SCL" value="32" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">INT</span><input type="text" class="textinput" id="i37" data-define="TS_INT" value="21" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i38" data-define="TS_RST" value="22" maxlength="3"></div>
         </div>
       </section>
     </div><!-- TOUCHSCREEN -->
@@ -578,12 +623,12 @@
         <div class="sd-pins">
           <h3 class="subtitle">SD SPI BUS</h3>
           <div class="evenly forexport" data-define="SD_HSPI" data-export="RADIO">
-            <label class="dsplabel"><input type="radio" class="radio" name="sdspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-            <label class="dsplabel"><input type="radio" class="radio" name="sdspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox" id="r64" name="sdspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox" id="r65" name="sdspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
           </div>
           <hr class="simple" />
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" data-define="SDC_CS" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i39" data-define="SDC_CS" value="" maxlength="3"></div>
           </div>
         </div>
       </section>
@@ -594,27 +639,28 @@
       <section id="etc">
         <div class="title"><span>etc.</span></div>
         <div class="evenly">
-          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc" data-target="etc-led"/><span class="checkmark box"></span>LED PIN</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc" data-target="etc-ir"/><span class="checkmark box"></span>IR PIN</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc" data-target="etc-mute"/><span class="checkmark box"></span>MUTE PIN</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc" data-target="etc-wake"/><span class="checkmark box"></span>WAKE PIN</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc" data-target="etc-light"/><span class="checkmark box"></span>LIGHT SENSOR</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r66" data-target="etc-led"/><span class="checkmark box"></span>LED PIN</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r67" data-target="etc-ir"/><span class="checkmark box"></span>IR PIN</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r68" data-target="etc-mute"/><span class="checkmark box"></span>MUTE PIN</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r69" data-target="etc-wake"/><span class="checkmark box"></span>WAKE PIN</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r70" data-target="etc-light"/><span class="checkmark box"></span>LIGHT SENSOR</label>
         </div>
         <hr class="simple" />
         <div class="evenly forexport" data-export="PINS">
-          <div class="inputwrap hidden" id="etc-led"><span class="inputtitle">led indicator</span><input type="text" class="textinput" data-define="LED_BUILTIN" value="2" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-ir"><span class="inputtitle">ir</span><input type="text" class="textinput" data-define="IR_PIN" value="255" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-mute"><span class="inputtitle">mute</span><input type="text" class="textinput" data-define="MUTE_PIN" value="255" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-wake"><span class="inputtitle">wake</span><input type="text" class="textinput" data-define="WAKE_PIN" value="255" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-light"><span class="inputtitle">light sensor</span><input type="text" class="textinput" data-define="LIGHT_SENSOR" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-led"><span class="inputtitle">led indicator</span><input type="text" class="textinput" id="i40" data-define="LED_BUILTIN" value="2" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-ir"><span class="inputtitle">ir</span><input type="text" class="textinput" id="i41" data-define="IR_PIN" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-mute"><span class="inputtitle">mute</span><input type="text" class="textinput" id="i42" data-define="MUTE_PIN" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-wake"><span class="inputtitle">wake</span><input type="text" class="textinput" id="i43" data-define="WAKE_PIN" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-light"><span class="inputtitle">light sensor</span><input type="text" class="textinput" id="i44" data-define="LIGHT_SENSOR" value="255" maxlength="3"></div>
         </div>
       </section>
     </div><!-- ETC -->
     <hr class="double" />
     <div id="submit" class="evenly">
-      <div class="button apply" data-name="fwupdate" id="btnreset" onclick="window.scrollTo(0, 0); location.reload(true);">reset</div>
-      <div class="button apply hlbutton" data-name="fwupdate" id="btnreset" onclick="doExport();">yoooo!</div>
+      <div class="button apply" id="btnreset" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
+      <div class="button apply hlbutton" id="btnreset" onclick="doExport();">yoooo!</div>
     </div>
+    <div class="href" onclick="getLink();">>> get link to this configuration <<</div>
     <div id="footer"></div>
     <button onclick="topFunction()" id="topbtn">&#8593;</button>
   </div>
@@ -627,7 +673,37 @@
                         "TS_CS":        13,  "TS_SDA":        33, "TS_SCL":     32, "TS_INT":         21,   "TS_RST": 25,
                         "LED_BUILTIN":  255, "MUTE_PIN":      255,"WAKE_PIN":   255,"LIGHT_SENSOR":   255,  "IR_PIN": 255 };
   
+  var atimeout;
   window.addEventListener('load', onLoad);
+  function qencode(str){
+    return encodeURIComponent(btoa(str));
+  }
+  function qdecode(str){
+    return (atob(decodeURIComponent(str)));
+  }
+  function dontAlert(){
+    document.getElementById("alert").setAttribute("class", "hidden");
+    document.getElementById("alert").innerHTML = "";
+    if(atimeout) clearTimeout(atimeout);
+  }
+  function doAlert(atype, atext){
+    document.getElementById("alert").setAttribute("class", atype);
+    document.getElementById("alert").innerHTML = atext;
+    atimeout = setTimeout(dontAlert, 7000);
+  }
+  function saveAlert(atype, atext){
+    localStorage.setItem('alert', atext);
+    localStorage.setItem('atype', atype);
+  }
+  function loadAlert(){
+    let salert = localStorage.getItem('alert');
+    if(salert){
+      let satype = localStorage.getItem('atype');
+      doAlert(satype, salert);
+      localStorage.removeItem('alert');
+      localStorage.removeItem('atype');
+    }
+  }
   function dspRadioClick(){
     let target=this.getAttribute('data-target');
     document.getElementById("display-pins").classList.add("hidden");
@@ -642,7 +718,7 @@
     document.getElementById("pins-7735").classList.add("hidden");
     if(this.hasAttribute('data-st')) {
       document.getElementById("pins-7735").classList.remove("hidden");
-      document.getElementById("blacktab-7735").click();
+      document.getElementsByClassName("initr-blacktab")[0].click();
     }
   }
   function nextionBoxClick(){
@@ -661,14 +737,15 @@
         hiddenradio[i].classList.remove("hidden");
       }
       for (var i = 0; i < pinbuttons.length; i++) {
-        if(document.getElementById("fivebuttons").checked){
+        //if(document.getElementById(" r50").checked){
+        if(document.getElementsByClassName("five-buttons")[0].checked){
           pinbuttons[i].classList.remove("hidden");
         }else{
           if(pinbuttons[i].classList.contains("threebuttons")) pinbuttons[i].classList.remove("hidden");
         }
       }
     }else{
-      if(!document.getElementById("buttonmode").checked) document.getElementById("buttons-pins").classList.add("hidden");
+      if(!document.getElementsByClassName("mode-button")[0].checked) document.getElementById("buttons-pins").classList.add("hidden");
       for (var i = 0; i < hiddenradio.length; i++) {
         hiddenradio[i].classList.add("hidden");
       }
@@ -679,8 +756,9 @@
   }
   function buttonsModeClick(){
     if(this.checked) document.getElementById("modebutton").classList.remove("hidden"); else document.getElementById("modebutton").classList.add("hidden");
-    if(!document.getElementById("buttonsuse").checked) document.getElementById("buttons-pins").classList.remove("hidden");
-    if(!this.checked && !document.getElementById("buttonsuse").checked) document.getElementById("buttons-pins").classList.add("hidden");
+    let controlButtons = document.getElementsByClassName("control-buttons")[0];
+    if(!controlButtons.checked) document.getElementById("buttons-pins").classList.remove("hidden");
+    if(!this.checked && !controlButtons.checked) document.getElementById("buttons-pins").classList.add("hidden");
   }
   function audioRadioClick(){
     let target=this.getAttribute('data-target');
@@ -699,8 +777,8 @@
     }
   }
   function encoderCheckboxClick(){
-    let ebx1 = document.getElementById("encoder1");
-    let ebx2 = document.getElementById("encoder2");
+    let ebx1 = document.getElementsByClassName("encoder-box1")[0];
+    let ebx2 = document.getElementsByClassName("encoder-box2")[0];
     let epinssection = document.getElementById("encoders-pins");
     if(ebx1.checked || ebx2.checked) epinssection.classList.remove("hidden"); else epinssection.classList.add("hidden");
     if(ebx1.checked) document.getElementById("epins1").classList.remove("hidden"); else document.getElementById("epins1").classList.add("hidden");
@@ -718,9 +796,9 @@
     for (var i = 0; i < elements.length; i++) {
       elements[i].addEventListener('click', dspRadioClick, false);
     }
-    document.getElementById("nextion-box").addEventListener('click', nextionBoxClick, false);
-    document.getElementById("buttonsuse").addEventListener('click', buttonsUseClick, false);
-    document.getElementById("buttonmode").addEventListener('click', buttonsModeClick, false);
+    document.getElementsByClassName("plus-nextion")[0].addEventListener('click', nextionBoxClick, false);
+    document.getElementsByClassName("control-buttons")[0].addEventListener('click', buttonsUseClick, false);
+    document.getElementsByClassName("mode-button")[0].addEventListener('click', buttonsModeClick, false);
     sdsp = document.getElementById("scontent-audio");
     elements = sdsp.getElementsByClassName("radio");
     for (var i = 0; i < elements.length; i++) {
@@ -796,6 +874,38 @@
       }, false);
     }
   }
+  function loadConfigFromUrl(){
+    //var ss = qdecode(window.location.search.substr(1));
+    let params = (new URL(document.location)).searchParams;
+    let ss = params.get('s');
+    if(!ss) return;
+    try {
+      var data = JSON.parse(qdecode(ss));
+    } catch (error) {
+      console.error(error);
+      doAlert("error", error);
+      return;
+    }
+    if(typeof data.r !== 'undefined'){ // load config from url
+      let cboxes = document.getElementsByClassName("checkbox");
+      for (var i = 0; i < cboxes.length; i++) {
+        let aid = parseInt(cboxes[i].id.substr(1));
+        if(data.r.includes(aid) && !cboxes[i].checked) cboxes[i].click();
+        if(!data.r.includes(aid) && cboxes[i].checked) cboxes[i].click();
+      }
+      let rboxes = document.getElementsByClassName("radio");
+      for (var i = 0; i < rboxes.length; i++) {
+        let aid = parseInt(rboxes[i].id.substr(1));
+        if(data.r.includes(aid)) rboxes[i].click();
+      }
+      /*for (var i = 0; i < data.r.length; i++) {
+        document.getElementById("r"+data.r[i]).click();
+      }*/
+      for (var i = 0; i < data.i.length; i++) {
+        document.getElementById("i"+data.i[i]).value = data.v[i].substr(0,3);
+      }
+    }
+  }
   function onLoad(event) {
     document.title = document.title+" - "+GVERSION;
     let ttl = document.getElementById("pagetitle");
@@ -803,12 +913,59 @@
     document.getElementById("footer").innerHTML = document.title + '<br /><a href="https://github.com/e2002/yoradio/" target="_blank">project homepage</a>';
     initCheckboxes();
     initTextInputs();
+    loadConfigFromUrl();
+    loadAlert();
   }
   function topFunction(){
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth'
+    });
+  }
+  function getLink(){
+    let elements = document.getElementsByClassName("rbox");
+    let rr = '';
+    let vv = '';
+    let ii = '';
+    for (var i = 0; i < elements.length; i++) {
+      if(elements[i].checked && elements[i].offsetParent !== null){
+        rr += elements[i].id.substr(1)+",";
+      }
+    }
+    rr = rr.slice(0, -1);
+    elements = document.getElementsByClassName("textinput");
+    for (var i = 0; i < elements.length; i++) {
+      if(elements[i].value!="" && elements[i].offsetParent !== null){
+        ii += elements[i].id.substr(1)+",";
+        vv += '"'+elements[i].value+'",';
+      }
+    }
+    ii = ii.slice(0, -1);
+    vv = vv.slice(0, -1);
+    let out = `{"r":[${rr}],"i":[${ii}],"v":[${vv}]}`;
+    if(debug) console.log(out);
+    let newlink = window.location.href.split('?')[0]+'?s='+qencode(out);
+    console.log("link to this configuration:");
+    console.log(newlink);
+    if(window.location.href.substr(0,4)!="http" && !debug){
+      doAlert("error", "Unable to generate a link for the local version of the page.");
+      return; 
+    }
+    navigator.clipboard.writeText(newlink).then(function() {
+      saveAlert("info", "Link copied to clipboard!");
+      window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      //window.location.href = newlink;
+      window.onscroll = e => {
+        let currentScrollOffset = window.pageYOffset || document.documentElement.scrollTop;
+        // Scroll reach the target
+        if (currentScrollOffset === 0) {
+          window.location.href = newlink;
+          window.onscroll = null; // remove listener
+        }
+      }
+    }, function(err) {
+      doAlert("error", "Could not copy text");
     });
   }
   function downloadFile(filename, text) {
@@ -826,7 +983,8 @@
   }
   function doExport(){
     if(!validatePins()) {
-      alert("Error filling values");
+      //alert("Error filling values");
+      doAlert("error", "Error filling values");
       return;
     }
     let forexport = document.getElementsByClassName("forexport");
@@ -845,8 +1003,10 @@
             break;
           }
         }
-        if(document.getElementById("rotate-box").checked && document.getElementById("rotate-box").offsetParent !== null && forexport[i].hasAttribute("data-displays")) outstr += "#define ROTATE_90\t\t\ttrue\n";
-        if(document.getElementById("invert-box").checked && document.getElementById("invert-box").offsetParent !== null && forexport[i].hasAttribute("data-invert")) outstr += "#define DSP_INVERT_TITLE\t\t\ttrue\n";
+        let rotate90 = document.getElementsByClassName("rotate90")[0];
+        let invertTitle = document.getElementsByClassName("invert-title")[0];
+        if(rotate90.checked && rotate90.offsetParent !== null && forexport[i].hasAttribute("data-displays")) outstr += "#define ROTATE_90\t\t\ttrue\n";
+        if(invertTitle.checked && invertTitle.offsetParent !== null && forexport[i].hasAttribute("data-invert")) outstr += "#define DSP_INVERT_TITLE\t\t\ttrue\n";
       }
       /*************************************************************/
       if(forexport[i].getAttribute('data-export')=="PINS"){
@@ -865,7 +1025,7 @@
           }
         }
         if(isButtons){
-          let buttonpullup = document.getElementById("buttonpullup");
+          let buttonpullup = document.getElementsByClassName("buttonspullup")[0];
           if(!buttonpullup.checked && buttonpullup.offsetParent !== null) outstr += "#define BTN_INTERNALPULLUP\t\t\tfalse\n";
         }
       }
@@ -881,9 +1041,9 @@
       }
       /*************************************************************/
       if(forexport[i].getAttribute('data-export')=="AUDIO"){
-        if(document.getElementById("audiovs").checked) outstr += "#define I2S_DOUT\t\t\t255\n";
-        if(document.getElementById("audioint").checked) outstr += "#define I2S_INTERNAL\t\t\ttrue\n";
-        if(document.getElementById("audio-mono").checked) outstr += "#define PLAYER_FORCE_MONO\t\t\ttrue\n";
+        if(document.getElementsByClassName("vs1053")[0].checked) outstr += "#define I2S_DOUT\t\t\t255\n";
+        if(document.getElementsByClassName("i2s-internal")[0].checked) outstr += "#define I2S_INTERNAL\t\t\ttrue\n";
+        if(document.getElementsByClassName("force-mono")[0].checked) outstr += "#define PLAYER_FORCE_MONO\t\t\ttrue\n";
       }
       /*************************************************************/
     }
