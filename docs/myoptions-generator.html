@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.3.0";
+    var GVERSION="v0.3.4";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -675,12 +675,7 @@
   
   var atimeout;
   window.addEventListener('load', onLoad);
-  function qencode(str){
-    return encodeURIComponent(btoa(str));
-  }
-  function qdecode(str){
-    return (atob(decodeURIComponent(str)));
-  }
+
   function dontAlert(){
     document.getElementById("alert").setAttribute("class", "hidden");
     document.getElementById("alert").innerHTML = "";
@@ -737,7 +732,6 @@
         hiddenradio[i].classList.remove("hidden");
       }
       for (var i = 0; i < pinbuttons.length; i++) {
-        //if(document.getElementById(" r50").checked){
         if(document.getElementsByClassName("five-buttons")[0].checked){
           pinbuttons[i].classList.remove("hidden");
         }else{
@@ -875,34 +869,38 @@
     }
   }
   function loadConfigFromUrl(){
-    //var ss = qdecode(window.location.search.substr(1));
     let params = (new URL(document.location)).searchParams;
-    let ss = params.get('s');
-    if(!ss) return;
+    let rr = params.get('r');
+    let ii = params.get('i');
+    let vv = params.get('v');
+    if(!rr || !ii || !vv) return;
     try {
-      var data = JSON.parse(qdecode(ss));
+      var datarr = JSON.parse("["+rr+"]");
+      var dataii = JSON.parse("["+ii+"]");
+      var datavv = JSON.parse("[\""+vv.replaceAll(",", '","')+"\"]");
+      
     } catch (error) {
       console.error(error);
       doAlert("error", error);
       return;
     }
-    if(typeof data.r !== 'undefined'){ // load config from url
+    if(typeof datarr !== 'undefined'){
       let cboxes = document.getElementsByClassName("checkbox");
       for (var i = 0; i < cboxes.length; i++) {
         let aid = parseInt(cboxes[i].id.substr(1));
-        if(data.r.includes(aid) && !cboxes[i].checked) cboxes[i].click();
-        if(!data.r.includes(aid) && cboxes[i].checked) cboxes[i].click();
+        if(datarr.includes(aid) && !cboxes[i].checked) cboxes[i].click();
+        if(!datarr.includes(aid) && cboxes[i].checked) cboxes[i].click();
       }
       let rboxes = document.getElementsByClassName("radio");
       for (var i = 0; i < rboxes.length; i++) {
         let aid = parseInt(rboxes[i].id.substr(1));
-        if(data.r.includes(aid)) rboxes[i].click();
+        if(datarr.includes(aid)) rboxes[i].click();
       }
       /*for (var i = 0; i < data.r.length; i++) {
         document.getElementById("r"+data.r[i]).click();
       }*/
-      for (var i = 0; i < data.i.length; i++) {
-        document.getElementById("i"+data.i[i]).value = data.v[i].substr(0,3);
+      for (var i = 0; i < dataii.length; i++) {
+        document.getElementById("i"+dataii[i]).value = datavv[i].substr(0,3);
       }
     }
   }
@@ -938,14 +936,15 @@
     for (var i = 0; i < elements.length; i++) {
       if(elements[i].value!="" && elements[i].offsetParent !== null){
         ii += elements[i].id.substr(1)+",";
-        vv += '"'+elements[i].value+'",';
+        vv += elements[i].value+",";
       }
     }
     ii = ii.slice(0, -1);
     vv = vv.slice(0, -1);
-    let out = `{"r":[${rr}],"i":[${ii}],"v":[${vv}]}`;
+    //let out = `{"r":[${rr}],"i":[${ii}],"v":[${vv}]}`;
+    let out = `r=${rr}&i=${ii}&v=${vv}`;
     if(debug) console.log(out);
-    let newlink = window.location.href.split('?')[0]+'?s='+qencode(out);
+    let newlink = window.location.href.split('?')[0]+'?'+out;
     console.log("link to this configuration:");
     console.log(newlink);
     if(window.location.href.substr(0,4)!="http" && !debug){
