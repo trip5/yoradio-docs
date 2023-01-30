@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.4.2";
+    var GVERSION="v0.4.3";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -299,7 +299,7 @@
       justify-content: space-evenly;
     }
     #submit {
-      max-width: 500px;
+      max-width: 570px;
       margin: 0 auto;
     }
     .button {
@@ -422,7 +422,7 @@
     .preview-purple  { border-color: #9445ab; background: #740d91; color: #000; }
     .preview-green   { border-color: #4cab45; background: #2b6a26; color: #000; }
     .preview-blue    { border-color: #1981bd; background: #316888; color: #000; }
-    .preview-orange  { border-color: #c37f1d; background: #885204; color: #000; }
+    .preview-orange  { border-color: #ff9000; background: #cd7400; color: #000; }
     .preview-yellow  { border-color: #cfc016; background: #a0951e; color: #000; }
     .preview-bgreen  { border-color: #1ea098; background: #267974; color: #000; }
     .preview-pink    { border-color: #912455; background: #6b304a; color: #000; }
@@ -479,7 +479,7 @@
         </ul>
       </div>
     </div>
-    <div class="button apply hlbutton" id="btnpreview" onclick="donePreview();">yo</div>
+    <div class="button apply hlbutton" id="btnpreview" onclick="donePreview();">ок</div>
   </div><!--#preview-->
   <div id="content">
     <div id="alert" class="hidden" onclick="dontAlert();"></div>
@@ -795,10 +795,10 @@
     <hr class="double" />
     <div id="submit" class="evenly">
       <div class="button apply" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
-      <div class="button apply hlbutton" onclick="doExport();">yoooo!</div>
+      <div class="button apply hlbutton" onclick="doExport();">get myoptions.h</div>
       <div class="button apply" onclick="doPreview();">preview</div>
     </div>
-    <div class="href" onclick="getLink();">>> get link to this configuration <<</div>
+    <div class="href" onclick="getLink();">>> link to this configuration <<</div>
     <div id="footer"></div>
     <button onclick="topFunction()" id="topbtn">&#8593;</button>
   </div>
