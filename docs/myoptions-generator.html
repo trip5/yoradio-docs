@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.4.3";
+    var GVERSION="v0.4.5";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -418,14 +418,15 @@
     .preview-pin-pwr { border-color: #f00; background: rgba(255,0,0,0.7); color: #000; }
     .preview-pin-gnd { border-color: #313131; background: #313131; color: #b5b5b5; }
     .preview-pin-dis { border-color: #000; background: #000; color: #F00; padding: 0;}
-    .preview-white   { border-color: #9f9f9f; background: #6b6b6b; color: #000; }
-    .preview-purple  { border-color: #9445ab; background: #740d91; color: #000; }
-    .preview-green   { border-color: #4cab45; background: #2b6a26; color: #000; }
+    .preview-white   { border-color: #9f9f9f; background: #7f7f7f; color: #000; }
+    .preview-purple  { border-color: #9445ab; background: #763788; color: #000; }
+    .preview-green   { border-color: #4cab45; background: #3c8837; color: #000; }
     .preview-blue    { border-color: #1981bd; background: #316888; color: #000; }
+    .preview-lblue   { border-color: #9ec7ed; background: #7e9fbd; color: #000; }
     .preview-orange  { border-color: #ff9000; background: #cd7400; color: #000; }
-    .preview-yellow  { border-color: #cfc016; background: #a0951e; color: #000; }
-    .preview-bgreen  { border-color: #1ea098; background: #267974; color: #000; }
-    .preview-pink    { border-color: #912455; background: #6b304a; color: #000; }
+    .preview-yellow  { border-color: #e3d25f; background: #b5a84c; color: #000; }
+    .preview-bgreen  { border-color: #4ab3ac; background: #3b8f89; color: #000; }
+    .preview-pink    { border-color: #de1670; background: #b11159; color: #000; }
   </style>
   </head>
 <body>
@@ -595,7 +596,7 @@
             <div id="display-pins-spi" class="forexport" data-export="PINS">
               <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" id="i1" data-define="TFT_DC" data-color="blue" value="5" maxlength="3"></div>
               <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i2" data-define="TFT_CS" data-color="blue" value="4" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i3" data-define="TFT_RST" data-color="white" value="-1" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i3" data-define="TFT_RST" data-color="blue" value="-1" maxlength="3"></div>
               <div class="inputwrap"><span class="inputtitle">BACKLIGHT</span><input type="text" class="textinput" id="i4" data-define="BRIGHTNESS_PIN" data-color="blue" value="255" maxlength="3"></div>
             </div>
           </div>
@@ -712,9 +713,9 @@
         <div id="epins2" class="hidden">
           <h3 class="subtitle">Encoder #2</h3>
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i31" data-define="ENC2_BTNR" data-color="green" value="35" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i32" data-define="ENC2_BTNL" data-color="green" value="33" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i33" data-define="ENC2_BTNB" data-color="green" value="32" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i31" data-define="ENC2_BTNR" data-color="lblue" value="35" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i32" data-define="ENC2_BTNL" data-color="lblue" value="33" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i33" data-define="ENC2_BTNB" data-color="lblue" value="32" maxlength="3"></div>
           </div>
           <div class="encoder-set evenly forexport" data-export="SET">
             <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc2pullup" id="r58" data-default="true" data-define="ENC2_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
