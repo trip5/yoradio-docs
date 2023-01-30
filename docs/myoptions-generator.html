@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.4.0";
+    var GVERSION="v0.4.1";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -1061,7 +1061,7 @@
     try {
       var datarr = JSON.parse("["+rr+"]");
       var dataii = JSON.parse("["+ii+"]");
-      var datavv = JSON.parse("[\""+vv.replaceAll(",", '","')+"\"]");
+      var datavv = JSON.parse("[\""+vv.replace(/,/g, '","')+"\"]");
       
     } catch (error) {
       console.error(error);
