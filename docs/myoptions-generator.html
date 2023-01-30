@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.3.4";
+    var GVERSION="v0.4.0";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -341,9 +341,146 @@
       border-width: 2px;
       line-height: 26px;
     }
+    #preview {
+      height: 680px;
+      width: auto;
+      min-width: 1100px;
+      border: #e3d25f 3px solid;
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 16px;
+      box-shadow: 0 15px 15px #000;
+      background: #000;
+    }
+    #preview .button {
+      position: absolute;
+      top: auto;
+      right: 20px;
+      bottom: 20px;
+      z-index: 101;
+    }
+    #preview .button:active {
+      bottom: 18px;
+    }
+    #preview-pins {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    #preview-pins ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    #preview-pins ul li {
+      padding: 0 6px;
+      height: 27.5px;
+      line-height: 27.5px;
+      display: flex;
+      align-items: center;
+    }
+    #preview-pins-left ul li {
+      justify-content: end;
+    }
+    #preview-pins-right ul li {
+      justify-content: start;
+    }
+    #preview-pins-center {
+      width: 306px;
+      height: 600px;
+      background: #000 url(esp32dev.png) center center no-repeat;
+    }
+    #preview-pins-left, #preview-pins-right {
+    }
+    #preview-pins-left .preview-pin-dis {
+      text-align: right;
+    }
+    #preview-pins-right .preview-pin-dis {
+      text-align: left;
+    }
+    .preview-pin {
+      min-width: 80px;
+      box-sizing: border-box;
+      border: #fff 2px solid;
+      border-radius: 4px;
+      line-height: 20px;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 15px;
+      margin: 0 2px;
+      padding: 0 8px;
+    }
+    .preview-pin-pwr { border-color: #f00; background: rgba(255,0,0,0.7); color: #000; }
+    .preview-pin-gnd { border-color: #313131; background: #313131; color: #b5b5b5; }
+    .preview-pin-dis { border-color: #000; background: #000; color: #F00; padding: 0;}
+    .preview-white   { border-color: #9f9f9f; background: #6b6b6b; color: #000; }
+    .preview-purple  { border-color: #9445ab; background: #740d91; color: #000; }
+    .preview-green   { border-color: #4cab45; background: #2b6a26; color: #000; }
+    .preview-blue    { border-color: #1981bd; background: #316888; color: #000; }
+    .preview-orange  { border-color: #c37f1d; background: #885204; color: #000; }
+    .preview-yellow  { border-color: #cfc016; background: #a0951e; color: #000; }
+    .preview-bgreen  { border-color: #1ea098; background: #267974; color: #000; }
+    .preview-pink    { border-color: #912455; background: #6b304a; color: #000; }
   </style>
   </head>
 <body>
+  <div id="preview" class="hidden">
+    <div id="preview-pins">
+      <div id="preview-pins-left">
+        <ul>
+          <li id="pwr-3v3"><div class="preview-pin preview-pin-pwr preview-pin-static">3v3</div></li>
+          <li id="gpio-en"></li>
+          <li id="gpio-36"></li>
+          <li id="gpio-39"></li>
+          <li id="gpio-34"></li>
+          <li id="gpio-35"></li>
+          <li id="gpio-32"></li>
+          <li id="gpio-33"></li>
+          <li id="gpio-25"></li>
+          <li id="gpio-26"></li>
+          <li id="gpio-27"></li>
+          <li id="gpio-14"></li>
+          <li id="gpio-12"></li>
+          <li id="pwr-gn1"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+          <li id="gpio-13"></li>
+          <li id="gpio-9"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="gpio-10"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="gpio-11"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="pwr-5v"><div class="preview-pin preview-pin-pwr preview-pin-static">5v</div></li>
+        </ul>
+      </div>
+      <div id="preview-pins-center"></div>
+      <div id="preview-pins-right">
+        <ul>
+          <li id="pwr-gn2"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+          <li id="gpio-23"></li>
+          <li id="gpio-22"></li>
+          <li id="gpio-tx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="gpio-rx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="gpio-21"></li>
+          <li id="pwr-gn3"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+          <li id="gpio-19"></li>
+          <li id="gpio-18"></li>
+          <li id="gpio-5"></li>
+          <li id="gpio-17"></li>
+          <li id="gpio-16"></li>
+          <li id="gpio-4"></li>
+          <li id="gpio-0"></li>
+          <li id="gpio-2"></li>
+          <li id="gpio-15"></li>
+          <li id="gpio-8"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="gpio-7"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+          <li id="gpio-6"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="button apply hlbutton" id="btnpreview" onclick="donePreview();">yo</div>
+  </div><!--#preview-->
   <div id="content">
     <div id="alert" class="hidden" onclick="dontAlert();"></div>
     <h1 id="pagetitle">ёRadio - myoptions generator</h1>
@@ -450,37 +587,37 @@
             <div id="display-spi-mode-wrap">
               <h3 class="subtitle">DISPLAY SPI BUS</h3>
               <div id="display-spi-mode" class="forexport" data-define="DSP_HSPI" data-export="RADIO">
-                <label class="dsplabel"><input type="radio" class="radio rbox" id="r41" name="dspspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-                <label class="dsplabel"><input type="radio" class="radio rbox" id="r42" name="dspspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+                <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r41" name="dspspitype" data-type="default" data-define="TFT_" data-color="blue" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+                <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r42" name="dspspitype" data-type="true" data-define="TFT_" data-color="blue" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
               </div>
               <hr />
             </div>
             <div id="display-pins-spi" class="forexport" data-export="PINS">
-              <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" id="i1" data-define="TFT_DC" value="5" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i2" data-define="TFT_CS" value="4" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i3" data-define="TFT_RST" value="-1" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">BACKLIGHT</span><input type="text" class="textinput" id="i4" data-define="BRIGHTNESS_PIN" value="255" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" id="i1" data-define="TFT_DC" data-color="blue" value="5" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i2" data-define="TFT_CS" data-color="blue" value="4" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i3" data-define="TFT_RST" data-color="white" value="-1" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">BACKLIGHT</span><input type="text" class="textinput" id="i4" data-define="BRIGHTNESS_PIN" data-color="blue" value="255" maxlength="3"></div>
             </div>
           </div>
           <div id="pins-i2c" class="hidden displays-pins forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i5" data-define="I2C_SDA" value="21" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i6" data-define="I2C_SCL" value="22" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i5" data-define="I2C_SDA" data-color="blue" value="21" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i6" data-define="I2C_SCL" data-color="blue" value="22" maxlength="3"></div>
           </div>
           <div id="pins-lcd" class="hidden displays-pins forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">RS</span><input type="text" class="textinput" id="i7" data-define="LCD_RS" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">E</span><input type="text" class="textinput" id="i8" data-define="LCD_E" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D4</span><input type="text" class="textinput" id="i9" data-define="LCD_D4" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D5</span><input type="text" class="textinput" id="i10" data-define="LCD_D5" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D6</span><input type="text" class="textinput" id="i11" data-define="LCD_D6" value="" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">D7</span><input type="text" class="textinput" id="i12" data-define="LCD_D7" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">RS</span><input type="text" class="textinput" id="i7" data-define="LCD_RS" data-color="blue" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">E</span><input type="text" class="textinput" id="i8" data-define="LCD_E" data-color="blue" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D4</span><input type="text" class="textinput" id="i9" data-define="LCD_D4" data-color="blue" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D5</span><input type="text" class="textinput" id="i10" data-define="LCD_D5" data-color="blue" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D6</span><input type="text" class="textinput" id="i11" data-define="LCD_D6" data-color="blue" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">D7</span><input type="text" class="textinput" id="i12" data-define="LCD_D7" data-color="blue" value="" maxlength="3"></div>
           </div>
         </div>
       </section>
       <section id="nextion" class="hidden">
         <div class="title"><span>nextion pins</span></div>
         <div id="pins-nextion" class="displays-pins forexport" data-export="PINS">
-          <div class="inputwrap"><span class="inputtitle">RX</span><input type="text" class="textinput" id="i13" data-define="NEXTION_RX" value="" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">TX</span><input type="text" class="textinput" id="i14" data-define="NEXTION_TX" value="" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">RX</span><input type="text" class="textinput" id="i13" data-define="NEXTION_RX" data-color="white" value="" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">TX</span><input type="text" class="textinput" id="i14" data-define="NEXTION_TX" data-color="white" value="" maxlength="3"></div>
         </div>
       </section>
     </div><!-- DISPLAY -->
@@ -499,24 +636,24 @@
       <div class="title"><span>audio pins</span></div>
       <div class="scontent scontent-audio-pins">
         <div id="audio-pins-i2s" class="audio-pins forexport" data-export="PINS">
-          <div class="inputwrap"><span class="inputtitle">DIN | DOUT</span><input type="text" class="textinput" id="i15" data-define="I2S_DOUT" value="27" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">BCLK</span><input type="text" class="textinput" id="i16" data-define="I2S_BCLK" value="26" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">LRC | WSEL</span><input type="text" class="textinput" id="i17" data-define="I2S_LRC" value="25" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">DIN | DOUT</span><input type="text" class="textinput" id="i15" data-define="I2S_DOUT" data-color="orange" value="27" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">BCLK</span><input type="text" class="textinput" id="i16" data-define="I2S_BCLK" data-color="orange" value="26" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">LRC | WSEL</span><input type="text" class="textinput" id="i17" data-define="I2S_LRC" data-color="orange" value="25" maxlength="3"></div>
         </div>
         <div id="audio-pins-spi-wrap" class="hidden audio-pins">
           <div id="audio-spi-mode-wrap">
             <h3 class="subtitle">AUDIO SPI BUS</h3>
             <div id="audio-spi-mode" class="forexport" data-define="VS_HSPI" data-export="RADIO">
-              <label class="dsplabel"><input type="radio" class="radio rbox" id="r47" name="audiospitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-              <label class="dsplabel"><input type="radio" class="radio rbox" id="r48" name="audiospitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+              <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r47" name="audiospitype" data-type="default" data-define="VS_" data-color="orange" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+              <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r48" name="audiospitype" data-type="true" data-define="VS_" data-color="orange" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
             </div>
             <hr />
           </div>
           <div id="audio-pins-spi" class="forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i18" data-define="VS1053_CS" value="27" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">DCS</span><input type="text" class="textinput" id="i19" data-define="VS1053_DCS" value="25" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">DREQ</span><input type="text" class="textinput" id="i20" data-define="VS1053_DREQ" value="26" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i21" data-define="VS1053_RST" value="-1" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i18" data-define="VS1053_CS" data-color="orange" value="27" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">DCS</span><input type="text" class="textinput" id="i19" data-define="VS1053_DCS" data-color="orange" value="25" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">DREQ</span><input type="text" class="textinput" id="i20" data-define="VS1053_DREQ" data-color="orange" value="26" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i21" data-define="VS1053_RST" data-color="orange" value="-1" maxlength="3"></div>
           </div>
         </div>
       </div>
@@ -536,12 +673,12 @@
       <section id="buttons-pins" class="hidden">
         <div class="title"><span>buttons pins</span></div>
         <div id="pins-buttons" class="buttons-pins evenly forexport" data-export="PINS">
-          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PREV</span><input type="text" class="textinput" id="i22" data-define="BTN_LEFT" value="" maxlength="3"></div>
-          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PLAY</span><input type="text" class="textinput" id="i23" data-define="BTN_CENTER" value="" maxlength="3"></div>
-          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">NEXT</span><input type="text" class="textinput" id="i24" data-define="BTN_RIGHT" value="" maxlength="3"></div>
-          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">UP</span><input type="text" class="textinput" id="i25" data-define="BTN_UP" value="" maxlength="3"></div>
-          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">DOWN</span><input type="text" class="textinput" id="i26" data-define="BTN_DOWN" value="" maxlength="3"></div>
-          <div class="inputwrap hidden" id="modebutton"><span class="inputtitle">MODE</span><input type="text" class="textinput" id="i27" data-define="BTN_MODE" value="" maxlength="3"></div>
+          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PREV</span><input type="text" class="textinput" id="i22" data-define="BTN_LEFT" data-color="purple" value="" maxlength="3"></div>
+          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PLAY</span><input type="text" class="textinput" id="i23" data-define="BTN_CENTER" data-color="purple" value="" maxlength="3"></div>
+          <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">NEXT</span><input type="text" class="textinput" id="i24" data-define="BTN_RIGHT" data-color="purple" value="" maxlength="3"></div>
+          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">UP</span><input type="text" class="textinput" id="i25" data-define="BTN_UP" data-color="purple" value="" maxlength="3"></div>
+          <div class="inputwrap fivebuttons pinbuttons hidden"><span class="inputtitle">DOWN</span><input type="text" class="textinput" id="i26" data-define="BTN_DOWN" data-color="purple" value="" maxlength="3"></div>
+          <div class="inputwrap hidden" id="modebutton"><span class="inputtitle">MODE</span><input type="text" class="textinput" id="i27" data-define="BTN_MODE" data-color="purple" value="" maxlength="3"></div>
         </div>
         <hr />
         <div class="evenly"><label class="dsplabel"><input type="checkbox" class="checkbox rbox buttonspullup" name="buttonpullup" id="r53" checked /><span class="checkmark box"></span>INTERNAL PULLUP</label></div>
@@ -562,9 +699,9 @@
         <div id="epins1" class="hidden">
           <h3 class="subtitle">Encoder #1</h3>
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i28" data-define="ENC_BTNR" value="36" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i29" data-define="ENC_BTNL" value="34" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i30" data-define="ENC_BTNB" value="39" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i28" data-define="ENC_BTNR" data-color="green" value="36" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i29" data-define="ENC_BTNL" data-color="green" value="34" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i30" data-define="ENC_BTNB" data-color="green" value="39" maxlength="3"></div>
           </div>
           <div class="encoder-set evenly forexport" data-export="SET">
             <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc1pullup" id="r56" data-default="true" data-define="ENC_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
@@ -575,9 +712,9 @@
         <div id="epins2" class="hidden">
           <h3 class="subtitle">Encoder #2</h3>
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i31" data-define="ENC2_BTNR" value="35" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i32" data-define="ENC2_BTNL" value="33" maxlength="3"></div>
-            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i33" data-define="ENC2_BTNB" value="32" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S1</span><input type="text" class="textinput" id="i31" data-define="ENC2_BTNR" data-color="green" value="35" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">S2</span><input type="text" class="textinput" id="i32" data-define="ENC2_BTNL" data-color="green" value="33" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">Key</span><input type="text" class="textinput" id="i33" data-define="ENC2_BTNB" data-color="green" value="32" maxlength="3"></div>
           </div>
           <div class="encoder-set evenly forexport" data-export="SET">
             <label class="dsplabel"><input type="checkbox" class="checkbox setitem rbox" name="enc2pullup" id="r58" data-default="true" data-define="ENC2_INTERNALPULLUP" /><span class="checkmark box"></span>INTERNAL PULLUP</label>
@@ -599,19 +736,19 @@
         <div class="ts-pins" id="ts-res">
           <h3 class="subtitle" style="margin-top: -30px;">TS SPI BUS</h3>
           <div class="evenly forexport" data-define="TS_HSPI" data-export="RADIO">
-            <label class="dsplabel"><input type="radio" class="radio rbox" id="r62" name="tsspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-            <label class="dsplabel"><input type="radio" class="radio rbox" id="r63" name="tsspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r62" name="tsspitype" data-type="default" data-define="TS_" data-color="yellow" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r63" name="tsspitype" data-type="true" data-define="TS_" data-color="yellow" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
           </div>
           <hr class="simple" />
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i34" data-define="TS_CS" value="13" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i34" data-define="TS_CS" data-color="yellow" value="13" maxlength="3"></div>
           </div>
         </div>
         <div class="ts-pins evenly hidden forexport" id="ts-cap" data-export="PINS">
-          <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i35" data-define="TS_SDA" value="33" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i36" data-define="TS_SCL" value="32" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">INT</span><input type="text" class="textinput" id="i37" data-define="TS_INT" value="21" maxlength="3"></div>
-          <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i38" data-define="TS_RST" value="22" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i35" data-define="TS_SDA" data-color="yellow" value="33" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i36" data-define="TS_SCL" data-color="yellow" value="32" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">INT</span><input type="text" class="textinput" id="i37" data-define="TS_INT" data-color="yellow" value="21" maxlength="3"></div>
+          <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i38" data-define="TS_RST" data-color="yellow" value="22" maxlength="3"></div>
         </div>
       </section>
     </div><!-- TOUCHSCREEN -->
@@ -623,12 +760,12 @@
         <div class="sd-pins">
           <h3 class="subtitle">SD SPI BUS</h3>
           <div class="evenly forexport" data-define="SD_HSPI" data-export="RADIO">
-            <label class="dsplabel"><input type="radio" class="radio rbox" id="r64" name="sdspitype" data-type="default" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-            <label class="dsplabel"><input type="radio" class="radio rbox" id="r65" name="sdspitype" data-type="true" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r64" name="sdspitype" data-type="default" data-define="SD_" data-color="bgreen" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r65" name="sdspitype" data-type="true" data-define="SD_" data-color="bgreen" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
           </div>
           <hr class="simple" />
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i39" data-define="SDC_CS" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i39" data-define="SDC_CS" data-color="bgreen" value="" maxlength="3"></div>
           </div>
         </div>
       </section>
@@ -647,18 +784,19 @@
         </div>
         <hr class="simple" />
         <div class="evenly forexport" data-export="PINS">
-          <div class="inputwrap hidden" id="etc-led"><span class="inputtitle">led indicator</span><input type="text" class="textinput" id="i40" data-define="LED_BUILTIN" value="2" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-ir"><span class="inputtitle">ir</span><input type="text" class="textinput" id="i41" data-define="IR_PIN" value="255" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-mute"><span class="inputtitle">mute</span><input type="text" class="textinput" id="i42" data-define="MUTE_PIN" value="255" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-wake"><span class="inputtitle">wake</span><input type="text" class="textinput" id="i43" data-define="WAKE_PIN" value="255" maxlength="3"></div>
-          <div class="inputwrap hidden" id="etc-light"><span class="inputtitle">light sensor</span><input type="text" class="textinput" id="i44" data-define="LIGHT_SENSOR" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-led"><span class="inputtitle">led indicator</span><input type="text" class="textinput" id="i40" data-define="LED_BUILTIN" data-color="pink" value="2" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-ir"><span class="inputtitle">ir</span><input type="text" class="textinput" id="i41" data-define="IR_PIN" data-color="pink" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-mute"><span class="inputtitle">mute</span><input type="text" class="textinput" id="i42" data-define="MUTE_PIN" data-color="pink" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-wake"><span class="inputtitle">wake</span><input type="text" class="textinput" id="i43" data-define="WAKE_PIN" data-color="pink" value="255" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-light"><span class="inputtitle">light sensor</span><input type="text" class="textinput" id="i44" data-define="LIGHT_SENSOR" data-color="pink" value="255" maxlength="3"></div>
         </div>
       </section>
     </div><!-- ETC -->
     <hr class="double" />
     <div id="submit" class="evenly">
-      <div class="button apply" id="btnreset" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
-      <div class="button apply hlbutton" id="btnreset" onclick="doExport();">yoooo!</div>
+      <div class="button apply" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
+      <div class="button apply hlbutton" onclick="doExport();">yoooo!</div>
+      <div class="button apply" onclick="doPreview();">preview</div>
     </div>
     <div class="href" onclick="getLink();">>> get link to this configuration <<</div>
     <div id="footer"></div>
@@ -675,7 +813,54 @@
   
   var atimeout;
   window.addEventListener('load', onLoad);
-
+  function donePreview(){
+    document.getElementById('preview').classList.add('hidden');;
+    let elements = document.getElementsByClassName('preview-pin');
+    for (var i = elements.length -1; i >= 0; i--) {
+      if(!elements[i].classList.contains("preview-pin-static")) elements[i].remove();
+    }
+  }
+  function doPreview(){
+    let spitypes = document.getElementsByClassName("spitype");
+    for (var i = 0; i < spitypes.length; i++) {
+      if(spitypes[i].offsetParent === null) continue;
+      const spiPins = [];
+      const spiNames = ["MOSI","MISO","SCK"];
+      if(spitypes[i].checked){
+        if(spitypes[i].classList.contains("vspi")){
+          spiPins[0]=23; spiPins[1]=19; spiPins[2]=18;
+        }else{
+          spiPins[0]=13; spiPins[1]=12; spiPins[2]=14;
+        }
+        let color = "preview-" + spitypes[i].getAttribute("data-color");
+        for (var k = 0; k < spiPins.length; k++) {
+          let targetId=document.getElementById("gpio-"+spiPins[k]);
+          let previewPin = document.createElement("div");
+          previewPin.classList.add("preview-pin");
+          previewPin.classList.add(color);
+          previewPin.innerHTML = spitypes[i].getAttribute("data-define") + spiNames[k] + "&nbsp;["+spiPins[k]+"]";
+          targetId.appendChild(previewPin);
+        }
+      }
+    }
+    let textinputs = document.getElementsByClassName("textinput");
+    for (var i = 0; i < textinputs.length; i++) {
+      if(textinputs[i].offsetParent === null) continue;
+      if(textinputs[i].value!="" || textinputs[i].value!="255"){
+        let targetId=document.getElementById("gpio-"+textinputs[i].value);
+        if(textinputs[i].value=="-1") targetId=document.getElementById("gpio-en");
+        if(targetId){
+          let color = "preview-" + textinputs[i].getAttribute("data-color");
+          let previewPin = document.createElement("div");
+          previewPin.classList.add("preview-pin");
+          previewPin.classList.add(color);
+          previewPin.innerHTML = textinputs[i].getAttribute("data-define") + "&nbsp;["+textinputs[i].value+"]";
+          targetId.appendChild(previewPin);
+        }
+      }
+    }
+    document.getElementById('preview').classList.remove('hidden');
+  }
   function dontAlert(){
     document.getElementById("alert").setAttribute("class", "hidden");
     document.getElementById("alert").innerHTML = "";
@@ -709,7 +894,6 @@
     if(target=="spi") document.getElementById("pins-spi").classList.remove("hidden");
     if(target=="i2c") document.getElementById("pins-i2c").classList.remove("hidden");
     if(target=="lcd") document.getElementById("pins-lcd").classList.remove("hidden");
-    
     document.getElementById("pins-7735").classList.add("hidden");
     if(this.hasAttribute('data-st')) {
       document.getElementById("pins-7735").classList.remove("hidden");
@@ -896,9 +1080,6 @@
         let aid = parseInt(rboxes[i].id.substr(1));
         if(datarr.includes(aid)) rboxes[i].click();
       }
-      /*for (var i = 0; i < data.r.length; i++) {
-        document.getElementById("r"+data.r[i]).click();
-      }*/
       for (var i = 0; i < dataii.length; i++) {
         document.getElementById("i"+dataii[i]).value = datavv[i].substr(0,3);
       }
@@ -941,7 +1122,6 @@
     }
     ii = ii.slice(0, -1);
     vv = vv.slice(0, -1);
-    //let out = `{"r":[${rr}],"i":[${ii}],"v":[${vv}]}`;
     let out = `r=${rr}&i=${ii}&v=${vv}`;
     if(debug) console.log(out);
     let newlink = window.location.href.split('?')[0]+'?'+out;
@@ -954,13 +1134,11 @@
     navigator.clipboard.writeText(newlink).then(function() {
       saveAlert("info", "Link copied to clipboard!");
       window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-      //window.location.href = newlink;
       window.onscroll = e => {
         let currentScrollOffset = window.pageYOffset || document.documentElement.scrollTop;
-        // Scroll reach the target
         if (currentScrollOffset === 0) {
           window.location.href = newlink;
-          window.onscroll = null; // remove listener
+          window.onscroll = null;
         }
       }
     }, function(err) {
@@ -982,7 +1160,6 @@
   }
   function doExport(){
     if(!validatePins()) {
-      //alert("Error filling values");
       doAlert("error", "Error filling values");
       return;
     }
@@ -1001,7 +1178,7 @@
             outstr += "#define " + define + "\t\t\t" + dtype + "\n";
             break;
           }
-        }
+        }doPreview
         let rotate90 = document.getElementsByClassName("rotate90")[0];
         let invertTitle = document.getElementsByClassName("invert-title")[0];
         if(rotate90.checked && rotate90.offsetParent !== null && forexport[i].hasAttribute("data-displays")) outstr += "#define ROTATE_90\t\t\ttrue\n";
