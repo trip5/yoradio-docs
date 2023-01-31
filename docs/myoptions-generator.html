@@ -539,10 +539,12 @@
           <li>Do not pullup the 12th GPIO from the outside.</li>
           <li>Empty value = error.</li>
           <li>GPIOs 34 to 39 are GPIs – input only pins. These pins don’t have internal pull-up or pull-down resistors. They can’t be used as outputs, so use these pins only as inputs.</li>
-          <li>Connect display and VS RST-pin to EN ESP32 pin (value&nbsp;-1)</li>
+          <li>Connect display and VS RST-pin to EN ESP32 pin (value&nbsp;-1).</li>
+          <li>Try not to use GPIO 0 unnecessarily.</li>
         </ul>
         <ul>
           <li>Please check out this article: <a href="https://randomnerdtutorials.com/esp32-pinout-reference-gpios/" target="_blank">https://randomnerdtutorials.com/esp32-pinout-reference-gpios/</a></li>
+          <li>Please check out this article: <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/" target="_blank">https://randomnerdtutorials.com/esp32-spi-communication-arduino/</a></li>
           <li>Please check out this article: <a href="https://github.com/e2002/yoradio#hardware-setup" target="_blank">https://github.com/e2002/yoradio#hardware-setup</a></li>
           <li>Please check out this article: <a href="https://github.com/e2002/yoradio/wiki/How-to-flash" target="_blank">https://github.com/e2002/yoradio/wiki/How-to-flash</a></li>
         </ul>
@@ -556,7 +558,7 @@
         <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r71" data-target="wroom" checked /><span class="checkmark"></span>WROOM</label>
         <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r72" data-target="wrover" /><span class="checkmark"></span>WROVER</label>
       </div>
-    </section>
+    </section><!-- MODULE -->
     <!-- SETUP -->
     <hr class="double" />
     <section id="setup">
