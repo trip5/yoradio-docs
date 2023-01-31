@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.4.5";
+    var GVERSION="v0.4.7";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -40,12 +40,13 @@
     #content {
       width: 100%;
       max-width: 1000px;
+      min-width: 670px;
       padding: 20px 60px;
       box-sizing: border-box;
       margin: 0 auto;
       position: relative;
     }
-    #topbtn {
+    #topbtn, .scrollbutton {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -60,9 +61,13 @@
       cursor: pointer;
       padding: 20px;
     }
-    #topbtn:hover {
+    #topbtn:hover, .scrollbutton:hover {
       background-color: rgba(50,50,50,0.1);
       color: #e3d25f;
+    }
+    #bottombtn {
+      left: auto;
+      right: 0;
     }
     .hidden {
 	    display: none!important;
@@ -289,10 +294,34 @@
     .textinput.error{
       border-color: red;
       background: #381212;
+      color: red;
+    }
+    .inputwrap:after{
+      color: #f00;
+      font-size: 14px;
+      padding: 4px 6px;
+    }
+    .inputwrap:has(> .conflict):after{
+      content: "conflict";
+    }
+    .inputwrap:has(> .invalid):after{
+      content: "out of range";
+    }
+    .inputwrap:has(> .vspi):after{
+      content: "used in VSPI";
+    }
+    .inputwrap:has(> .hspi):after{
+      content: "used in HSPI";
+    }
+    .inputwrap:has(> .wrover):after{
+      content: "used in WROVER";
     }
     .inputwrap:has(> .textinput:focus) .inputtitle {
       color: #fff;
       font-weight: bold;
+    }
+    .inputwrap:has(> .textinput:focus):after {
+      content: "";
     }
     #pins-i2c, #pins-lcd, #display-pins-spi, #pins-nextion, .evenly {
       display: flex;
@@ -427,6 +456,21 @@
     .preview-yellow  { border-color: #e3d25f; background: #b5a84c; color: #000; }
     .preview-bgreen  { border-color: #4ab3ac; background: #3b8f89; color: #000; }
     .preview-pink    { border-color: #de1670; background: #b11159; color: #000; }
+    @media screen and (max-width: 680px) {
+      #content, #preview { zoom: 0.8; }
+    }
+    @media screen and (max-width: 600px) {
+      #content, #preview { zoom: 0.7; }
+    }
+    @media screen and (max-width: 500px) {
+      #content, #preview { zoom: 0.6; }
+    }
+    @media screen and (max-width: 420px) {
+      #content, #preview { zoom: 0.5; }
+    }
+    @media screen and (max-width: 35px) {
+      #content, #preview { zoom: 0.4; }
+    }
   </style>
   </head>
 <body>
@@ -491,8 +535,8 @@
       <div class="title"><span>commandments</span></div>
       <div id="info-content">
         <ul>
-          <li>Do not use 16-17 pins on WROVER module.</li>
-          <li>Do not pullup the 12th pin from the outside.</li>
+          <li>Do not use 16-17 GPIOs on WROVER module.</li>
+          <li>Do not pullup the 12th GPIO from the outside.</li>
           <li>Empty value = error.</li>
           <li>GPIOs 34 to 39 are GPIs – input only pins. These pins don’t have internal pull-up or pull-down resistors. They can’t be used as outputs, so use these pins only as inputs.</li>
           <li>Connect display and VS RST-pin to EN ESP32 pin (value&nbsp;-1)</li>
@@ -504,6 +548,15 @@
         </ul>
       </div>
     </section><!-- INFO -->
+    <!-- MODULE -->
+    <hr class="double" />
+    <section id="module">
+      <div class="title"><span>esp32 module</span></div>
+      <div class="evenly">
+        <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r71" data-target="wroom" checked /><span class="checkmark"></span>WROOM</label>
+        <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r72" data-target="wrover" /><span class="checkmark"></span>WROVER</label>
+      </div>
+    </section>
     <!-- SETUP -->
     <hr class="double" />
     <section id="setup">
@@ -801,7 +854,8 @@
     </div>
     <div class="href" onclick="getLink();">>> link to this configuration <<</div>
     <div id="footer"></div>
-    <button onclick="topFunction()" id="topbtn">&#8593;</button>
+    <button onclick="topFunction()" id="topbtn" class="scrollbutton">&#8593;</button>
+    <button onclick="bottomFunction()" id="bottombtn" class="scrollbutton">&#8595;</button>
   </div>
 </body>
 <script>
@@ -809,10 +863,15 @@
                         "I2C_SDA":      21,  "I2C_SCL":       22, 
                         "I2S_DOUT":     27,  "I2S_BCLK":      26, "I2S_LRC":    25,
                         "VS1053_DCS":   25,  "VS1053_DREQ":   26, "VS1053_RST": -1,
-                        "TS_CS":        13,  "TS_SDA":        33, "TS_SCL":     32, "TS_INT":         21,   "TS_RST": 25,
-                        "LED_BUILTIN":  255, "MUTE_PIN":      255,"WAKE_PIN":   255,"LIGHT_SENSOR":   255,  "IR_PIN": 255 };
+                        "TS_CS":        13,  "TS_SDA":        33, "TS_SCL":     32, "TS_INT":         21,   "TS_RST":   25,
+                        "LED_BUILTIN":  255, "MUTE_PIN":      255,"WAKE_PIN":   255,"LIGHT_SENSOR":   255,  "IR_PIN":   255,
+                        "BTN_LEFT":     255, "BTN_CENTER":    255,"BTN_RIGHT":  255,"BTN_UP":         255,  "BTN_DOWN": 255, "BTN_MODE": 255 };
   
   var atimeout;
+  var validGPIOs = [-1,0,2,4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,27,32,33,34,35,36,39,255];
+  var vspiGPIOs  = [ 18,19,23 ];
+  var hspiGPIOs  = [ 12,13,14 ];
+  var isWrover   = false;
   window.addEventListener('load', onLoad);
   function donePreview(){
     document.getElementById('preview').classList.add('hidden');;
@@ -822,6 +881,26 @@
     }
   }
   function doPreview(){
+    if(!validatePins()) {
+      doAlert("error", "Error filling values");
+      return;
+    }
+    let pinWrover = document.getElementsByClassName("preview-pin-wrover");
+    for (var i = pinWrover.length -1; i >= 0; i--) {
+      pinWrover[i].remove();
+    }
+    if(isWrover){
+      for (var i = 16; i <= 17; i++) {
+        let targetId=document.getElementById("gpio-"+i);
+        let previewPin = document.createElement("div");
+        previewPin.classList.add("preview-pin"); //preview-pin preview-pin-dis preview-pin-static
+        previewPin.classList.add("preview-pin-dis");
+        previewPin.classList.add("preview-pin-static");
+        previewPin.classList.add("preview-pin-wrover");
+        previewPin.innerHTML = "X";
+        targetId.appendChild(previewPin);
+      }
+    }
     let spitypes = document.getElementsByClassName("spitype");
     for (var i = 0; i < spitypes.length; i++) {
       if(spitypes[i].offsetParent === null) continue;
@@ -1026,17 +1105,55 @@
   }
   function validatePins(){
     let elements = document.getElementsByClassName("textinput");
+    var hspibusy = false;
+    var vspibusy = false;
+    isWrover = document.getElementsByClassName("espmodule")[1].checked;
     for (var i = 0; i < elements.length; i++) {
       elements[i].classList.remove("error");
+      elements[i].classList.remove("conflict");
+      elements[i].classList.remove("invalid");
+      elements[i].classList.remove("wrover");
+      elements[i].classList.remove("vspi");
+      elements[i].classList.remove("hspi");
+    }
+    let spitype = document.getElementsByClassName("spitype");
+    for (var i = 0; i < spitype.length; i++) {
+      if(spitype[i].offsetParent === null) continue;
+      if(spitype[i].checked){
+        if(spitype[i].classList.contains("vspi")) vspibusy=true;
+        if(spitype[i].classList.contains("hspi")) hspibusy=true;
+      }
     }
     for (var i = 0; i < elements.length; i++) {
       if(elements[i].offsetParent === null || elements[i].value=="" || elements[i].value=="-1" || elements[i].value=="255") continue;
+      if(hspibusy==true && hspiGPIOs.includes(parseInt(elements[i].value))){
+        elements[i].classList.add("error");
+        elements[i].classList.add("hspi");
+        elements[i].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+        return false;
+      }
+      if(vspibusy==true && vspiGPIOs.includes(parseInt(elements[i].value))){
+        elements[i].classList.add("error");
+        elements[i].classList.add("vspi");
+        elements[i].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+        return false;
+      }
+      var validGPIOsFiltered = isWrover?validGPIOs.filter(function(value, index, arr){  return value != 16 && value != 17; }):validGPIOs;
+      let intVal = parseInt(elements[i].value);
+      if(!validGPIOsFiltered.includes(intVal)) {
+        elements[i].classList.add("error");
+        elements[i].classList.add((intVal==16 || intVal==17)?"wrover":"invalid");
+        elements[i].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+        return false;
+      }
       for (var k = 0; k < elements.length; k++) {
         if(elements[k].offsetParent === null || elements[k].value=="" || elements[i].value=="-1" || elements[i].value=="255") continue;
         if(elements[i]==elements[k]) continue;
         if(elements[i].value==elements[k].value){
           elements[i].classList.add("error");
+          elements[i].classList.add("conflict");
           elements[k].classList.add("error");
+          elements[k].classList.add("conflict");
           elements[i].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
           return false;
         }
@@ -1103,7 +1220,14 @@
       behavior: 'smooth'
     });
   }
-  function getLink(){
+  function bottomFunction(){
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  function getLink(doreturn=false){
     let elements = document.getElementsByClassName("rbox");
     let rr = '';
     let vv = '';
@@ -1126,6 +1250,7 @@
     let out = `r=${rr}&i=${ii}&v=${vv}`;
     if(debug) console.log(out);
     let newlink = window.location.href.split('?')[0]+'?'+out;
+    if(doreturn) return newlink;
     console.log("link to this configuration:");
     console.log(newlink);
     if(window.location.href.substr(0,4)!="http" && !debug){
@@ -1156,7 +1281,7 @@
     document.body.removeChild(element);
   }
   function formatExport(input){
-    let out = `#ifndef myoptions_h\n#define myoptions_h\n\n/* Generated by myoptions.h generator - ${GVERSION} */\n/* Put this file next to yoRadio.ino and restart Arduino IDE. */\n/* !!! Do not be alarmed, all right, the default values ​​are not included in this file !!! */\n\n${input}\n\n#endif\n`;
+    let out = `#ifndef myoptions_h\n#define myoptions_h\n\n/* Generated by myoptions.h generator - ${GVERSION} */\n/* ${getLink(true)} */\n/* Put this file next to yoRadio.ino and restart Arduino IDE. */\n/* !!! Do not be alarmed, all right, the default values ​​are not included in this file !!! */\n\n${input}\n\n#endif\n`;
     downloadFile("myoptions.h", out);
   }
   function doExport(){
