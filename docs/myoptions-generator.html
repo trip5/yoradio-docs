@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.4.8";
+    var GVERSION="v0.5.5";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -156,13 +156,13 @@
       background-image: linear-gradient(#000, #0b0b0b);
       position: relative;
     }
-    section .title {
+    section .title, #preview-pins-unused .title {
       width: auto;
       margin-top: -34px;
       padding: 4px 0 20px 0;
       text-align: center;
     }
-    section .title span {
+    section .title span, #preview-pins-unused .title span {
       padding: 4px 8px;
       background: #000;
       font-weight: bold;
@@ -383,6 +383,7 @@
       border-radius: 16px;
       box-shadow: 0 15px 15px #000;
       background: #000;
+      padding-left: 230px;
     }
     #preview .button {
       position: absolute;
@@ -443,6 +444,10 @@
       font-size: 15px;
       margin: 0 2px;
       padding: 0 8px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
     .preview-pin-pwr { border-color: #f00; background: rgba(255,0,0,0.7); color: #000; }
     .preview-pin-gnd { border-color: #313131; background: #313131; color: #b5b5b5; }
@@ -456,6 +461,40 @@
     .preview-yellow  { border-color: #e3d25f; background: #b5a84c; color: #000; }
     .preview-bgreen  { border-color: #4ab3ac; background: #3b8f89; color: #000; }
     .preview-pink    { border-color: #de1670; background: #b11159; color: #000; }
+    #preview-pins li .preview-pin {
+      cursor: not-allowed;
+    }
+    #preview-pins li.movable .preview-pin, #preview-pins-unused .preview-pin {
+      padding-left: 16px;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOAQMAAADZk5RYAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlMAP8D14AUAAAAMSURBVAjXY5iEGwIAb+QH/Z/KV8wAAAAASUVORK5CYII=');
+      background-position: 4px center;
+      background-repeat: no-repeat;
+      cursor: move;
+    }
+    #preview-pins-unused {
+      position:absolute;
+      z-index: 102;
+      height:auto;
+      bottom:0;
+      top:0;
+      left:0;
+      padding: 20px 10px;
+      margin: 30px 0 30px 20px;
+      box-sizing: border-box;
+      border: #777 1px dashed;
+      border-radius: 10px;
+      opacity: 0.8;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background-image: linear-gradient(#000, #0b0b0b);
+    }
+    #preview-pins-unused .title {
+      width: 100%;
+    }
+    #preview-pins-unused .preview-pin {
+      margin-bottom: 8px;
+    }
     @media screen and (max-width: 680px) {
       #content, #preview { zoom: 0.8; }
     }
@@ -476,23 +515,26 @@
 <body>
   <div id="preview" class="hidden">
     <div id="preview-pins">
+      <div id="preview-pins-unused" class="movable">
+        <div class="title"><span>LOST PINS</span></div>
+      </div>
       <div id="preview-pins-left">
         <ul>
           <li id="pwr-3v3"><div class="preview-pin preview-pin-pwr preview-pin-static">3v3</div></li>
-          <li id="gpio-en"></li>
-          <li id="gpio-36"></li>
-          <li id="gpio-39"></li>
-          <li id="gpio-34"></li>
-          <li id="gpio-35"></li>
-          <li id="gpio-32"></li>
-          <li id="gpio-33"></li>
-          <li id="gpio-25"></li>
-          <li id="gpio-26"></li>
-          <li id="gpio-27"></li>
-          <li id="gpio-14"></li>
-          <li id="gpio-12"></li>
+          <li id="gpio-en" class="movable movable-rst"></li>
+          <li id="gpio-36" class="movable"></li>
+          <li id="gpio-39" class="movable"></li>
+          <li id="gpio-34" class="movable"></li>
+          <li id="gpio-35" class="movable"></li>
+          <li id="gpio-32" class="movable"></li>
+          <li id="gpio-33" class="movable"></li>
+          <li id="gpio-25" class="movable"></li>
+          <li id="gpio-26" class="movable"></li>
+          <li id="gpio-27" class="movable"></li>
+          <li id="gpio-14" class="movable movable-dynamic"></li>
+          <li id="gpio-12" class="movable movable-dynamic"></li>
           <li id="pwr-gn1"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
-          <li id="gpio-13"></li>
+          <li id="gpio-13" class="movable movable-dynamic"></li>
           <li id="gpio-9"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
           <li id="gpio-10"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
           <li id="gpio-11"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
@@ -503,21 +545,21 @@
       <div id="preview-pins-right">
         <ul>
           <li id="pwr-gn2"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
-          <li id="gpio-23"></li>
-          <li id="gpio-22"></li>
+          <li id="gpio-23" class="movable movable-dynamic"></li>
+          <li id="gpio-22" class="movable"></li>
           <li id="gpio-tx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
           <li id="gpio-rx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-21"></li>
+          <li id="gpio-21" class="movable"></li>
           <li id="pwr-gn3"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
-          <li id="gpio-19"></li>
-          <li id="gpio-18"></li>
-          <li id="gpio-5"></li>
-          <li id="gpio-17"></li>
-          <li id="gpio-16"></li>
-          <li id="gpio-4"></li>
-          <li id="gpio-0"></li>
-          <li id="gpio-2"></li>
-          <li id="gpio-15"></li>
+          <li id="gpio-19" class="movable movable-dynamic"></li>
+          <li id="gpio-18" class="movable movable-dynamic"></li>
+          <li id="gpio-5" class="movable"></li>
+          <li id="gpio-17" class="movable movable-dynamic"></li>
+          <li id="gpio-16" class="movable movable-dynamic"></li>
+          <li id="gpio-4" class="movable"></li>
+          <li id="gpio-0" class="movable"></li>
+          <li id="gpio-2" class="movable"></li>
+          <li id="gpio-15" class="movable"></li>
           <li id="gpio-8"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
           <li id="gpio-7"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
           <li id="gpio-6"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
@@ -889,7 +931,12 @@
     }
     let pinWrover = document.getElementsByClassName("preview-pin-wrover");
     for (var i = pinWrover.length -1; i >= 0; i--) {
+      pinWrover[i].parentNode.classList.remove("add");
       pinWrover[i].remove();
+    }
+    let movableDynamic = document.getElementsByClassName("movable-dynamic");
+    for (var i = 0; i < movableDynamic.length; i++) {
+      movableDynamic[i].classList.add("movable");
     }
     if(isWrover){
       for (var i = 16; i <= 17; i++) {
@@ -901,6 +948,7 @@
         previewPin.classList.add("preview-pin-wrover");
         previewPin.innerHTML = "X";
         targetId.appendChild(previewPin);
+        targetId.classList.remove("movable");
       }
     }
     let spitypes = document.getElementsByClassName("spitype");
@@ -921,14 +969,16 @@
           previewPin.classList.add("preview-pin");
           previewPin.classList.add(color);
           previewPin.innerHTML = spitypes[i].getAttribute("data-define") + spiNames[k] + "&nbsp;["+spiPins[k]+"]";
+          previewPin.id = "preview-static-"+k;
           targetId.appendChild(previewPin);
+          targetId.classList.remove("movable");
         }
       }
     }
     let textinputs = document.getElementsByClassName("textinput");
     for (var i = 0; i < textinputs.length; i++) {
       if(textinputs[i].offsetParent === null) continue;
-      if(textinputs[i].value!="" || textinputs[i].value!="255"){
+      if(textinputs[i].value!="" && textinputs[i].value!="255"){
         let targetId=document.getElementById("gpio-"+textinputs[i].value);
         if(textinputs[i].value=="-1") targetId=document.getElementById("gpio-en");
         if(targetId){
@@ -936,12 +986,39 @@
           let previewPin = document.createElement("div");
           previewPin.classList.add("preview-pin");
           previewPin.classList.add(color);
+          previewPin.setAttribute("data-parent", textinputs[i].id);
+          previewPin.setAttribute("data-value", textinputs[i].value);
+          previewPin.setAttribute("data-define", textinputs[i].getAttribute("data-define"));
           previewPin.innerHTML = textinputs[i].getAttribute("data-define") + "&nbsp;["+textinputs[i].value+"]";
+          previewPin.id = "preview-"+i;
           targetId.appendChild(previewPin);
         }
+      }else{
+        let targetId=document.getElementById("preview-pins-unused");
+        let color = "preview-" + textinputs[i].getAttribute("data-color");
+          let previewPin = document.createElement("div");
+          previewPin.classList.add("preview-pin");
+          previewPin.classList.add(color);
+          previewPin.setAttribute("data-parent", textinputs[i].id);
+          previewPin.setAttribute("data-value", textinputs[i].value);
+          previewPin.setAttribute("data-define", textinputs[i].getAttribute("data-define"));
+          previewPin.innerHTML = textinputs[i].getAttribute("data-define");
+          previewPin.id = "preview-"+i;
+          targetId.appendChild(previewPin);
       }
     }
     document.getElementById('preview').classList.remove('hidden');
+    
+    let movable = document.getElementsByClassName("movable");
+    for (var i = 0; i < movable.length; i++) {
+      let draggable = movable[i].getElementsByClassName("preview-pin")[0];
+      if(draggable) draggable.setAttribute("draggable", true);
+    }
+    movable = document.getElementById("preview-pins-unused").getElementsByClassName("preview-pin");
+    for (var i = 0; i < movable.length; i++) {
+      movable[i].setAttribute("draggable", true);
+    }
+    document.getElementById("preview").style.paddingLeft=document.getElementById("preview-pins-unused").offsetWidth + 20 + "px";
   }
   function dontAlert(){
     document.getElementById("alert").setAttribute("class", "hidden");
@@ -1353,6 +1430,75 @@
     }
     formatExport(outstr);
   }
+  /* DRAGDROP */
+  let dragged;
+  let node;
+  let draggedId;
+  document.addEventListener("dragstart", ({target}) => {
+	  dragged = target;
+	  draggedId = target.id;
+	  node = target.parentNode;
+  });
+
+  document.addEventListener("dragover", (event) => {
+    event.preventDefault();
+  });
+
+  document.addEventListener("drop", ({target}) => {
+    if(target.id==draggedId) return;
+    if(target.parentNode.classList.contains("movable-rst")) {
+      dragged.remove( dragged );
+      target.parentNode.appendChild(dragged);
+      let targetVal = "-1";
+      document.getElementById(dragged.getAttribute("data-parent")).value = targetVal;
+      dragged.innerHTML = dragged.getAttribute("data-define") + "&nbsp;["+targetVal+"]";
+      dragged.setAttribute("data-value", targetVal);
+      return;
+    }
+    if(target.classList.contains("movable-rst")) {
+      dragged.remove( dragged );
+      target.appendChild(dragged);
+      let targetVal = "-1";
+      document.getElementById(dragged.getAttribute("data-parent")).value = targetVal;
+      dragged.innerHTML = dragged.getAttribute("data-define") + "&nbsp;["+targetVal+"]";
+      dragged.setAttribute("data-value", targetVal);
+      return;
+    }
+    if(target.id=="preview-pins-unused") {
+      dragged.remove( dragged );
+      target.appendChild(dragged);
+      let targetVal = "255";
+      document.getElementById(dragged.getAttribute("data-parent")).value = targetVal;
+      dragged.innerHTML = dragged.getAttribute("data-define");
+      dragged.setAttribute("data-value", targetVal);
+      document.getElementById("preview").style.paddingLeft=document.getElementById("preview-pins-unused").offsetWidth + 20 + "px";
+      return;
+    }
+	  if(target.classList.contains("movable")) {
+	    let isEmpty = target.getElementsByClassName("preview-pin").length==0;
+	    if(!isEmpty) return;
+	    dragged.remove( dragged );
+	    let targetVal = target.id.split("-")[1];
+		  target.appendChild(dragged);
+		  document.getElementById(dragged.getAttribute("data-parent")).value = targetVal;
+		  dragged.innerHTML = dragged.getAttribute("data-define") + "&nbsp;["+targetVal+"]";
+		  dragged.setAttribute("data-value", targetVal);
+	  }
+	  if(target.classList.contains("preview-pin") && target.parentNode.classList.contains("movable") && target.parentNode.id!="preview-pins-unused"){
+	    dragged.remove( dragged );
+	    let targetVal = target.getAttribute("data-value");
+	    let draggedVal = dragged.getAttribute("data-value");
+	    target.parentNode.appendChild(dragged);
+	    document.getElementById(dragged.getAttribute("data-parent")).value = targetVal;
+	    dragged.innerHTML = dragged.getAttribute("data-define") + "&nbsp;["+targetVal+"]";
+	    dragged.setAttribute("data-value", targetVal);
+	    node.appendChild(target);
+	    document.getElementById(target.getAttribute("data-parent")).value = draggedVal;
+	    target.innerHTML = target.getAttribute("data-define") + (target.parentNode.id=="preview-pins-unused"?"":"&nbsp;["+draggedVal+"]");
+	    target.setAttribute("data-value", draggedVal);
+	  }
+	  document.getElementById("preview").style.paddingLeft=document.getElementById("preview-pins-unused").offsetWidth + 20 + "px";
+  });
 </script>
 
 </html>
