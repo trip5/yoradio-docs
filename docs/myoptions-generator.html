@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.5.5";
+    var GVERSION="v0.6.0";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -328,7 +328,7 @@
       justify-content: space-evenly;
     }
     #submit {
-      max-width: 570px;
+      max-width: 680px;
       margin: 0 auto;
     }
     .button {
@@ -341,7 +341,7 @@
       cursor: pointer;
       text-align: center;
       min-width: 140px;
-      margin-left: 20px;
+      margin-left: 0px;
       text-transform: uppercase;
       color: #e3d25f;
       background: #272727;
@@ -358,6 +358,9 @@
     .hlbutton {
       background: #e3d25f;
       color: #000;
+    }
+    .button#docopy {
+      min-width: 41px;
     }
     .encoder-set {
       margin-top: 30px;
@@ -636,28 +639,28 @@
         <div class="title"><span>display</span></div>
         <div class="scontent scontent-displays forexport" id="scontent-displays" data-define="DSP_MODEL" data-export="RADIO" data-displays="true">
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r10" data-target="dmy" data-type="default" checked /><span class="checkmark"></span>no display</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r11" data-target="spi" data-st="ST7735" data-type="DSP_ST7735" /><span class="checkmark"></span>ST7735</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r12" data-target="i2c" data-type="DSP_SSD1306" data-invert="true"/><span class="checkmark"></span>SSD1306</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r13" data-target="spi" data-type="DSP_NOKIA5110" /><span class="checkmark"></span>NOKIA 5110</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r14" data-target="spi" data-type="DSP_ST7789" /><span class="checkmark"></span>ST7789</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r15" data-target="i2c" data-type="DSP_SH1106" data-invert="true" /><span class="checkmark"></span>SH1106</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r11" data-target="spi" data-st="ST7735" data-type="DSP_ST7735" data-libs="Adafruit ST7735 and ST7789 Library" /><span class="checkmark"></span>ST7735</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r12" data-target="i2c" data-type="DSP_SSD1306" data-libs="Adafruit SSD1306" data-invert="true"/><span class="checkmark"></span>SSD1306</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r13" data-target="spi" data-type="DSP_NOKIA5110" data-libs="Adafruit PCD8544 Nokia 5110 LCD library" /><span class="checkmark"></span>NOKIA 5110</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r14" data-target="spi" data-type="DSP_ST7789" data-libs="Adafruit ST7735 and ST7789 Library" /><span class="checkmark"></span>ST7789</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r15" data-target="i2c" data-type="DSP_SH1106" data-libs="Adafruit SH110X" data-invert="true" /><span class="checkmark"></span>SH1106</label>
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r16" data-target="i2c" data-type="DSP_1602I2C" /><span class="checkmark"></span>1602 I2C</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r17" data-target="i2c" data-type="DSP_SSD1306x32" /><span class="checkmark"></span>SSD1306x32</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r18" data-target="i2c" data-type="DSP_SSD1327" data-rotate="true" /><span class="checkmark"></span>SSD1327</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r19" data-target="spi" data-type="DSP_ILI9341" /><span class="checkmark"></span>ILI9341</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r20" data-target="spi" data-type="DSP_SSD1305" data-invert="true" /><span class="checkmark"></span>SSD1305</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r21" data-target="i2c" data-type="DSP_SH1107" /><span class="checkmark"></span>SH1107</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r17" data-target="i2c" data-type="DSP_SSD1306x32" data-libs="Adafruit SSD1306" /><span class="checkmark"></span>SSD1306x32</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r18" data-target="i2c" data-type="DSP_SSD1327" data-libs="Adafruit SSD1327" data-rotate="true" /><span class="checkmark"></span>SSD1327</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r19" data-target="spi" data-type="DSP_ILI9341" data-libs="Adafruit ILI9341" /><span class="checkmark"></span>ILI9341</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r20" data-target="spi" data-type="DSP_SSD1305" data-libs="Adafruit SSD1305" data-invert="true" /><span class="checkmark"></span>SSD1305</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r21" data-target="i2c" data-type="DSP_SH1107" data-libs="Adafruit SH110X" /><span class="checkmark"></span>SH1107</label>
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r22" data-target="lcd" data-type="DSP_1602" /><span class="checkmark"></span>LCD 1602</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r23" data-target="spi" data-type="DSP_GC9106" /><span class="checkmark"></span>GC9106</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r23" data-target="spi" data-type="DSP_GC9106" /><span class="checkmark"></span>GC9106</label>
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r24" data-target="i2c" data-type="DSP_2004I2C" /><span class="checkmark"></span>2004 I2C</label>
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r25" data-target="lcd" data-type="DSP_2004" /><span class="checkmark"></span>LCD 2004</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r26" data-target="i2c" data-type="DSP_SSD1305I2C" data-invert="true" /><span class="checkmark"></span>SSD1305 I2C</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r27" data-target="spi" data-type="DSP_ILI9225" /><span class="checkmark"></span>ILI9225</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r28" data-target="spi" data-type="DSP_ST7789_240" data-rotate="true" /><span class="checkmark"></span>ST7789x240</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r29" data-target="spi" data-type="DSP_ST7796" /><span class="checkmark"></span>ST7796</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r30" data-target="spi" data-type="DSP_GC9A01A" /><span class="checkmark"></span>GC9A01A</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r31" data-target="spi" data-type="DSP_ILI9488" /><span class="checkmark"></span>ILI9488</label>
-          <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r32" data-target="spi" data-type="DSP_ILI9486" /><span class="checkmark"></span>ILI9486</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r26" data-target="i2c" data-type="DSP_SSD1305I2C" data-invert="true" /><span class="checkmark"></span>SSD1305 I2C</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r27" data-target="spi" data-type="DSP_ILI9225" /><span class="checkmark"></span>ILI9225</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r28" data-target="spi" data-type="DSP_ST7789_240" data-libs="Adafruit ST7735 and ST7789 Library" data-rotate="true" /><span class="checkmark"></span>ST7789x240</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r29" data-target="spi" data-type="DSP_ST7796" /><span class="checkmark"></span>ST7796</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r30" data-target="spi" data-type="DSP_GC9A01A" /><span class="checkmark"></span>GC9A01A</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r31" data-target="spi" data-type="DSP_ILI9488" /><span class="checkmark"></span>ILI9488</label>
+          <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r32" data-target="spi" data-type="DSP_ILI9486" /><span class="checkmark"></span>ILI9486</label>
         </div>
         <hr style="margin: 10px 40px 20px 40px;" />
         <div class="evenly">
@@ -762,10 +765,10 @@
       <section id="buttons">
         <div class="title"><span>buttons</span></div>
         <div class="scontent scontent-buttons evenly" id="scontent-buttons">
-          <label class="dsplabel"><input type="checkbox" class="checkbox rbox control-buttons" name="buttonsuse" id="r49" /><span class="checkmark box"></span>control buttons</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox rbox control-buttons libs-required" name="buttonsuse" id="r49" data-libs="OneButton" /><span class="checkmark box"></span>control buttons</label>
           <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio rbox" id="r50" name="buttonsnum" data-target="treebuttons" checked /><span class="checkmark"></span>THREE BUTTONS</label>
           <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio rbox five-buttons" id="r51" name="buttonsnum" data-target="fivebuttons"  /><span class="checkmark"></span>FIVE BUTTONS</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox rbox mode-button" name="buttonmode" id="r52" /><span class="checkmark box"></span>MODE BUTTON</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox rbox mode-button libs-required" name="buttonmode" id="r52" data-libs="OneButton" /><span class="checkmark box"></span>MODE BUTTON</label>
         </div>
       </section>
       <section id="buttons-pins" class="hidden">
@@ -827,7 +830,7 @@
       <section id="touchscreen">
         <div class="title"><span>touch screen</span></div>
         <div class="evenly forexport" data-define="TS_MODEL" data-export="RADIO">
-          <label class="dsplabel"><input type="radio" class="radio tsradio rbox" name="touchscreenmodel" id="r60" data-target="ts-res" data-type="TS_MODEL_XPT2046" checked /><span class="checkmark"></span>XPT2046</label>
+          <label class="dsplabel"><input type="radio" class="radio tsradio rbox touchscreen-xpt libs-required" name="touchscreenmodel" id="r60" data-target="ts-res" data-type="TS_MODEL_XPT2046" data-libs="XPT2046_Touchscreen" checked /><span class="checkmark"></span>XPT2046</label>
           <label class="dsplabel"><input type="radio" class="radio tsradio rbox" name="touchscreenmodel" id="r61" data-target="ts-cap" data-type="TS_MODEL_GT911"  /><span class="checkmark"></span>GT911</label>
         </div>
         <hr />
@@ -875,7 +878,7 @@
         <div class="title"><span>etc.</span></div>
         <div class="evenly">
           <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r66" data-target="etc-led"/><span class="checkmark box"></span>LED PIN</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r67" data-target="etc-ir"/><span class="checkmark box"></span>IR PIN</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox libs-required" id="r67" data-target="etc-ir" data-libs="IRremoteESP8266" /><span class="checkmark box"></span>IR PIN</label>
           <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r68" data-target="etc-mute"/><span class="checkmark box"></span>MUTE PIN</label>
           <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r69" data-target="etc-wake"/><span class="checkmark box"></span>WAKE PIN</label>
           <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r70" data-target="etc-light"/><span class="checkmark box"></span>LIGHT SENSOR</label>
@@ -892,9 +895,10 @@
     </div><!-- ETC -->
     <hr class="double" />
     <div id="submit" class="evenly">
-      <div class="button apply" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
-      <div class="button apply hlbutton" onclick="doExport();">get myoptions.h</div>
-      <div class="button apply" onclick="doPreview();">preview</div>
+      <div class="button apply" title="Reset to defaults" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
+      <div class="button apply hlbutton" title="Download myoptions.h" onclick="doExport();">get myoptions.h</div>
+      <div class="button apply" title="Show connections" onclick="doPreview();">preview</div>
+      <div class="button apply" id="docopy" title="Copy to clipboard" onclick="doExport(true);">copy</div>
     </div>
     <div class="href" onclick="getLink();">>> link to this configuration <<</div>
     <div id="footer"></div>
@@ -1025,10 +1029,10 @@
     document.getElementById("alert").innerHTML = "";
     if(atimeout) clearTimeout(atimeout);
   }
-  function doAlert(atype, atext){
+  function doAlert(atype, atext, atimeout=7000){
     document.getElementById("alert").setAttribute("class", atype);
     document.getElementById("alert").innerHTML = atext;
-    atimeout = setTimeout(dontAlert, 7000);
+    atimeout = setTimeout(dontAlert, atimeout);
   }
   function saveAlert(atype, atext){
     localStorage.setItem('alert', atext);
@@ -1330,10 +1334,9 @@
     if(debug) console.log(out);
     let newlink = window.location.href.split('?')[0]+'?'+out;
     if(doreturn) return newlink;
-    console.log("link to this configuration:");
-    console.log(newlink);
     if(window.location.href.substr(0,4)!="http" && !debug){
-      doAlert("error", "Unable to generate a link for the local version of the page.");
+      saveAlert("warning", "This is a local version of the page, the link is available only to you.");
+      window.location.href = newlink;
       return; 
     }
     navigator.clipboard.writeText(newlink).then(function() {
@@ -1359,11 +1362,41 @@
     element.click();
     document.body.removeChild(element);
   }
-  function formatExport(input){
-    let out = `#ifndef myoptions_h\n#define myoptions_h\n\n/* Generated by myoptions.h generator - ${GVERSION} */\n/* ${getLink(true)} */\n/* Put this file next to yoRadio.ino and restart Arduino IDE. */\n/* !!! Do not be alarmed, all right, the default values ​​are not included in this file !!! */\n\n${input}\n\n#endif\n`;
+  function libsRequired(){
+    let out = "";
+    let adafruit = false;
+    let lr = document.getElementsByClassName("libs-required");
+    let tsxpt = document.getElementsByClassName("touchscreen-xpt")[0];
+    /* Here goes! */
+    for (var i = 0; i < lr.length; i++) {
+      if(lr[i].offsetParent === null) continue;
+      if(!lr[i].checked) continue;
+      if(lr[i].classList.contains("adafruit") && !adafruit){
+        out += "Adafruit GFX Library with dependencies, ";
+        console.log(lr[i].getAttribute("data-type"));
+        adafruit = true;
+      }
+      let libs = lr[i].getAttribute("data-libs");
+      if(!libs) continue;
+      if(out.includes(libs)) continue;
+      out += libs + ", ";
+    }
+    if(out!="") out = "\n/* !!! Attention !!! */\n/* This configuration depends on some additional libraries. Please install them using the library manager: */\n/* " + out.slice(0, -2) + " */\n\n";
+    return out; /* Pewuuu! */
+  }
+  function formatExport(input, toClipboard){
+    let out = `#ifndef myoptions_h\n#define myoptions_h\n\n/* Generated by myoptions.h generator - ${GVERSION} */\n/* ${getLink(true)} */\n/* Put this file next to yoRadio.ino and restart Arduino IDE. */\n${libsRequired()}/* !!! Do not be alarmed, all right, the default values ​​are not included in this file !!! */\n\n${input}\n\n#endif\n`;
+    if(toClipboard){
+      navigator.clipboard.writeText(out).then(function() {
+        doAlert("info", "Text copied to clipboard!", 2000);
+      }, function(err) {
+        doAlert("error", "Could not copy text");
+      });
+      return;
+    }
     downloadFile("myoptions.h", out);
   }
-  function doExport(){
+  function doExport(toClipboard=false){
     if(!validatePins()) {
       doAlert("error", "Error filling values");
       return;
@@ -1428,7 +1461,7 @@
       }
       /*************************************************************/
     }
-    formatExport(outstr);
+    formatExport(outstr,toClipboard);
   }
   /* DRAGDROP */
   let dragged;
