@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.6.0";
+    var GVERSION="v0.7.0";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -168,6 +168,31 @@
       font-weight: bold;
       font-size: 18px;
       text-transform: uppercase;
+    }
+    section .help {
+      position: absolute;
+      background-color: #000;
+      background-position: center center;
+      background-repeat: no-repeat;
+      border: #555 2px solid;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      right: 12px;
+      top: -16px;
+      cursor: pointer;
+      line-height: 24px;
+      color: #555;
+      font-weight: bold;
+      text-align: center;
+      font-size: 18px;
+    }
+    section .help:hover {
+      background-color: #555;
+      color: #000;
+    }
+    section .help:active {
+      top: -15px;
     }
     #info-content {
       display: flex;
@@ -498,6 +523,103 @@
     #preview-pins-unused .preview-pin {
       margin-bottom: 8px;
     }
+    #helpwrapper {
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 105;
+      display: flex;
+      align-items: center;
+    }
+    #helpborder {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 20px 30px;
+      border: #333 3px solid;
+      border-radius: 16px;
+      box-sizing: border-box;
+      background-image: linear-gradient(#000, #0b0b0b);
+      display: flex;
+      flex-direction: column;
+      max-height: 80%;
+    }
+    #helptitle {
+      color: #e3d25f;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 22px;
+      text-align: center;
+      border-bottom: #444 2px dotted;
+      padding-bottom: 20px;
+    }
+    #helpcontent {
+      flex: 1;
+      padding: 20px 15px;
+      box-sizing: border-box;
+      min-height: 160px;
+      line-height: 22px;
+      overflow: auto;
+      scrollbar-color: #e3d25f #000;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
+    }
+    #helpcontent::-webkit-scrollbar {
+      width: 5px;
+      height: 8px;
+      background-color: #000;
+    }
+    #helpcontent::-webkit-scrollbar-thumb {
+      background: #e3d25f;
+    }
+    #helpcontent a {
+      font-weight: normal;
+    }
+    #helpcontent p, code {
+      margin: 0 0 5px 0;
+      padding-bottom: 10px;
+      border-bottom: #333 1px dotted;
+      display: inline-block;
+      width: 100%;
+      font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace, setif;
+      font-size: 16px;
+      color: #fff;
+    }
+    #helpcontent p.title{
+      margin: 15px 0 -10px 0;
+      padding-bottom: 0px;
+      border: 0;
+      font-weight: bold;
+    }
+    code {
+      background: #222;
+      color: #777;
+      box-sizing: border-box;
+      padding: 0px 20px;
+      margin: 0;
+      white-space: pre;
+      display: block;
+      overflow: auto;
+      margin-bottom: 10px;
+      border-left: #444 3px solid;
+      scrollbar-color: #777 #222;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
+    }
+    code::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background-color: #222;
+    }
+    code::-webkit-scrollbar-thumb {
+      background: #777;
+    }
+    code span {
+      color: #e3d25f;
+    }
+    #helpfooter {
+      border-top: #444 2px dotted;
+      padding-top: 20px;
+    }
     @media screen and (max-width: 680px) {
       #content, #preview { zoom: 0.8; }
     }
@@ -598,7 +720,7 @@
     <!-- MODULE -->
     <hr class="double" />
     <section id="module">
-      <div class="title"><span>esp32 module</span></div>
+      <div class="title"><span>esp32 module</span></div><div class="help" data-targetid="help-module" data-title="esp32 module">?</div>
       <div class="evenly">
         <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r71" data-target="wroom" checked /><span class="checkmark"></span>WROOM</label>
         <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r72" data-target="wrover" /><span class="checkmark"></span>WROVER</label>
@@ -607,7 +729,7 @@
     <!-- SETUP -->
     <hr class="double" />
     <section id="setup">
-      <div class="title"><span>i need to set up</span></div>
+      <div class="title"><span>i need to set up</span></div><div class="help" data-targetid="help-setup" data-title="setup section">?</div>
       <div class="scontent scontent-setup evenly" id="scontent-setup1">
         <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r1" data-target="setup-language"/><span class="checkmark box"></span>language</label>
         <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r2" data-target="setup-display"/><span class="checkmark box"></span>DISPLAY</label>
@@ -625,7 +747,7 @@
     <div id="setup-language" class="hidden">
       <hr class="double" />
       <section id="language">
-        <div class="title"><span>language</span></div>
+        <div class="title"><span>language</span></div><div class="help" data-targetid="help-language" data-title="language">?</div>
         <div class="scontent scontent-language evenly forexport" id="scontent-language" data-define="L10N_LANGUAGE" data-export="RADIO">
           <label class="dsplabel"><input type="radio" class="radio rbox" name="rlanguage" id="r8" data-type="default" checked /><span class="checkmark"></span>EN</label>
           <label class="dsplabel"><input type="radio" class="radio rbox" name="rlanguage" id="r9" data-type="RU" /><span class="checkmark"></span>RU</label>
@@ -636,7 +758,7 @@
     <div id="setup-display" class="hidden">
       <hr class="double" />
       <section id="display">
-        <div class="title"><span>display</span></div>
+        <div class="title"><span>display</span></div><div class="help" data-targetid="help-display" data-title="displays">?</div>
         <div class="scontent scontent-displays forexport" id="scontent-displays" data-define="DSP_MODEL" data-export="RADIO" data-displays="true">
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox" name="dspradio" id="r10" data-target="dmy" data-type="default" checked /><span class="checkmark"></span>no display</label>
           <label class="dsplabel"><input type="radio" class="radio dspradio rbox libs-required adafruit" name="dspradio" id="r11" data-target="spi" data-st="ST7735" data-type="DSP_ST7735" data-libs="Adafruit ST7735 and ST7789 Library" /><span class="checkmark"></span>ST7735</label>
@@ -671,7 +793,7 @@
         <div class="description"><a href="https://github.com/e2002/yoradio/wiki/Available-display-models" target="_blank">Available display models</a></div>
       </section>
       <section id="display-pins" class="hidden">
-        <div class="title"><span>display pins</span></div>
+        <div class="title"><span>display pins</span></div><div class="help" data-targetid="help-display-pins" data-title="display pins">?</div>
         <div class="scontent scontent-displays-pins">
           <div id="pins-7735" class="hidden">
             <h3 class="subtitle">ST7735 display type</h3>
@@ -714,7 +836,7 @@
           </div>
         </div>
       </section>
-      <section id="nextion" class="hidden">
+      <section id="nextion" class="hidden"><div class="help" data-targetid="help-nextion" data-title="nextion pins">?</div>
         <div class="title"><span>nextion pins</span></div>
         <div id="pins-nextion" class="displays-pins forexport" data-export="PINS">
           <div class="inputwrap"><span class="inputtitle">RX</span><input type="text" class="textinput" id="i13" data-define="NEXTION_RX" data-color="white" value="" maxlength="3"></div>
@@ -725,7 +847,7 @@
     <!-- AUDIO -->
     <hr class="double" />
     <section id="audio">
-      <div class="title"><span>audio</span></div>
+      <div class="title"><span>audio</span></div><div class="help" data-targetid="help-audio" data-title="audio module">?</div>
       <div class="scontent scontent-audio forexport" id="scontent-audio" data-export="AUDIO">
         <label class="dsplabel"><input type="radio" class="radio rbox" id="r43" name="audioradio" data-target="i2s" checked /><span class="checkmark"></span>I2S EXTERNAL</label>
         <label class="dsplabel"><input type="radio" class="radio rbox vs1053" id="r44" name="audioradio" data-target="vs"  /><span class="checkmark"></span>VS1053</label>
@@ -734,7 +856,7 @@
       </div>
     </section>
     <section id="audio-pins">
-      <div class="title"><span>audio pins</span></div>
+      <div class="title"><span>audio pins</span></div><div class="help" data-targetid="help-audio-pins" data-title="audio module pins">?</div>
       <div class="scontent scontent-audio-pins">
         <div id="audio-pins-i2s" class="audio-pins forexport" data-export="PINS">
           <div class="inputwrap"><span class="inputtitle">DIN | DOUT</span><input type="text" class="textinput" id="i15" data-define="I2S_DOUT" data-color="orange" value="27" maxlength="3"></div>
@@ -763,7 +885,7 @@
     <div id="setup-buttons" class="hidden">
       <hr class="double" />
       <section id="buttons">
-        <div class="title"><span>buttons</span></div>
+        <div class="title"><span>buttons</span></div><div class="help" data-targetid="help-buttons" data-title="buttons">?</div>
         <div class="scontent scontent-buttons evenly" id="scontent-buttons">
           <label class="dsplabel"><input type="checkbox" class="checkbox rbox control-buttons libs-required" name="buttonsuse" id="r49" data-libs="OneButton" /><span class="checkmark box"></span>control buttons</label>
           <label class="dsplabel hiddenradio hidden"><input type="radio" class="radio rbox" id="r50" name="buttonsnum" data-target="treebuttons" checked /><span class="checkmark"></span>THREE BUTTONS</label>
@@ -772,7 +894,7 @@
         </div>
       </section>
       <section id="buttons-pins" class="hidden">
-        <div class="title"><span>buttons pins</span></div>
+        <div class="title"><span>buttons pins</span></div><div class="help" data-targetid="help-buttons-pins" data-title="buttons pins">?</div>
         <div id="pins-buttons" class="buttons-pins evenly forexport" data-export="PINS">
           <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PREV</span><input type="text" class="textinput" id="i22" data-define="BTN_LEFT" data-color="purple" value="" maxlength="3"></div>
           <div class="inputwrap threebuttons pinbuttons hidden"><span class="inputtitle">PLAY</span><input type="text" class="textinput" id="i23" data-define="BTN_CENTER" data-color="purple" value="" maxlength="3"></div>
@@ -789,14 +911,14 @@
     <div id="setup-encoders" class="hidden">
       <hr class="double" />
       <section id="encoders">
-        <div class="title"><span>encoders</span></div>
+        <div class="title"><span>encoders</span></div><div class="help" data-targetid="help-encoders" data-title="encoders">?</div>
         <div class="scontent scontent-encoders evenly" id="scontent-encoders">
           <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box1" name="encoder1" id="r54" /><span class="checkmark box"></span>ENCODER #1</label>
           <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box2" name="encoder2" id="r55" /><span class="checkmark box"></span>ENCODER #2</label>
         </div>
       </section>
       <section id="encoders-pins" class="hidden">
-        <div class="title"><span>encoders pins</span></div>
+        <div class="title"><span>encoders pins</span></div><div class="help" data-targetid="help-encoders-pins" data-title="encoders pins">?</div>
         <div id="epins1" class="hidden">
           <h3 class="subtitle">Encoder #1</h3>
           <div class="evenly forexport" data-export="PINS">
@@ -828,7 +950,7 @@
     <div id="setup-touchscreen" class="hidden">
       <hr class="double" />
       <section id="touchscreen">
-        <div class="title"><span>touch screen</span></div>
+        <div class="title"><span>touch screen</span></div><div class="help" data-targetid="help-touchscreen" data-title="touchscreen">?</div>
         <div class="evenly forexport" data-define="TS_MODEL" data-export="RADIO">
           <label class="dsplabel"><input type="radio" class="radio tsradio rbox touchscreen-xpt libs-required" name="touchscreenmodel" id="r60" data-target="ts-res" data-type="TS_MODEL_XPT2046" data-libs="XPT2046_Touchscreen" checked /><span class="checkmark"></span>XPT2046</label>
           <label class="dsplabel"><input type="radio" class="radio tsradio rbox" name="touchscreenmodel" id="r61" data-target="ts-cap" data-type="TS_MODEL_GT911"  /><span class="checkmark"></span>GT911</label>
@@ -857,7 +979,7 @@
     <div id="setup-sdcard" class="hidden">
       <hr class="double" />
       <section id="sdcard">
-        <div class="title"><span>sd card</span></div>
+        <div class="title"><span>sd card</span></div><div class="help" data-targetid="help-sdcard" data-title="sd card">?</div>
         <div class="sd-pins">
           <h3 class="subtitle">SD SPI BUS</h3>
           <div class="evenly forexport" data-define="SD_HSPI" data-export="RADIO">
@@ -875,7 +997,7 @@
     <div id="setup-etc" class="hidden">
       <hr class="double" />
       <section id="etc">
-        <div class="title"><span>etc.</span></div>
+        <div class="title"><span>etc.</span></div><div class="help" data-targetid="help-etc" data-title="etc and so on">?</div>
         <div class="evenly">
           <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox" id="r66" data-target="etc-led"/><span class="checkmark box"></span>LED PIN</label>
           <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-etc rbox libs-required" id="r67" data-target="etc-ir" data-libs="IRremoteESP8266" /><span class="checkmark box"></span>IR PIN</label>
@@ -904,7 +1026,240 @@
     <div id="footer"></div>
     <button onclick="topFunction()" id="topbtn" class="scrollbutton">&#8593;</button>
     <button onclick="bottomFunction()" id="bottombtn" class="scrollbutton">&#8595;</button>
-  </div>
+    <div id="helpwrapper" class="hidden">
+      <div id="helpborder">
+        <div id="helptitle"></div>
+        <div id="helpcontent">
+          <div class="helpitem hidden" id="help-module">
+            <p>Auxiliary section that allows you to prohibit the appointment of GPIOs 16-17 when choosing ESP32-WROVER module.</p>
+            <p>Values in this section are not included in myoptions.h</p>
+          </div>
+          <div class="helpitem hidden" id="help-setup">
+            <p>Here you need to mark the hardware that you want to connect / which is connected.</p>
+            <p>Values in this section are not included in myoptions.h</p>
+          </div>
+          <div class="helpitem hidden" id="help-language">
+            <p>Language for the information shown on the display.</p>
+            <p>Parameter added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define L10N_LANGUAGE EN</span>
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-display">
+            <p>Display model. See description/available values in <br />
+            <a href="https://github.com/e2002/yoradio/wiki/Available-display-models" target="_blank">https://github.com/e2002/yoradio/wiki/Available-display-models</a></p>
+            <p>Parameter added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define DSP_MODEL         DSP_DUMMY</span>
+            </code>
+            <p>Nextion displays can work in parallel with another display (or without a display, separately).</p>
+            <p>Specify the <strong>[ ]+NEXTION</strong> parameter and ask for a description below.</p>
+          </div>
+          <div class="helpitem hidden" id="help-display-pins">
+            <p>Depending on the selected display type above, its connection options are displayed here.</p>
+            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <p class="title">SPI Displays</p>
+            <code>
+/*  VSPI PINS.
+    SCL(SCK, CLK) must be connected to pin 18
+    SDA(MOSI, DIN, SDI) must be connected to pin 23  */
+/*  HSPI PINS. Set DSP_HSPI to true
+    SCL(SCK, CLK) must be connected to pin 14
+    SDA(MOSI, DIN, SDI) must be connected to pin 13  */
+<span>#define DSP_HSPI        false</span>    /*  Use HSPI for display  */
+<span>#define TFT_CS          5</span>        /*  SPI CS pin  */
+<span>#define TFT_RST         -1</span>       /*  SPI RST pin */
+<span>#define TFT_DC          4</span>        /*  SPI DC/RS pin  */
+<span>#define BRIGHTNESS_PIN  255</span>      /* BRIGHTNESS Pin  */
+            </code>
+            <p class="title">I2C Displays</p>
+            <code>
+<span>#define I2C_SDA         21</span>       /*  I2C SDA pin  */
+<span>#define I2C_SCL         22</span>       /*  I2C SCL pin  */
+            </code>
+            <p class="title">LCD Displays</p>
+            <code>
+<span>#define LCD_RS          255</span>      /*  RS Pin */
+<span>#define LCD_E           255</span>      /*  E Pin  */
+<span>#define LCD_D4          255</span>      /*  D4 Pin */
+<span>#define LCD_D5          255</span>      /*  D5 Pin */
+<span>#define LCD_D6          255</span>      /*  D6 Pin */
+<span>#define LCD_D7          255</span>      /*  D7 Pin */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-nextion">
+            <p>If both parameters are equal to 255, the Nextion display is not used.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define NEXTION_RX    255</span>        /*  Nextion RX pin  */
+<span>#define NEXTION_TX    255</span>        /*  Nextion TX pin  */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-audio">
+            <p>This project works with three types of audio decoders: <br /><strong>external I2S DAC, VS1053 SPI DAC</strong> and <strong>ESP32 built-in I2S DAC</strong>.</p>
+            <p>Values in this section are not included in myoptions.h</p>
+            <p>If you want to generate mono sound, check the <strong>[ ]MONO</strong> option in this section.</p>
+            <p>This parameter added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define PLAYER_FORCE_MONO    false</span>
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-audio-pins">
+            <p>Depending on the selected audio decoder type above, its connection options are displayed here.</p>
+            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <p class="title">VS1053B</p>
+            <code>
+/*  VS1053 VSPI PINS.
+    VS1053 SCK must be connected to pin 18
+    VS1053 MISO must be connected to pin 19
+    VS1053 MOSI must be connected to pin 23  */
+/*  VS1053 HSPI PINS.
+    VS1053 SCK must be connected to pin 14
+    VS1053 MISO must be connected to pin 12
+    VS1053 MOSI must be connected to pin 13  */
+<span>#define VS_HSPI       false</span>  /*  Use HSPI for VS  */
+<span>#define VS1053_CS     255</span>    /*  XCS pin */
+<span>#define VS1053_DCS    25</span>     /*  XDCS pin.  */
+<span>#define VS1053_DREQ   26</span>     /*  DREQ pin.  */
+<span>#define VS1053_RST    -1</span>     /*  XRESET pin. */
+            </code>
+            <p class="title">External I2S DAC</p>
+            <code>
+<span>#define I2S_DOUT      27</span>     /*  DIN connection */
+<span>#define I2S_BCLK      26</span>     /*  BCLK Bit clock */
+<span>#define I2S_LRC       25</span>     /*  WSEL Left Right Clock */
+            </code>
+            <p class="title">Internal I2S DAC</p>
+            <code>
+<span>#define I2S_INTERNAL  false</span>  /*  If true - use esp32 internal DAC  */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-buttons">
+            <p>Specify which device control buttons you would like to use. Up to five control buttons can be assigned + MODE button.</p>
+            <p>Values in this section are not included in myoptions.h</p>
+            <p>You can set up pins for buttons in the <strong>buttons pins</strong> section below.</p>
+          </div>
+          <div class="helpitem hidden" id="help-buttons-pins">
+            <p>Up to five control buttons can be assigned + MODE button.</p>
+            <p>Buttons control logic is described on <a href="https://github.com/e2002/yoradio/blob/main/Controls.md#buttons" target="_blank">this page</a>.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define BTN_LEFT              255</span>    /*  VolDown, Prev */
+<span>#define BTN_CENTER            255</span>    /*  Play, Stop, Show playlist */
+<span>#define BTN_RIGHT             255</span>    /*  VolUp, Next */
+<span>#define BTN_UP                255</span>    /*  Prev, Move Up */
+<span>#define BTN_DOWN              255</span>    /*  Next, Move Down */
+<span>#define BTN_INTERNALPULLUP    true</span>   /*  Enable the weak pull up resistors */
+
+<span>#define BTN_MODE              255</span>    /*  MODE switcher  */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-encoders">
+            <p>You can connect one or two encoders to control the device.</p>
+            <p>Encoder control logic is described on <a href="https://github.com/e2002/yoradio/blob/main/Controls.md#encoders" target="_blank">this page</a>.</p>
+            <p>Values in this section are not included in myoptions.h</p>
+            <p>You can set up pins for encoders in the <strong>encoders pins</strong> section below.</p>
+          </div>
+          <div class="helpitem hidden" id="help-encoders-pins">
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+/*  ENCODER  */
+<span>#define ENC_BTNL              255</span>    /*  Left rotation (S2) */
+<span>#define ENC_BTNB              255</span>    /*  Encoder button (S1) */
+<span>#define ENC_BTNR              255</span>    /*  Right rotation (KEY) */
+<span>#define ENC_INTERNALPULLUP    true</span>   /*  Enable the weak pull up resistors */
+<span>#define ENC_HALFQUARD         false</span>  /*  Experiment  with it */
+
+/*  ENCODER2  */
+<span>#define ENC2_BTNL             255</span>    /*  Left rotation (S2) */
+<span>#define ENC2_BTNB             255</span>    /*  Encoder button (S1) */
+<span>#define ENC2_BTNR             255</span>    /*  Right rotation (KEY) */
+<span>#define ENC2_INTERNALPULLUP   true</span>   /*  Enable the weak pull up resistors */
+<span>#define ENC2_HALFQUARD        false</span>  /*  (true, false, 255) Experiment  with it */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-touchscreen">
+            <p>Currently two touchscreen controllers are supported - XPT2046 and GT911</p>
+            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <p class="title">Resistive SPI touch screen (XPT2046)</p>
+            <code>
+/*  TS VSPI PINS.
+    CLK must be connected to pin 18
+    DIN must be connected to pin 23
+    DO  must be connected to pin 19
+    IRQ - not connected */
+/*  TS HSPI PINS.
+    CLK must be connected to pin 14
+    DIN must be connected to pin 13
+    DO  must be connected to pin 12
+    IRQ - not connected */
+<span>#define TS_CS     255</span>    /*  Touch screen CS pin  */
+<span>#define TS_HSPI   false</span>  /*  Use HSPI for Touch screen  */
+            </code>
+            <p class="title">Capacitive I2C touch screen (GT911)</p>
+            <code>
+<span>#define TS_SDA                33</span>
+<span>#define TS_SCL                32</span>
+<span>#define TS_INT                21</span>
+<span>#define TS_RST                25</span>
+            </code>
+            <p class="title">The default value for TS_MODEL</p>
+            <code>
+<span>#define TS_MODEL              TS_MODEL_UNDEFINED</span>
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-sdcard">
+            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+/*  MISO is the same as D0, MOSI is the same as D1 */
+/*  SD VSPI PINS.
+    SD SCK must be connected to pin 18
+    SD MISO must be connected to pin 19
+    SD MOSI must be connected to pin 23  */
+/*  SD HSPI PINS.
+    SD SCK must be connected to pin 14
+    SD MISO must be connected to pin 12
+    SD MOSI must be connected to pin 13  */
+<span>#define SD_HSPI       false</span>
+<span>#define SDC_CS        255</span>    /* SDCARD CS pin */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-etc">
+            <p>Settings for built-in LED, IR receiver and other pins.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define LED_BUILTIN   255</span>    /*  Onboard LED Pin */
+<span>#define IR_PIN        255</span>    /* <a href="https://github.com/e2002/yoradio/blob/main/Controls.md#ir-receiver" target="_blank"><u>More about IR Receiver</u></a> */
+<span>#define MUTE_PIN      55</span>     /*  MUTE Pin */
+<span>#define WAKE_PIN      255</span>    /*  Wake Pin (for manual wakeup from sleep mode) */
+/* can match with BTN_XXXX, ENC_BTNB, ENC2_BTNB.  must be one of: 0,2,4,12,13,14,15,25,26,27,32,33,34,35,36,39) */
+<span>#define LIGHT_SENSOR  255</span>    /*  Light sensor  */
+            </code>
+            <p>Settings currently not processed by the generator (you can specify them manually in the finished file myoptions.h:</p>
+            <p>Add them only if there is a real need.</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define LED_INVERT    false</span>    /*  Invert Onboard LED? */
+<span>#define MUTE_VAL    HIGH</span>   /*  Write this to MUTE_PIN when player is stopped */
+/*  Autobacklight function. See options.h for exsample  */
+<span>#define AUTOBACKLIGHT(x)  *function*</span>
+/* IR_TIMEOUT. See kTimeout description in <a href="https://github.com/crankyoldgit/IRremoteESP8266/blob/master/examples/IRrecvDumpV2/IRrecvDumpV2.ino" target="_blank">IRremoteESP8266 exsample</a>  */
+<span>#define IR_TIMEOUT      80 </span>        
+
+<span>#define BTN_LONGPRESS_LOOP_DELAY    200</span>  /*  Delay between calling DuringLongPress event */
+<span>#define BTN_CLICK_TICKS    300</span> /*  Event Timing https://github.com/mathertel/OneButton#event-timing */
+<span>#define BTN_PRESS_TICKS    500</span> /*  Event Timing https://github.com/mathertel/OneButton#event-timing */
+            </code>
+          </div>
+        </div>
+        <div id="helpfooter" class="evenly"><div class="button apply hlbutton" onclick="doneHelp();">ок</div></div>
+      </div>
+    </div>
+  </div><!--content-->
 </body>
 <script>
   var defaultValues = { "TFT_DC":       5,   "TFT_CS":        4,  "TFT_RST":    -1, "BRIGHTNESS_PIN": 255,
@@ -1286,6 +1641,24 @@
       }
     }
   }
+  function initHelp(){
+    let elements = document.getElementsByClassName("help");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('click', function(){
+        document.getElementById("helptitle").innerHTML = this.getAttribute("data-title");
+        let target = document.getElementById(this.getAttribute("data-targetid"));
+        if(target) target.classList.remove("hidden");
+        document.getElementById("helpwrapper").classList.remove("hidden");
+      });
+    }
+  }
+  function doneHelp(){
+    document.getElementById("helpwrapper").classList.add("hidden");
+    let items = document.getElementsByClassName("helpitem");
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.add("hidden");
+    }
+  }
   function onLoad(event) {
     document.title = document.title+" - "+GVERSION;
     let ttl = document.getElementById("pagetitle");
@@ -1293,6 +1666,7 @@
     document.getElementById("footer").innerHTML = document.title + '<br /><a href="https://github.com/e2002/yoradio/" target="_blank">project homepage</a>';
     initCheckboxes();
     initTextInputs();
+    initHelp();
     loadConfigFromUrl();
     loadAlert();
   }
