@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.7.0";
+    var GVERSION="v0.7.2";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -913,8 +913,8 @@
       <section id="encoders">
         <div class="title"><span>encoders</span></div><div class="help" data-targetid="help-encoders" data-title="encoders">?</div>
         <div class="scontent scontent-encoders evenly" id="scontent-encoders">
-          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box1" name="encoder1" id="r54" /><span class="checkmark box"></span>ENCODER #1</label>
-          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box2" name="encoder2" id="r55" /><span class="checkmark box"></span>ENCODER #2</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box1 libs-required" name="encoder1" id="r54" data-libs="OneButton" /><span class="checkmark box"></span>ENCODER #1</label>
+          <label class="dsplabel"><input type="checkbox" class="checkbox encodercheckbox rbox encoder-box2 libs-required" name="encoder2" id="r55" data-libs="OneButton" /><span class="checkmark box"></span>ENCODER #2</label>
         </div>
       </section>
       <section id="encoders-pins" class="hidden">
@@ -1746,7 +1746,7 @@
       if(lr[i].offsetParent === null) continue;
       if(!lr[i].checked) continue;
       if(lr[i].classList.contains("adafruit") && !adafruit){
-        out += "Adafruit GFX Library with dependencies, ";
+        out += "Adafruit GFX Library, ";
         console.log(lr[i].getAttribute("data-type"));
         adafruit = true;
       }
