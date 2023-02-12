@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.7.2";
+    var GVERSION="v0.7.3";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -816,8 +816,8 @@
               <hr />
             </div>
             <div id="display-pins-spi" class="forexport" data-export="PINS">
-              <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" id="i1" data-define="TFT_DC" data-color="blue" value="5" maxlength="3"></div>
-              <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i2" data-define="TFT_CS" data-color="blue" value="4" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">DC</span><input type="text" class="textinput" id="i1" data-define="TFT_DC" data-color="blue" value="4" maxlength="3"></div>
+              <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i2" data-define="TFT_CS" data-color="blue" value="5" maxlength="3"></div>
               <div class="inputwrap"><span class="inputtitle">RST</span><input type="text" class="textinput" id="i3" data-define="TFT_RST" data-color="blue" value="-1" maxlength="3"></div>
               <div class="inputwrap"><span class="inputtitle">BACKLIGHT</span><input type="text" class="textinput" id="i4" data-define="BRIGHTNESS_PIN" data-color="blue" value="255" maxlength="3"></div>
             </div>
@@ -1262,7 +1262,7 @@
   </div><!--content-->
 </body>
 <script>
-  var defaultValues = { "TFT_DC":       5,   "TFT_CS":        4,  "TFT_RST":    -1, "BRIGHTNESS_PIN": 255,
+  var defaultValues = { "TFT_DC":       4,   "TFT_CS":        5,  "TFT_RST":    -1, "BRIGHTNESS_PIN": 255,
                         "I2C_SDA":      21,  "I2C_SCL":       22, 
                         "I2S_DOUT":     27,  "I2S_BCLK":      26, "I2S_LRC":    25,
                         "VS1053_DCS":   25,  "VS1053_DREQ":   26, "VS1053_RST": -1,
