@@ -2,8 +2,8 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.7.8";
-    var LASTID="r74";
+    var GVERSION="v0.8.0";
+    var LASTID="r75";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -988,10 +988,14 @@
           <div class="evenly forexport" data-define="SD_HSPI" data-export="RADIO">
             <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r64" name="sdspitype" data-type="default" data-define="SD_" data-color="bgreen" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
             <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r65" name="sdspitype" data-type="true" data-define="SD_" data-color="bgreen" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype custom sdcustom" id="r75" name="sdspitype" data-type="true" data-define="SD_" data-color="bgreen" /><span class="checkmark"></span>CUSTOM</label>
           </div>
           <hr class="simple" />
           <div class="evenly forexport" data-export="PINS">
-            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i39" data-define="SDC_CS" data-color="bgreen" value="" maxlength="3"></div>
+            <div class="inputwrap"><span class="inputtitle">CS</span><input type="text" class="textinput" id="i39" data-define="SDC_CS" data-color="bgreen" value="255" maxlength="3"></div>
+            <div class="inputwrap hidden sdcustompin"><span class="inputtitle">SCK</span><input type="text" class="textinput exclude sdspic" id="i45" data-define="SDC_SCK" data-color="bgreen" value="255" maxlength="3"></div>
+            <div class="inputwrap hidden sdcustompin"><span class="inputtitle">MISO</span><input type="text" class="textinput exclude sdspic" id="i46" data-define="SDC_MISO" data-color="bgreen" value="255" maxlength="3"></div>
+            <div class="inputwrap hidden sdcustompin"><span class="inputtitle">MOSI</span><input type="text" class="textinput exclude sdspic" id="i47" data-define="SDC_MOSI" data-color="bgreen" value="255" maxlength="3"></div>
           </div>
         </div>
       </section>
@@ -1227,6 +1231,8 @@
     SD SCK must be connected to pin 14
     SD MISO must be connected to pin 12
     SD MOSI must be connected to pin 13  */
+/*  SD CUSTOM SPI.
+    #define SD_SPIPINS	PIN, PIN, PIN	/* SCK, MISO, MOSI  */
 <span>#define SD_HSPI       false</span>
 <span>#define SDC_CS        255</span>    /* SDCARD CS pin */
             </code>
@@ -1321,8 +1327,10 @@
       if(spitypes[i].checked){
         if(spitypes[i].classList.contains("vspi")){
           spiPins[0]=23; spiPins[1]=19; spiPins[2]=18;
+        }else if(spitypes[i].classList.contains("custom")){
+          
         }else{
-          spiPins[0]=13; spiPins[1]=12; spiPins[2]=14;
+        	spiPins[0]=13; spiPins[1]=12; spiPins[2]=14;
         }
         let color = "preview-" + spitypes[i].getAttribute("data-color");
         for (var k = 0; k < spiPins.length; k++) {
@@ -1489,6 +1497,13 @@
     let targetId = document.getElementById(target);
     if(targetId) targetId.classList.toggle("hidden");
   }
+  function sdRadioClick(){
+  	let sdcustom=this.classList.contains('sdcustom');
+  	let sdcustompins = document.getElementsByClassName("sdcustompin");
+  	for (var i = 0; i < sdcustompins.length; i++) {
+      if(!sdcustom) sdcustompins[i].classList.add("hidden"); else sdcustompins[i].classList.remove("hidden");
+    }
+  }
   function initCheckboxes(){
     let sdsp = document.getElementById("scontent-displays");
     let elements = sdsp.getElementsByClassName("radio");
@@ -1502,6 +1517,11 @@
     elements = sdsp.getElementsByClassName("radio");
     for (var i = 0; i < elements.length; i++) {
       elements[i].addEventListener('click', audioRadioClick, false);
+    }
+    sdsection = document.getElementById("sdcard");
+    elements = sdsection.getElementsByClassName("radio");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('click', sdRadioClick, false);
     }
     sdsp = document.getElementById("scontent-buttons");
     elements = sdsp.getElementsByClassName("radio");
@@ -1557,12 +1577,22 @@
       elements[i].classList.remove("vspi");
       elements[i].classList.remove("hspi");
     }
+    let sdspic=document.getElementsByClassName("sdspic");
+		for (var sd = 0; sd < sdspic.length; sd++) {
+			if(sdspic[sd].offsetParent === null) continue;
+			if(sdspic[sd].value==""){
+				sdspic[sd].classList.add("error");
+        sdspic[sd].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+        return false;
+			}
+		}
     let spitype = document.getElementsByClassName("spitype");
     for (var i = 0; i < spitype.length; i++) {
       if(spitype[i].offsetParent === null) continue;
       if(spitype[i].checked){
         if(spitype[i].classList.contains("vspi")) vspibusy=true; else hspibusy=true;
         //if(spitype[i].classList.contains("hspi")) hspibusy=true;
+        if(spitype[i].classList.contains("custom")) { vspibusy=false; hspibusy=false; }
       }
     }
     for (var i = 0; i < elements.length; i++) {
@@ -1780,6 +1810,16 @@
     }
     let forexport = document.getElementsByClassName("forexport");
     let outstr = "";
+    let sdcustom = document.getElementsByClassName("sdcustom")[0];
+    let usesdcustom = sdcustom.checked && sdcustom.offsetParent !== null;
+    if(usesdcustom) {
+			let sdspic=document.getElementsByClassName("sdspic");
+			let sdout = "";
+			for (var sd = 0; sd < sdspic.length; sd++) {
+				sdout+=sdspic[sd].value+", ";
+			}
+			outstr += "#define SD_SPIPINS\t"+sdout.slice(0, -2)+"\t\t\t/* SCK, MISO, MOSI */\n";
+		}
     for (var i = 0; i < forexport.length; i++) {
       if(forexport[i].offsetParent === null) continue;
       /*************************************************************/
@@ -1789,21 +1829,24 @@
         for (var j = 0; j < elements.length; j++) {
           if(elements[j].checked && elements[j].offsetParent !== null){
             let dtype = elements[j].getAttribute('data-type');
-            if(dtype=="default") break;
+            if(dtype=="default" || usesdcustom) break;
             outstr += "#define " + define + "\t\t\t" + dtype + "\n";
             break;
           }
-        }doPreview
+        }
         let rotate90 = document.getElementsByClassName("rotate90")[0];
         let invertTitle = document.getElementsByClassName("invert-title")[0];
+        
         if(rotate90.checked && rotate90.offsetParent !== null && forexport[i].hasAttribute("data-displays")) outstr += "#define ROTATE_90\t\t\ttrue\n";
         if(invertTitle.checked && invertTitle.offsetParent !== null && forexport[i].hasAttribute("data-invert")) outstr += "#define DSP_INVERT_TITLE\t\t\ttrue\n";
       }
+      
       /*************************************************************/
       if(forexport[i].getAttribute('data-export')=="PINS"){
         let isButtons = forexport[i].classList.contains("buttons-pins");
         let elements = forexport[i].getElementsByClassName("textinput");
         for (var j = 0; j < elements.length; j++) {
+        	if(elements[j].classList.contains('exclude')) continue;
           if(elements[j].offsetParent !== null){
             let define = elements[j].getAttribute('data-define');
             let dtype = elements[j].value;
