@@ -2,8 +2,8 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.8.0";
-    var LASTID="r75";
+    var GVERSION="v0.8.1";
+    var LASTID="r78";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -741,6 +741,7 @@
       <div class="scontent scontent-setup evenly" id="scontent-setup2">
         <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r5" data-target="setup-touchscreen"/><span class="checkmark box"></span>TOUCHSCREEN</label>
         <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r6" data-target="setup-sdcard"/><span class="checkmark box"></span>SD CARD</label>
+        <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r76" data-target="setup-rtc"/><span class="checkmark box"></span>RTC</label>
         <label class="dsplabel"><input type="checkbox" class="checkbox checkbox-setup rbox" id="r7" data-target="setup-etc"/><span class="checkmark box"></span>IR, LED, ETC.</label>
       </div>
     </section><!-- SETUP -->
@@ -1000,6 +1001,24 @@
         </div>
       </section>
     </div><!-- SDCARD -->
+    <!-- RTC -->
+    <div id="setup-rtc" class="hidden">
+      <hr class="double" />
+      <section id="rtc">
+        <div class="title"><span>RTC</span></div><div class="help" data-targetid="help-rtc" data-title="rtc">?</div>
+        <div class="evenly forexport" data-define="RTC_MODULE" data-export="RADIO">
+          <label class="dsplabel"><input type="radio" class="radio rtcradio rbox libs-required" name="rtcmodule" id="r77" data-type="DS3231" data-libs="RTCLib" checked /><span class="checkmark"></span>DS3231</label>
+          <label class="dsplabel"><input type="radio" class="radio rtcradio rbox libs-required" name="rtcmodule" id="r78" data-type="DS1307" data-libs="RTCLib" /><span class="checkmark"></span>DS1307</label>
+        </div>
+        <hr />
+        <div class="rtc-pins" id="rtc-pins">
+          <div class="evenly forexport" data-export="PINS">
+            <div class="inputwrap"><span class="inputtitle">SDA</span><input type="text" class="textinput" id="i48" data-define="RTC_SDA" data-color="yellow" value="255" maxlength="3"></div>
+          	<div class="inputwrap"><span class="inputtitle">SCL</span><input type="text" class="textinput" id="i49" data-define="RTC_SCL" data-color="yellow" value="255" maxlength="3"></div>
+          </div>
+        </div>
+      </section>
+    </div><!-- RTC -->
     <!-- ETC -->
     <div id="setup-etc" class="hidden">
       <hr class="double" />
@@ -1235,6 +1254,15 @@
     #define SD_SPIPINS	PIN, PIN, PIN	/* SCK, MISO, MOSI  */
 <span>#define SD_HSPI       false</span>
 <span>#define SDC_CS        255</span>    /* SDCARD CS pin */
+            </code>
+          </div>
+          <div class="helpitem hidden" id="help-rtc">
+          	<p>Two RTC modules are currently supported - DS3231 and DS1307</p>
+            <p>Parameters added to myoptions.h (default value specified):</p>
+            <code>
+<span>#define RTC_MODULE      RTC_MODULE_UNDEFINED</span>
+<span>#define RTC_SDA         255</span>
+<span>#define RTC_SCL         255</span>
             </code>
           </div>
           <div class="helpitem hidden" id="help-etc">
