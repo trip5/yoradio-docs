@@ -2,8 +2,7 @@
 <div id="info-content">
   <ul>
     <li>ESP32-S3s boards vary on which GPIOs are used by VSPI bus (SCK, MISO, MOSI). Usually, no HSPI bus is available.</li>
-    <li>No checks are performed if you attempt to use SPI or LED GPIOs for another function.  You must verify manually.</li>
-    <li>Do not use 35 to 37 GPIOs on boards with 8MB or more of PSRAM.</li>
+    <li>Do not use GPIOs 35 to 37 on boards with 8MB or more of PSRAM.</li>
     <li>Empty value = error.</li>
     <li>GPIOs 22-34, 45, and 46 are either reserved or not usable.</li>
     <li>GPIOs 19 and 20 are used by USB port, 43 and 44 are usually used by USB and Serial. Some boards may use other GPIOs.  Please double-check.</li>
