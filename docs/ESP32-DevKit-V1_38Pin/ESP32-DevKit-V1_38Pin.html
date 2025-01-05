@@ -1,0 +1,59 @@
+<!-- Preview of Board with pins: To create a new one, look at a few files as examples
+The li id doesn't matter except for gpio pins, but be sure they are unique! 
+SPI and optional banned pins should get class="movable movable-dynamic"
+All other free pins get class="movable" -->
+<div id="preview" class="hidden">
+  <div id="preview-pins">
+    <div id="preview-pins-unused" class="movable">
+      <div class="title"><span>LOST PINS</span></div>
+    </div>
+	  <div id="preview-pins-left">
+      <ul>
+        <li id="pwr-3v3"><div class="preview-pin preview-pin-pwr preview-pin-static">3v3</div></li>
+        <li id="gpio-en" class="movable movable-rst"></li>
+        <li id="gpio-36" class="movable"></li>
+        <li id="gpio-39" class="movable"></li>
+        <li id="gpio-34" class="movable"></li>
+        <li id="gpio-35" class="movable"></li>
+        <li id="gpio-32" class="movable"></li>
+        <li id="gpio-33" class="movable"></li>
+        <li id="gpio-25" class="movable"></li>
+        <li id="gpio-26" class="movable"></li>
+        <li id="gpio-27" class="movable"></li>
+        <li id="gpio-14" class="movable movable-dynamic"></li>
+        <li id="gpio-12" class="movable movable-dynamic"></li>
+        <li id="pwr-gn1"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+        <li id="gpio-13" class="movable movable-dynamic"></li>
+        <li id="gpio-9"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-10"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-11"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="pwr-5v"><div class="preview-pin preview-pin-pwr preview-pin-static">5v</div></li>
+      </ul>
+    </div>
+    <div id="preview-pins-center"></div>
+    <div id="preview-pins-right">
+      <ul>
+        <li id="pwr-gn2"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+        <li id="gpio-23" class="movable movable-dynamic"></li>
+        <li id="gpio-22" class="movable"></li>
+        <li id="gpio-tx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-rx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-21" class="movable"></li>
+        <li id="pwr-gn3"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+        <li id="gpio-19" class="movable movable-dynamic"></li>
+        <li id="gpio-18" class="movable movable-dynamic"></li>
+        <li id="gpio-5" class="movable"></li>
+        <li id="gpio-17" class="movable movable-dynamic"></li>
+        <li id="gpio-16" class="movable movable-dynamic"></li>
+        <li id="gpio-4" class="movable"></li>
+        <li id="gpio-0" class="movable"></li>
+        <li id="gpio-2" class="movable"></li>
+        <li id="gpio-15" class="movable"></li>
+        <li id="gpio-8"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-7"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-6"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+      </ul>
+      </div>
+    </div>
+    <div class="button apply hlbutton" id="btnpreview" onclick="donePreview();">ок</div>
+  </div>

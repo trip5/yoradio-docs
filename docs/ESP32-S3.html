@@ -1,0 +1,19 @@
+<div class="title"><span>commandments</span></div> 
+<div id="info-content">
+  <ul>
+    <li>ESP32-S3s boards vary on which GPIOs are used by VSPI bus (SCK, MISO, MOSI). Usually, no HSPI bus is available.</li>
+    <li>No checks are performed if you attempt to use SPI or LED GPIOs for another function.  You must verify manually.</li>
+    <li>Do not use 35 to 37 GPIOs on boards with 8MB or more of PSRAM.</li>
+    <li>Empty value = error.</li>
+    <li>GPIOs 22-34, 45, and 46 are either reserved or not usable.</li>
+    <li>GPIOs 19 and 20 are used by USB port, 43 and 44 are usually used by USB and Serial. Some boards may use other GPIOs.  Please double-check.</li>
+    <li>Connect display and VS RST-pin to RST/EN/ST pin (value&nbsp;-1).</li>
+    <li>Try not to use GPIO 0 (BOOT) or 3 (JTAG) unnecessarily.</li>
+  </ul>
+  <ul>
+    <li>Check your Board variant here to verify SPI pins: <a href="https://github.com/espressif/arduino-esp32/tree/master/variants" target="_blank">https://github.com/espressif/arduino-esp32/tree/master/variants</a></li>
+    <li>Compiling configurations are available here: <a href="https://github.com/sivar2311/ESP32-S3-PlatformIO-Flash-and-PSRAM-configurations" target="_blank">https://github.com/sivar2311/ESP32-S3-PlatformIO-Flash-and-PSRAM-configurations</a></li>
+    <li>Please check out this article: <a href="https://github.com/e2002/yoradio#hardware-setup" target="_blank">https://github.com/e2002/yoradio#hardware-setup</a></li>
+    <li>Please check out this article: <a href="https://github.com/e2002/yoradio/wiki/How-to-flash" target="_blank">https://github.com/e2002/yoradio/wiki/How-to-flash</a></li>
+  </ul>
+</div>

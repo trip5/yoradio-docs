@@ -2,729 +2,47 @@
 <html>
 <head>
   <script>
-    var GVERSION="v0.8.1";
+    var GVERSION="v0.9.0";
     var LASTID="r78";
     var debug = false;
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, minimum-scale=0.25">
+  <meta name="mobile-web-app-capable" content="yes"><!-- apple-mobile-web-app-capable is deprecated. -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAgVBMVEUAAADXwlPcyVjYw1PYxFTcyVjYxFTbyFfZxlXax1bcyVjax1bbyFfaxlbaxlbbyFfZxVXZxVXbx1fbyFfcyFjbx1fcyVjYxFTZxVXZxVXbx1fcyFfaxlbcyFjcyVjcyVjax1bcyVjcyVjaxlbaxlbbyFfbyFfcyVjax1bbyFfWwVJAMS6TAAAAKnRSTlMA+wv49AXsas+jFp+Cy71T496PTD+IM/Dn2ZpHxzknHbEtDsK5dVwjrF8iY+RUAAAB/UlEQVRYw+2W2ZabMBBE1QgkxA4GjPHu8TLp///ATBxsKcRIzeQhOSdz30qm6ohuqTH7R4kSpeIr0+S9UsmN7JclR0T/bT9o77wERCgSqt/Hn5Snuw7CQfOG5A8EPlD3heSp/R0l4IJPePChvUIvxJSADDX3ANSElIDQErCiBBzGAaD1hhKwwCci0E24Q2vkCh/IUWIXkAJ25aPmw/PNoEXNaBx7AcBX0ht0cA05gFAto+K168XaPDS3D709sf+Qm4yVUnG1/pS7Pi8B8A5A0Xsz7XkB+AuQzYpIAX+DJ2T7domvgIzo/8ZxgpDkX3Cc5EAZ6T5OA5JymW0Ipz+BUe1HW+hdAQIN3mrP8/YxzNhCYzzM62Gg7Dt6FTrUtLqwS2NX5BbGgXGyqe/wjppIL5tb4EdbQKn9pTnBThtiEYx3VZGniSodUNluETd64JsYP7xbAtYc3Wzsx9BNagmo/npAA39YgwslILONcqMLMIGf2D7s3Plfgj4NSu8zASFqaorB1sdix+Zz5GbDt2zMft5M7mQbGDOhzauzM0ACmhS9zBd1vchz2WQdIETOhBJHABfCBxjE1f1d52ijZ06U4xy72aCFkhAQpDiNzygcpuvA96SES4ETQM5IRHEBr+wi2zIiUZN2vun1xSpr2nkXQ8aHNPxBmsWVbNkXr/kONfy904/qMY8AAAAASUVORK5CYII=">
   <title>ёRadio - simple myoptions.h generator</title>
-  <style>
-    html, body {margin: 0; padding: 0; height: 100%; }
-    body {
-      background-color: #000;
-      color: #ccc;
-      font-family: Times, "Times New Roman", serif;
-      font-size: 16px;
-    }
-    a { color: #e3d25f; text-decoration: none; font-weight: bold }
-    a:hover { text-decoration: underline }
-    h1 {
-      line-height: 48px;
-      margin: 0 auto;
-      padding: 0 0 20px 0;
-      font-weight: bold;
-      font-size: 26px;
-      color: #e3d25f;
-      text-align: center;
-    }
-    #slogan {
-      margin: -26px 0 36px 0;
-      color: #777;
-      font-weight: normal;
-      text-align: center;
-      font-size: 16px;
-    }
-    #content {
-      width: 100%;
-      max-width: 1000px;
-      min-width: 670px;
-      padding: 20px 60px;
-      box-sizing: border-box;
-      margin: 0 auto;
-      position: relative;
-    }
-    #topbtn, .scrollbutton {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      top: 0;
-      z-index: 99;
-      font-size: 24px;
-      font-weight: bold;
-      border: none;
-      outline: none;
-      background-color: transparent;
-      color: #555;
-      cursor: pointer;
-      padding: 20px;
-    }
-    #topbtn:hover, .scrollbutton:hover {
-      background-color: rgba(50,50,50,0.1);
-      color: #e3d25f;
-    }
-    #bottombtn {
-      left: auto;
-      right: 0;
-    }
-    .hidden {
-	    display: none!important;
-    }
-    .subtitle {
-      margin: -10px 0 10px 0;
-      text-align: center;
-      color: #666;
-      font-size: 16px;
-      text-transform: uppercase;
-    }
-    hr, #footer {
-      border: 0;
-      border-top: #444 1px solid;
-      background: transparent;
-      margin: 20px 30px 40px 30px;
-      border-top-style: dotted;
-    }
-    hr.double {
-      border-width: 3px;
-    }
-    hr.simple {
-      border: 0;
-      border-top: #444 1px solid;
-      background: transparent;
-      border-top-style: dotted;
-      margin: 10px 30px 10px 30px;
-    }
-    .description {
-      text-align: center;
-      margin: 10px 40px 0 40px;
-      border-top: #444 1px solid;
-      padding-top: 10px;
-    }
-    .href {
-      color: #e3d25f;
-      text-align: center;
-      font-weight: bold;
-      font-size: 20px;
-      cursor: pointer;
-      margin: 30px 0 -20px 0;
-    }
-    .href:hover{
-      text-decoration: underline;
-    }
-    #alert {
-      width: 600px;
-      box-sizing: border-box;
-      margin: 0px -300px 0 0;
-      padding: 20px;
-      position: fixed;
-      right: 50%;
-      z-index: 99;
-      border: #e3d25f 3px solid;
-      background-color: #beb051;
-      color: #000;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    #alert.info {
-      border-color: #76db5b;
-      background-color: #62b74b;
-      color: #23431a;
-    }
-    #alert.warning {
-      border-color: #e3aa5f;
-      background-color: #c59453;
-      color: #43341a;
-    }
-    #alert.error {
-      border-color: #e35f5f;
-      background-color: #ca5555;
-      color: #431a1a;
-    }
-    section {
-      border: #333 1px solid;
-      border-radius: 10px;
-      box-sizing: border-box;
-      padding: 20px 20px 20px 20px;
-      margin-top: 10px;
-      width: 100%;
-      margin-bottom: 30px;
-      background-image: linear-gradient(#000, #0b0b0b);
-      position: relative;
-    }
-    section .title, #preview-pins-unused .title {
-      width: auto;
-      margin-top: -34px;
-      padding: 4px 0 20px 0;
-      text-align: center;
-    }
-    section .title span, #preview-pins-unused .title span {
-      padding: 4px 8px;
-      background: #000;
-      font-weight: bold;
-      font-size: 18px;
-      text-transform: uppercase;
-    }
-    section .help {
-      position: absolute;
-      background-color: #000;
-      background-position: center center;
-      background-repeat: no-repeat;
-      border: #555 2px solid;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      right: 12px;
-      top: -16px;
-      cursor: pointer;
-      line-height: 24px;
-      color: #555;
-      font-weight: bold;
-      text-align: center;
-      font-size: 18px;
-    }
-    section .help:hover {
-      background-color: #555;
-      color: #000;
-    }
-    section .help:active {
-      top: -15px;
-    }
-    #info-content {
-      display: flex;
-    }
-    #info-content ul {
-      flex: 1;
-      color: #aaa;
-    }
-    #info-content ul li {
-      margin-bottom: 8px;
-    }
-    .scontent-displays {
-      display: grid;
-      grid-template-columns: 20% 20% 20% 20% 20%;
-    }
-    .scontent-audio, #audio-pins-spi, #audio-pins-i2s, #audio-spi-mode, #display-spi-mode {
-      display: flex;
-      justify-content: space-evenly;
-    }
-    .radio, .checkbox {
-      position: absolute;
-      cursor: pointer;
-      opacity: 0;
-      z-index: 5;
-      width: 100%;
-      margin: 0 0 0 -40px;
-      height: 29px;
-    }
-    .dsplabel {
-      position: relative;
-      display: inline-block;
-      padding-left: 32px;
-      margin: 0 10px 12px 10px;
-      font-size: 16px;
-      line-height: 25px;
-      text-transform: uppercase;
-      color: #aaa;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    .dsplabel:has(> input:checked) {
-      color: #fff;
-      font-weight: bold;
-    }
-    .checkmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 20px;
-      width: 20px;
-      background-color: #272727;
-      border-radius: 50%;
-      border: #777 2px solid;
-    }
-    .checkmark:after {
-      display: block;
-      top: 5px;
-      left: 5px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #e3d25f;
-    }
-    .checkmark.box, .checkmark.box:after {
-      border-radius: 0%;
-    }
-    .dsplabel:hover input ~ .checkmark {
-      background-color: #272727;
-    }
-    .dsplabel input:checked ~ .checkmark {
-      background-color: #272727;
-      border: #e3d25f 2px solid;
-    }
-    .dsplabel input:checked ~ .checkmark:after {
-      display: block;
-    }
-    .checkmark:after {
-      content: "";
-      position: absolute;
-      display: none;
-    }
-    .inputwrap {
-      flex: 1;
-      position: relative;
-      padding-top: 20px;
-      max-width: 140px;
-    }
-    .inputtitle {
-      display: inline-block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      padding-left: 4px;
-      color: #b7b7b7;
-      text-transform: uppercase;
-    }
-    .textinput {
-      width: 97%;
-      max-width: 140px;
-      box-sizing: border-box;
-      background: #272727;
-      color: #e3d25f;
-      padding: 6px 12px;
-      font-size: 20px;
-      border: #777 3px solid;
-      font-weight: normal;
-      box-sizing: border-box;
-      margin-top: 4px;
-      border-radius: 8px;
-      text-align: center;
-    }
-    .textinput::selection {  background: #aaa; color: #000; }
-    #pins-lcd .textinput, #pins-lcd .inputwrap,
-    #pins-buttons .textinput, #pins-buttons .inputwrap {
-      max-width: 100px;
-    }
-    .textinput:focus {
-      outline: none;
-      border-color: #e3d25f;
-      background: #474747;
-    }
-    .textinput.error{
-      border-color: red;
-      background: #381212;
-      color: red;
-    }
-    .inputwrap:after{
-      color: #f00;
-      font-size: 14px;
-      padding: 4px 6px;
-    }
-    .inputwrap:has(> .conflict):after{
-      content: "conflict";
-    }
-    .inputwrap:has(> .invalid):after{
-      content: "out of range";
-    }
-    .inputwrap:has(> .vspi):after{
-      content: "used in VSPI";
-    }
-    .inputwrap:has(> .hspi):after{
-      content: "used in HSPI";
-    }
-    .inputwrap:has(> .wrover):after{
-      content: "used in WROVER";
-    }
-    .inputwrap:has(> .textinput:focus) .inputtitle {
-      color: #fff;
-      font-weight: bold;
-    }
-    .inputwrap:has(> .textinput:focus):after {
-      content: "";
-    }
-    #pins-i2c, #pins-lcd, #display-pins-spi, #pins-nextion, .evenly {
-      display: flex;
-      justify-content: space-evenly;
-    }
-    #submit {
-      max-width: 680px;
-      margin: 0 auto;
-    }
-    .button {
-      padding: 8px 22px;
-      font-size: 18px;
-      border: #e3d25f 2px solid;
-      font-weight: normal;
-      box-sizing: border-box;
-      border-radius: 20px;
-      cursor: pointer;
-      text-align: center;
-      min-width: 140px;
-      margin-left: 0px;
-      text-transform: uppercase;
-      color: #e3d25f;
-      background: #272727;
-    }
-    .button:hover {
-      background: #e3d25f;
-      color: #000;
-      text-decoration: none;
-    }
-    .button:active {
-      position: relative;
-      top: 2px;
-    }
-    .hlbutton {
-      background: #e3d25f;
-      color: #000;
-    }
-    .button#docopy {
-      min-width: 41px;
-    }
-    .encoder-set {
-      margin-top: 30px;
-    }
-    #footer {
-      text-align: center;
-      padding: 40px 0 20px 0;
-      color: #aaa;
-      margin: 60px 0 0 0;
-      border-width: 2px;
-      line-height: 26px;
-    }
-    #preview {
-      height: 680px;
-      width: auto;
-      min-width: 1100px;
-      border: #e3d25f 3px solid;
-      position: fixed;
-      z-index: 100;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 16px;
-      box-shadow: 0 15px 15px #000;
-      background: #000;
-      padding-left: 230px;
-    }
-    #preview .button {
-      position: absolute;
-      top: auto;
-      right: 20px;
-      bottom: 20px;
-      z-index: 101;
-    }
-    #preview .button:active {
-      bottom: 18px;
-    }
-    #preview-pins {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
-    #preview-pins ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-    #preview-pins ul li {
-      padding: 0 6px;
-      height: 27.5px;
-      line-height: 27.5px;
-      display: flex;
-      align-items: center;
-    }
-    #preview-pins-left ul li {
-      justify-content: flex-end;
-    }
-    #preview-pins-right ul li {
-      justify-content: flex-start;
-    }
-    #preview-pins-center {
-      width: 306px;
-      height: 600px;
-      background: #000 url(esp32dev.png) center center no-repeat;
-    }
-    #preview-pins-left, #preview-pins-right {
-    }
-    #preview-pins-left .preview-pin-dis {
-      text-align: right;
-    }
-    #preview-pins-right .preview-pin-dis {
-      text-align: left;
-    }
-    .preview-pin {
-      min-width: 80px;
-      box-sizing: border-box;
-      border: #fff 2px solid;
-      border-radius: 4px;
-      line-height: 20px;
-      text-align: center;
-      font-weight: bold;
-      text-transform: uppercase;
-      font-size: 15px;
-      margin: 0 2px;
-      padding: 0 8px;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    .preview-pin-pwr { border-color: #f00; background: rgba(255,0,0,0.7); color: #000; }
-    .preview-pin-gnd { border-color: #313131; background: #313131; color: #b5b5b5; }
-    .preview-pin-dis { border-color: #000; background: #000; color: #F00; padding: 0;}
-    .preview-white   { border-color: #9f9f9f; background: #7f7f7f; color: #000; }
-    .preview-purple  { border-color: #9445ab; background: #763788; color: #000; }
-    .preview-green   { border-color: #4cab45; background: #3c8837; color: #000; }
-    .preview-blue    { border-color: #1981bd; background: #316888; color: #000; }
-    .preview-lblue   { border-color: #9ec7ed; background: #7e9fbd; color: #000; }
-    .preview-orange  { border-color: #ff9000; background: #cd7400; color: #000; }
-    .preview-yellow  { border-color: #e3d25f; background: #b5a84c; color: #000; }
-    .preview-bgreen  { border-color: #4ab3ac; background: #3b8f89; color: #000; }
-    .preview-pink    { border-color: #de1670; background: #b11159; color: #000; }
-    #preview-pins li .preview-pin {
-      cursor: not-allowed;
-    }
-    #preview-pins li.movable .preview-pin, #preview-pins-unused .preview-pin {
-      padding-left: 16px;
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOAQMAAADZk5RYAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlMAP8D14AUAAAAMSURBVAjXY5iEGwIAb+QH/Z/KV8wAAAAASUVORK5CYII=');
-      background-position: 4px center;
-      background-repeat: no-repeat;
-      cursor: move;
-    }
-    #preview-pins-unused {
-      position:absolute;
-      z-index: 102;
-      height:auto;
-      bottom:0;
-      top:0;
-      left:0;
-      padding: 20px 10px;
-      margin: 30px 0 30px 20px;
-      box-sizing: border-box;
-      border: #777 1px dashed;
-      border-radius: 10px;
-      opacity: 0.8;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      background-image: linear-gradient(#000, #0b0b0b);
-    }
-    #preview-pins-unused .title {
-      width: 100%;
-    }
-    #preview-pins-unused .preview-pin {
-      margin-bottom: 8px;
-    }
-    #helpwrapper {
-      position: fixed;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 105;
-      display: flex;
-      align-items: center;
-    }
-    #helpborder {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 20px 30px;
-      border: #333 3px solid;
-      border-radius: 16px;
-      box-sizing: border-box;
-      background-image: linear-gradient(#000, #0b0b0b);
-      display: flex;
-      flex-direction: column;
-      max-height: 80%;
-    }
-    #helptitle {
-      color: #e3d25f;
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: 22px;
-      text-align: center;
-      border-bottom: #444 2px dotted;
-      padding-bottom: 20px;
-    }
-    #helpcontent {
-      flex: 1;
-      padding: 20px 15px;
-      box-sizing: border-box;
-      min-height: 160px;
-      line-height: 22px;
-      overflow: auto;
-      scrollbar-color: #e3d25f #000;
-      scrollbar-width: thin;
-      overscroll-behavior: contain;
-    }
-    #helpcontent::-webkit-scrollbar {
-      width: 5px;
-      height: 8px;
-      background-color: #000;
-    }
-    #helpcontent::-webkit-scrollbar-thumb {
-      background: #e3d25f;
-    }
-    #helpcontent a {
-      font-weight: normal;
-    }
-    #helpcontent p, code {
-      margin: 0 0 5px 0;
-      padding-bottom: 10px;
-      border-bottom: #333 1px dotted;
-      display: inline-block;
-      width: 100%;
-      font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace, setif;
-      font-size: 16px;
-      color: #fff;
-    }
-    #helpcontent p.title{
-      margin: 15px 0 -10px 0;
-      padding-bottom: 0px;
-      border: 0;
-      font-weight: bold;
-    }
-    code {
-      background: #222;
-      color: #777;
-      box-sizing: border-box;
-      padding: 0px 20px;
-      margin: 0;
-      white-space: pre;
-      display: block;
-      overflow: auto;
-      margin-bottom: 10px;
-      border-left: #444 3px solid;
-      scrollbar-color: #777 #222;
-      scrollbar-width: thin;
-      overscroll-behavior: contain;
-    }
-    code::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-      background-color: #222;
-    }
-    code::-webkit-scrollbar-thumb {
-      background: #777;
-    }
-    code span {
-      color: #e3d25f;
-    }
-    #helpfooter {
-      border-top: #444 2px dotted;
-      padding-top: 20px;
-    }
-    @media screen and (max-width: 680px) {
-      #content, #preview { zoom: 0.8; }
-    }
-    @media screen and (max-width: 600px) {
-      #content, #preview { zoom: 0.7; }
-    }
-    @media screen and (max-width: 500px) {
-      #content, #preview { zoom: 0.6; }
-    }
-    @media screen and (max-width: 420px) {
-      #content, #preview { zoom: 0.5; }
-    }
-    @media screen and (max-width: 35px) {
-      #content, #preview { zoom: 0.4; }
-    }
-  </style>
-  </head>
+  <link href="stylesheet.css" rel="stylesheet">
+  <link id="board-css" rel="stylesheet" href="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin.css">
+</head>
 <body>
-  <div id="preview" class="hidden">
-    <div id="preview-pins">
-      <div id="preview-pins-unused" class="movable">
-        <div class="title"><span>LOST PINS</span></div>
-      </div>
-      <div id="preview-pins-left">
-        <ul>
-          <li id="pwr-3v3"><div class="preview-pin preview-pin-pwr preview-pin-static">3v3</div></li>
-          <li id="gpio-en" class="movable movable-rst"></li>
-          <li id="gpio-36" class="movable"></li>
-          <li id="gpio-39" class="movable"></li>
-          <li id="gpio-34" class="movable"></li>
-          <li id="gpio-35" class="movable"></li>
-          <li id="gpio-32" class="movable"></li>
-          <li id="gpio-33" class="movable"></li>
-          <li id="gpio-25" class="movable"></li>
-          <li id="gpio-26" class="movable"></li>
-          <li id="gpio-27" class="movable"></li>
-          <li id="gpio-14" class="movable movable-dynamic"></li>
-          <li id="gpio-12" class="movable movable-dynamic"></li>
-          <li id="pwr-gn1"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
-          <li id="gpio-13" class="movable movable-dynamic"></li>
-          <li id="gpio-9"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-10"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-11"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="pwr-5v"><div class="preview-pin preview-pin-pwr preview-pin-static">5v</div></li>
-        </ul>
-      </div>
-      <div id="preview-pins-center"></div>
-      <div id="preview-pins-right">
-        <ul>
-          <li id="pwr-gn2"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
-          <li id="gpio-23" class="movable movable-dynamic"></li>
-          <li id="gpio-22" class="movable"></li>
-          <li id="gpio-tx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-rx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-21" class="movable"></li>
-          <li id="pwr-gn3"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
-          <li id="gpio-19" class="movable movable-dynamic"></li>
-          <li id="gpio-18" class="movable movable-dynamic"></li>
-          <li id="gpio-5" class="movable"></li>
-          <li id="gpio-17" class="movable movable-dynamic"></li>
-          <li id="gpio-16" class="movable movable-dynamic"></li>
-          <li id="gpio-4" class="movable"></li>
-          <li id="gpio-0" class="movable"></li>
-          <li id="gpio-2" class="movable"></li>
-          <li id="gpio-15" class="movable"></li>
-          <li id="gpio-8"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-7"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-          <li id="gpio-6"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
-        </ul>
-      </div>
-    </div>
-    <div class="button apply hlbutton" id="btnpreview" onclick="donePreview();">ок</div>
-  </div><!--#preview-->
+  <div id="board-area"><!-- preview: dynamic board .css and .html and .jpg inserted here--></div>
+
   <div id="content">
     <div id="alert" class="hidden" onclick="dontAlert();"></div>
     <h1 id="pagetitle">ёRadio - myoptions generator</h1>
     <h2 id="slogan">feel difference</h2>
+    <!-- BOARD SELECT for dynamic insert -->
+    <div class="board-select">
+	    <label for="board-select">Select Board:</label>
+	    <select id="board-select">
+	      <option value="ESP32-DevKit-V1_38Pin">ESP32-DevKit-V1 (38 Pin)</option>
+	      <option value="ESP32-S3-DevKitC-1">ESP32-S3-DevKitC-1</option>
+	      <option value="ESP32-S3-Adafruit_Feather">ESP32-S3 Adafruit Feather</option>
+	    </select>
+    </div>
     <!-- INFO -->
     <section id="info">
-      <div class="title"><span>commandments</span></div>
-      <div id="info-content">
-        <ul>
-          <li>Do not use 16-17 GPIOs on WROVER module.</li>
-          <li>Do not pullup the 12th GPIO from the outside.</li>
-          <li>Empty value = error.</li>
-          <li>GPIOs 34 to 39 are GPIs – input only pins. These pins don’t have internal pull-up or pull-down resistors. They can’t be used as outputs, so use these pins only as inputs.</li>
-          <li>Connect display and VS RST-pin to EN ESP32 pin (value&nbsp;-1).</li>
-          <li>Try not to use GPIO 0 unnecessarily.</li>
-        </ul>
-        <ul>
-          <li>Please check out this article: <a href="https://randomnerdtutorials.com/esp32-pinout-reference-gpios/" target="_blank">https://randomnerdtutorials.com/esp32-pinout-reference-gpios/</a></li>
-          <li>Please check out this article: <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/" target="_blank">https://randomnerdtutorials.com/esp32-spi-communication-arduino/</a></li>
-          <li>Please check out this article: <a href="https://github.com/e2002/yoradio#hardware-setup" target="_blank">https://github.com/e2002/yoradio#hardware-setup</a></li>
-          <li>Please check out this article: <a href="https://github.com/e2002/yoradio/wiki/How-to-flash" target="_blank">https://github.com/e2002/yoradio/wiki/How-to-flash</a></li>
-        </ul>
-      </div>
+      <div id="esp-board-area"><!-- dynamic ESP board .html inserted here --></div>
     </section><!-- INFO -->
     <!-- MODULE -->
     <hr class="double" />
     <section id="module">
-      <div class="title"><span>esp32 module</span></div><div class="help" data-targetid="help-module" data-title="esp32 module">?</div>
+      <div class="title"><span>module type</span></div><div class="help" data-targetid="help-ban-pins" data-title="module type">?</div>
       <div class="evenly">
-        <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r71" data-target="wroom" checked /><span class="checkmark"></span>WROOM</label>
-        <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r72" data-target="wrover" /><span class="checkmark"></span>WROVER</label>
+        <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r71" data-target="option-no-ban-pins" checked /><span class="checkmark"></span><div id="no-ban-pins-label">PSRAM is less than 8MB xxx</div></label> 
+        <label class="dsplabel"><input type="radio" class="radio espmodule rbox" name="espmodule" id="r72" data-target="option-ban-pins" /><span class="checkmark"></span><div id="ban-pins-label">PSRAM is 8MB or more xxx</div></label>
       </div>
     </section><!-- MODULE -->
     <!-- SETUP -->
@@ -808,14 +126,14 @@
               <label class="dsplabel" title="1.44' display."><input type="radio" class="radio dspradio rbox" id="r39" name="initrradio" data-rotate="true" data-type="INITR_144GREENTAB" /><span class="checkmark"></span>144GREENTAB</label>
               <label class="dsplabel" title="0.96' display."><input type="radio" class="radio dspradio rbox" id="r40" name="initrradio" data-type="INITR_MINI160x80" /><span class="checkmark"></span>MINI160x80</label>
             </div>
-            <hr />
+            <hr /> 
           </div>
           <div id="pins-spi" class="hidden displays-spi">
             <div id="display-spi-mode-wrap">
               <h3 class="subtitle">DISPLAY SPI BUS</h3>
               <div id="display-spi-mode" class="forexport" data-define="DSP_HSPI" data-export="RADIO">
-                <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r41" name="dspspitype" data-type="default" data-define="TFT_" data-color="blue" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-                <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r42" name="dspspitype" data-type="true" data-define="TFT_" data-color="blue" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+                <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r41" name="dspspitype" data-type="default" data-define="TFT_" data-color="blue" checked /><span class="checkmark"></span><span id="vspi-text1">VSPI (mosi-23, miso-19, sck-18)</span></label>
+                <label class="dsplabel"><input type="radio" class="radio rbox spitype hspi" id="r42" name="dspspitype" data-type="true" data-define="TFT_" data-color="blue" /><span class="checkmark"></span><span id="hspi-text1">HSPI (mosi-13, miso-12, sck-14)</span></label>
               </div>
               <hr />
             </div>
@@ -871,8 +189,8 @@
           <div id="audio-spi-mode-wrap">
             <h3 class="subtitle">AUDIO SPI BUS</h3>
             <div id="audio-spi-mode" class="forexport" data-define="VS_HSPI" data-export="RADIO">
-              <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r47" name="audiospitype" data-type="default" data-define="VS_" data-color="orange" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-              <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r48" name="audiospitype" data-type="true" data-define="VS_" data-color="orange" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+              <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r47" name="audiospitype" data-type="default" data-define="VS_" data-color="orange" checked /><span class="checkmark"></span><span id="vspi-text2">VSPI (mosi-23, miso-19, sck-18)</span></label>
+              <label class="dsplabel"><input type="radio" class="radio rbox spitype hspi" id="r48" name="audiospitype" data-type="true" data-define="VS_" data-color="orange" /><span class="checkmark"></span><span id="hspi-text2">HSPI (mosi-13, miso-12, sck-14)</span></label>
             </div>
             <hr />
           </div>
@@ -963,8 +281,8 @@
         <div class="ts-pins" id="ts-res">
           <h3 class="subtitle" style="margin-top: -30px;">TS SPI BUS</h3>
           <div class="evenly forexport" data-define="TS_HSPI" data-export="RADIO">
-            <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r62" name="tsspitype" data-type="default" data-define="TS_" data-color="yellow" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-            <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r63" name="tsspitype" data-type="true" data-define="TS_" data-color="yellow" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r62" name="tsspitype" data-type="default" data-define="TS_" data-color="yellow" checked /><span class="checkmark"></span><span id="vspi-text3">VSPI (mosi-23, miso-19, sck-18)</span></label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype hspi" id="r63" name="tsspitype" data-type="true" data-define="TS_" data-color="yellow" /><span class="checkmark"></span><span id="hspi-text3">HSPI (mosi-13, miso-12, sck-14)</span></label>
           </div>
           <hr class="simple" />
           <div class="evenly forexport" data-export="PINS">
@@ -987,8 +305,8 @@
         <div class="sd-pins">
           <h3 class="subtitle">SD SPI BUS</h3>
           <div class="evenly forexport" data-define="SD_HSPI" data-export="RADIO">
-            <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r64" name="sdspitype" data-type="default" data-define="SD_" data-color="bgreen" checked /><span class="checkmark"></span>VSPI (mosi-23, miso-19, sck-18)</label>
-            <label class="dsplabel"><input type="radio" class="radio rbox spitype" id="r65" name="sdspitype" data-type="true" data-define="SD_" data-color="bgreen" /><span class="checkmark"></span>HSPI (mosi-13, miso-12, sck-14)</label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype vspi" id="r64" name="sdspitype" data-type="default" data-define="SD_" data-color="bgreen" checked /><span class="checkmark"></span><span id="vspi-text4">VSPI (mosi-23, miso-19, sck-18)</span></label>
+            <label class="dsplabel"><input type="radio" class="radio rbox spitype hspi" id="r65" name="sdspitype" data-type="true" data-define="SD_" data-color="bgreen" /><span class="checkmark"></span><span id="hspi-text4">HSPI (mosi-13, miso-12, sck-14)</span></label>
             <label class="dsplabel"><input type="radio" class="radio rbox spitype custom sdcustom" id="r75" name="sdspitype" data-type="true" data-define="SD_" data-color="bgreen" /><span class="checkmark"></span>CUSTOM</label>
           </div>
           <hr class="simple" />
@@ -1056,8 +374,8 @@
       <div id="helpborder">
         <div id="helptitle"></div>
         <div id="helpcontent">
-          <div class="helpitem hidden" id="help-module">
-            <p>Auxiliary section that allows you to prohibit the appointment of GPIOs 16-17 when choosing ESP32-WROVER module.</p>
+          <div class="helpitem hidden" id="help-ban-pins">
+            <p id="ban-pins-info">Auxiliary section that allows you to prohibit the appointment of certain GPIOs when choosing the board type.</p>
             <p>Values in this section are not included in myoptions.h</p>
           </div>
           <div class="helpitem hidden" id="help-setup">
@@ -1088,11 +406,11 @@
             <p class="title">SPI Displays</p>
             <code>
 /*  VSPI PINS.
-    SCL(SCK, CLK) must be connected to pin 18
-    SDA(MOSI, DIN, SDI) must be connected to pin 23  */
+    SCL(SCK, CLK) must be connected to pin <span id="vspi-sck-pin1">18</span>
+    SDA(MOSI, DIN, SDI) must be connected to pin <span id="vspi-mosi-pin1">23</span>  */
 /*  HSPI PINS. Set DSP_HSPI to true
-    SCL(SCK, CLK) must be connected to pin 14
-    SDA(MOSI, DIN, SDI) must be connected to pin 13  */
+    SCL(SCK, CLK) must be connected to pin <span id="hspi-sck-pin1">14</span>
+    SDA(MOSI, DIN, SDI) must be connected to pin <span id="hspi-mosi-pin1">13</span>  */
 <span>#define DSP_HSPI        false</span>    /*  Use HSPI for display  */
 <span>#define TFT_CS          5</span>        /*  SPI CS pin  */
 <span>#define TFT_RST         -1</span>       /*  SPI RST pin */
@@ -1138,13 +456,13 @@
             <p class="title">VS1053B</p>
             <code>
 /*  VS1053 VSPI PINS.
-    VS1053 SCK must be connected to pin 18
-    VS1053 MISO must be connected to pin 19
-    VS1053 MOSI must be connected to pin 23  */
+    VS1053 SCK must be connected to pin <span id="vspi-sck-pin2">18</span>
+    VS1053 MISO must be connected to pin <span id="vspi-miso-pin2">19</span>
+    VS1053 MOSI must be connected to pin <span id="vspi-mosi-pin2">23</span>  */
 /*  VS1053 HSPI PINS.
-    VS1053 SCK must be connected to pin 14
-    VS1053 MISO must be connected to pin 12
-    VS1053 MOSI must be connected to pin 13  */
+    VS1053 SCK must be connected to pin <span id="hspi-sck-pin2">14</span>
+    VS1053 MISO must be connected to pin <span id="hspi-miso-pin2">12</span>
+    VS1053 MOSI must be connected to pin <span id="hspi-mosi-pin2">13</span>  */
 <span>#define VS_HSPI       false</span>  /*  Use HSPI for VS  */
 <span>#define VS1053_CS     255</span>    /*  XCS pin */
 <span>#define VS1053_DCS    25</span>     /*  XDCS pin.  */
@@ -1213,14 +531,14 @@
             <p class="title">Resistive SPI touch screen (XPT2046)</p>
             <code>
 /*  TS VSPI PINS.
-    CLK must be connected to pin 18
-    DIN must be connected to pin 23
-    DO  must be connected to pin 19
+    CLK must be connected to pin <span id="vspi-sck-pin3">18</span>
+    DIN must be connected to pin <span id="vspi-mosi-pin3">23</span>
+    DO  must be connected to pin <span id="vspi-miso-pin3">19</span>
     IRQ - not connected */
 /*  TS HSPI PINS.
-    CLK must be connected to pin 14
-    DIN must be connected to pin 13
-    DO  must be connected to pin 12
+    CLK must be connected to pin <span id="hspi-sck-pin3">14</span>
+    DIN must be connected to pin <span id="hspi-mosi-pin3">13</span>
+    DO  must be connected to pin <span id="hspi-miso-pin3">12</span>
     IRQ - not connected */
 <span>#define TS_CS     255</span>    /*  Touch screen CS pin  */
 <span>#define TS_HSPI   false</span>  /*  Use HSPI for Touch screen  */
@@ -1243,13 +561,13 @@
             <code>
 /*  MISO is the same as D0, MOSI is the same as D1 */
 /*  SD VSPI PINS.
-    SD SCK must be connected to pin 18
-    SD MISO must be connected to pin 19
-    SD MOSI must be connected to pin 23  */
+    SD SCK must be connected to pin <span id="vspi-sck-pin4">18</span>
+    SD MISO must be connected to pin <span id="vspi-miso-pin4">19</span>
+    SD MOSI must be connected to pin <span id="vspi-mosi-pin4">23</span>  */
 /*  SD HSPI PINS.
-    SD SCK must be connected to pin 14
-    SD MISO must be connected to pin 12
-    SD MOSI must be connected to pin 13  */
+    SD SCK must be connected to pin <span id="hspi-sck-pin4">14</span>
+    SD MISO must be connected to pin <span id="hspi-miso-pin4">12</span>
+    SD MOSI must be connected to pin <span id="hspi-mosi-pin4">13</span>  */
 /*  SD CUSTOM SPI.
     #define SD_SPIPINS	PIN, PIN, PIN	/* SCK, MISO, MOSI  */
 <span>#define SD_HSPI       false</span>
@@ -1299,20 +617,142 @@
   </div><!--content-->
 </body>
 <script>
-  var defaultValues = { "TFT_DC":       4,   "TFT_CS":        5,  "TFT_RST":    -1, "BRIGHTNESS_PIN": 255,
-                        "I2C_SDA":      21,  "I2C_SCL":       22, 
-                        "I2S_DOUT":     27,  "I2S_BCLK":      26, "I2S_LRC":    25,
-                        "VS1053_DCS":   25,  "VS1053_DREQ":   26, "VS1053_RST": -1,
-                        "TS_CS":        13,  "TS_SDA":        33, "TS_SCL":     32, "TS_INT":         21,   "TS_RST":   25,
-                        "LED_BUILTIN":  255, "MUTE_PIN":      255,"WAKE_PIN":   255,"LIGHT_SENSOR":   255,  "IR_PIN":   255,
-                        "BTN_LEFT":     255, "BTN_CENTER":    255,"BTN_RIGHT":  255,"BTN_UP":         255,  "BTN_DOWN": 255, "BTN_MODE": 255 };
-  
   var atimeout;
-  var validGPIOs = [-1,0,2,4,5,12,13,14,15,16,17,18,19,21,22,23,25,26,27,32,33,34,35,36,39,255];
-  var vspiGPIOs  = [ 18,19,23 ];
-  var hspiGPIOs  = [ 12,13,14 ];
-  var isWrover   = false;
-  window.addEventListener('load', onLoad);
+  var isOptionBanPins = false;
+  
+  // This next section loads various files dynamically, depending on board selected, including default values for script
+  document.addEventListener('DOMContentLoaded', () => { // Ensure the DOM is fully loaded
+    const boardSelect = document.getElementById('board-select');
+    const boardArea = document.getElementById('board-area');
+    const espBoardArea = document.getElementById('esp-board-area');
+    loadContent('ESP32-DevKit-V1_38Pin'); // Default selection when page loads (you can change this if needed)
+    boardSelect.addEventListener('change', () => {
+      const board = boardSelect.value;
+      loadContent(board);
+    });
+    // Function to load HTML content dynamically
+    function loadContent(board) {
+      const isESP32S3 = board.includes('ESP32-S3'); // Check if board contains "ESP32-S3"
+      //const isESP32H4 = board.includes('ESP32-H4'); // placeholder for future ESP type
+      if (isESP32S3) { esptype = 'ESP32-S3'; }  // Choose the MCU type
+      //else if (isESP32H4) { esptype = 'ESP32-H4'; } // placeholder for future ESP type
+      else { esptype = 'ESP32'; }
+
+      fetch(`${board}/${board}.html`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Board files error.');
+          }
+          return response.text();
+        })
+        .then(data => {
+          boardArea.innerHTML = data; // Insert HTML content into board-area
+          const newCSS = document.createElement('link');
+          newCSS.rel = 'stylesheet';
+          newCSS.href = `${board}/${board}.css?timestamp=${new Date().getTime()}`; // load css with cache-busting
+          newCSS.id = 'board-css';
+          const oldCSS = document.getElementById('board-css');
+          if (oldCSS) {
+            oldCSS.parentNode.removeChild(oldCSS); // Remove old CSS (if not first load)
+          }
+          document.head.appendChild(newCSS); // Add the new CSS
+
+          const newScript = document.createElement('script'); // add Javascript dynamically
+          newScript.src = `${board}/${board}.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
+          newScript.id = 'board-js';
+          const oldScript = document.getElementById('board-js');
+          if (oldScript) {
+            oldScript.parentNode.removeChild(oldScript); // Remove old JS (if not first load)
+          }
+          newScript.onload = () => { // Wait until the new JS is loaded
+            // Update input values based on defaultValues from the loaded script
+            const inputs = document.querySelectorAll('input[data-define]'); // Select inputs with data-define attribute
+            inputs.forEach(input => {
+              const defineKey = input.getAttribute('data-define'); // Get the key from data-define
+              if (typeof defaultValues !== 'undefined' && defaultValues.hasOwnProperty(defineKey)) { // Check if defaultValues exists and has the key
+                input.value = defaultValues[defineKey]; // Update input value
+              }
+            });
+            // Replace VSPI & HSPI text & pin numbers dynamically
+            updateSPIText('vspi', vspiGPIOs);
+            updateSPIText('hspi', hspiGPIOs);
+            function updateSPIText(spiType, gpioArray) {
+              const spiTextElements = document.querySelectorAll(`[id^='${spiType}-text']`); // Update SPI labels
+              const pinNames = ['sck', 'miso', 'mosi']; // Pin labels
+              if (typeof gpioArray !== 'undefined') {
+                const unavailable = gpioArray.some(pin => pin === 255); // Check for unavailable pins
+                // If unavailable, hide the SPI option or revert to VSPI
+                const spiInputs = document.querySelectorAll(`input.spitype.${spiType}`); // SPI radio buttons
+                spiInputs.forEach(input => {
+                  if (unavailable) {
+                    input.disabled = true; // Disable the input
+                    input.checked = false; // Uncheck if selected
+                    input.closest('label').style.display = 'none'; // Hide the label
+                  } else {
+                    input.disabled = false; // Enable the input
+                    input.closest('label').style.display = ''; // Show the label
+                  }
+                });
+                // Update text for SPI labels
+                const text = unavailable
+                  ? `${spiType.toUpperCase()} (not available)`
+                  : `${spiType.toUpperCase()} (sck-${gpioArray[0]}, miso-${gpioArray[1]}, mosi-${gpioArray[2]})`;
+                  spiTextElements.forEach(el => el.textContent = text);
+                // Update individual pin numbers
+                pinNames.forEach((pin, index) => {
+                  const pinElements = document.querySelectorAll(`[id^='${spiType}-${pin}-pin']`);
+                  pinElements.forEach(el => {
+                    el.textContent = gpioArray[index] === 255 
+                    ? 'n/a' // Replace unavailable pin
+                    : gpioArray[index]; // Replace with the actual pin number
+                  });
+                });
+                // Auto-select VSPI if HSPI is unavailable and currently selected
+                if (unavailable) {
+                  const vspiInput = document.querySelector('input.spitype.vspi');
+                  if (vspiInput) vspiInput.checked = true; // Set VSPI as selected
+                }
+              }
+            }
+          };
+          document.body.appendChild(newScript); // Add new JS
+        })
+        .catch(error => {
+          console.error('Error loading board content:', error);
+          boardArea.innerHTML = '<p>Error loading board content.</p>'; // Display error message
+        });
+      fetch(`${esptype}.html`) // Load board-information content
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Board information files error.');
+          }
+          return response.text();
+        })
+        .then(data => {
+          espBoardArea.innerHTML = data; // Insert HTML into board-information
+          const newEspScript = document.createElement('script'); // Add Javascript dynamically for board-information
+          newEspScript.src = `${esptype}.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
+          newEspScript.id = 'esp-board-js';
+          const oldEspScript = document.getElementById('esp-board-js');
+          if (oldEspScript) {
+            oldEspScript.parentNode.removeChild(oldEspScript); // Remove old JS (if not first load)
+          }
+          newEspScript.onload = () => { // Wait until the new JS is loaded - this section replaces text
+            if (typeof BanPinsInfo !== 'undefined' && noBanPinsLabel !== 'undefined' && typeof BanPinsLabel !== 'undefined') {
+              document.getElementById('ban-pins-info').textContent = BanPinsInfo;
+              document.getElementById('no-ban-pins-label').textContent = noBanPinsLabel;
+              document.getElementById('ban-pins-label').textContent = BanPinsLabel;
+            }
+          };
+          document.body.appendChild(newEspScript); // Add new JS
+        })
+        .catch(error => {
+          console.error('Error loading ESP board content:', error);
+          espBoardArea.innerHTML = '<p>Error loading ESP board content.</p>';
+        });
+    }
+  });
+
   function donePreview(){
     document.getElementById('preview').classList.add('hidden');;
     let elements = document.getElementsByClassName('preview-pin');
@@ -1325,54 +765,66 @@
       doAlert("error", "Error filling values");
       return;
     }
-    let pinWrover = document.getElementsByClassName("preview-pin-wrover");
-    for (var i = pinWrover.length -1; i >= 0; i--) {
-      pinWrover[i].parentNode.classList.remove("add");
-      pinWrover[i].remove();
+    let pinOptionBanPins = document.getElementsByClassName("preview-pin-optionban");
+    for (var i = pinOptionBanPins.length -1; i >= 0; i--) {
+      pinOptionBanPins[i].parentNode.classList.remove("add");
+      pinOptionBanPins[i].remove();
     }
     let movableDynamic = document.getElementsByClassName("movable-dynamic");
     for (var i = 0; i < movableDynamic.length; i++) {
       movableDynamic[i].classList.add("movable");
     }
-    if(isWrover){
-      for (var i = 16; i <= 17; i++) {
-        let targetId=document.getElementById("gpio-"+i);
-        let previewPin = document.createElement("div");
-        previewPin.classList.add("preview-pin"); //preview-pin preview-pin-dis preview-pin-static
-        previewPin.classList.add("preview-pin-dis");
-        previewPin.classList.add("preview-pin-static");
-        previewPin.classList.add("preview-pin-wrover");
-        previewPin.innerHTML = "X";
+    if (isOptionBanPins) {
+      if (typeof BanPins !== 'undefined' && Array.isArray(BanPins)) { // Ensure BanPins is defined (in case it's not loaded yet)
+        BanPins.forEach(pin => {
+          let targetId = document.getElementById("gpio-" + pin);
+          if (targetId) {
+            let previewPin = document.createElement("div");
+            previewPin.classList.add("preview-pin", "preview-pin-dis", "preview-pin-static", "preview-pin-optionban");
+            previewPin.innerHTML = "X";
+            targetId.appendChild(previewPin);
+            targetId.classList.remove("movable");
+          }
+        });
+      } else {
+        console.error('BanPins is not defined or is not an array');
+      }
+    }
+    let spitypes = document.getElementsByClassName("spitype");
+    
+    //
+    for (var i = 0; i < spitypes.length; i++) {
+      if (spitypes[i].offsetParent === null) continue; // Skip hidden elements
+      let spiPins = [];
+      const spiNames = ["SCK", "MISO", "MOSI"];
+      if (spitypes[i].checked) { // Handle checked SPI options
+        if (spitypes[i].classList.contains("vspi")) {
+          spiPins = vspiGPIOs; // Use predefined VSPI pins
+        } else if (spitypes[i].classList.contains("custom")) {
+
+        } else {
+          spiPins = hspiGPIOs; // Use predefined HSPI pins
+        }
+      }
+      const unavailable = spiPins.some(pin => pin === 255); // Check for unavailable pins
+      let color = "preview-" + spitypes[i].getAttribute("data-color");
+      for (var k = 0; k < spiPins.length; k++) {
+        let targetId = document.getElementById("gpio-" + spiPins[k]);
+        if (unavailable || spiPins[k] === 255) {
+          // Skip unavailable pins
+          continue;
+        }
+        let previewPin = document.createElement("div"); // Create preview pin element
+        previewPin.classList.add("preview-pin");
+        previewPin.classList.add(color);
+        previewPin.innerHTML = spitypes[i].getAttribute("data-define") + spiNames[k] + "&nbsp;[" + spiPins[k] + "]";
+        previewPin.id = "preview-static-" + k;
+        // Append preview to target element
         targetId.appendChild(previewPin);
         targetId.classList.remove("movable");
       }
     }
-    let spitypes = document.getElementsByClassName("spitype");
-    for (var i = 0; i < spitypes.length; i++) {
-      if(spitypes[i].offsetParent === null) continue;
-      const spiPins = [];
-      const spiNames = ["MOSI","MISO","SCK"];
-      if(spitypes[i].checked){
-        if(spitypes[i].classList.contains("vspi")){
-          spiPins[0]=23; spiPins[1]=19; spiPins[2]=18;
-        }else if(spitypes[i].classList.contains("custom")){
-          
-        }else{
-        	spiPins[0]=13; spiPins[1]=12; spiPins[2]=14;
-        }
-        let color = "preview-" + spitypes[i].getAttribute("data-color");
-        for (var k = 0; k < spiPins.length; k++) {
-          let targetId=document.getElementById("gpio-"+spiPins[k]);
-          let previewPin = document.createElement("div");
-          previewPin.classList.add("preview-pin");
-          previewPin.classList.add(color);
-          previewPin.innerHTML = spitypes[i].getAttribute("data-define") + spiNames[k] + "&nbsp;["+spiPins[k]+"]";
-          previewPin.id = "preview-static-"+k;
-          targetId.appendChild(previewPin);
-          targetId.classList.remove("movable");
-        }
-      }
-    }
+
     let textinputs = document.getElementsByClassName("textinput");
     for (var i = 0; i < textinputs.length; i++) {
       if(textinputs[i].offsetParent === null) continue;
@@ -1596,12 +1048,12 @@
     let elements = document.getElementsByClassName("textinput");
     var hspibusy = false;
     var vspibusy = false;
-    isWrover = document.getElementsByClassName("espmodule")[1].checked;
+    isOptionBanPins = document.getElementsByClassName("espmodule")[1].checked;
     for (var i = 0; i < elements.length; i++) {
       elements[i].classList.remove("error");
       elements[i].classList.remove("conflict");
       elements[i].classList.remove("invalid");
-      elements[i].classList.remove("wrover");
+      elements[i].classList.remove("optionban");
       elements[i].classList.remove("vspi");
       elements[i].classList.remove("hspi");
     }
@@ -1637,11 +1089,11 @@
         elements[i].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
         return false;
       }
-      var validGPIOsFiltered = isWrover?validGPIOs.filter(function(value, index, arr){  return value != 16 && value != 17; }):validGPIOs;
+      var validGPIOsFiltered = isOptionBanPins?validGPIOs.filter(function(value) { return !BanPins.includes(value); }):validGPIOs;
       let intVal = parseInt(elements[i].value);
       if(!validGPIOsFiltered.includes(intVal)) {
         elements[i].classList.add("error");
-        elements[i].classList.add((intVal==16 || intVal==17)?"wrover":"invalid");
+        elements[i].classList.add((intVal==35 || intVal==36 || intVal==37)?"optionban":"invalid");
         elements[i].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
         return false;
       }
@@ -1671,6 +1123,18 @@
   }
   function loadConfigFromUrl(){
     let params = (new URL(document.location)).searchParams;
+    let board = params.get('b');
+    let boardSelect = document.getElementById('board-select');
+    let usedDefaultBoard = false;
+    let loadedWithErrors = false;
+    if (boardSelect) {
+      if (!board || ![...boardSelect.options].some(opt => opt.value === board)) {
+        console.warn('Invalid or missing board parameter. Using default.');
+        board = 'ESP32-DevKit-V1_38Pin'; // Fallback
+        usedDefaultBoard = true;
+      }
+      boardSelect.value = board; // Set dropdown value
+    }
     let rr = params.get('r');
     let ii = params.get('i');
     let vv = params.get('v');
@@ -1679,7 +1143,6 @@
       var datarr = JSON.parse("["+rr+"]");
       var dataii = JSON.parse("["+ii+"]");
       var datavv = JSON.parse("[\""+vv.replace(/,/g, '","')+"\"]");
-      
     } catch (error) {
       console.error(error);
       doAlert("error", error);
@@ -1688,18 +1151,42 @@
     if(typeof datarr !== 'undefined'){
       let cboxes = document.getElementsByClassName("checkbox");
       for (var i = 0; i < cboxes.length; i++) {
-        let aid = parseInt(cboxes[i].id.substr(1));
-        if(datarr.includes(aid) && !cboxes[i].checked) cboxes[i].click();
-        if(!datarr.includes(aid) && cboxes[i].checked) cboxes[i].click();
+        try {
+          let aid = parseInt(cboxes[i].id.substr(1));
+          if(datarr.includes(aid) && !cboxes[i].checked) cboxes[i].click();
+          if(!datarr.includes(aid) && cboxes[i].checked) cboxes[i].click();
+        } catch (error) {
+          console.error(`Checkbox error at index ${i}:`, error);
+          loadedWithErrors = true; // Flag the error
+        }
       }
       let rboxes = document.getElementsByClassName("radio");
       for (var i = 0; i < rboxes.length; i++) {
-        let aid = parseInt(rboxes[i].id.substr(1));
-        if(datarr.includes(aid)) rboxes[i].click();
+        try {
+          let aid = parseInt(rboxes[i].id.substr(1));
+          if(datarr.includes(aid)) rboxes[i].click();
+        } catch (error) {
+          console.error(`Radio button error at index ${i}:`, error);
+          loadedWithErrors = true; // Flag the error
+        }
       }
       for (var i = 0; i < dataii.length; i++) {
-        document.getElementById("i"+dataii[i]).value = datavv[i].substr(0,3);
+        try {
+          document.getElementById("i"+dataii[i]).value = datavv[i].substr(0,3);
+        } catch (error) {
+          console.error(`Input field error at index ${i}:`, error);
+          loadedWithErrors = true; // Flag the error
+        }
       }
+    }
+    if (loadedWithErrors && usedDefaultBoard) {
+      doAlert("error", "Configuration loaded with some errors. Using default board: ESP32-DevKit-V1 (38Pin).");
+    } else if (loadedWithErrors && !usedDefaultBoard ) {
+      doAlert("error", "Configuration loaded with some errors.");
+    } else if (!loadedWithErrors && usedDefaultBoard ) {
+      doAlert("warn", "Board not loaded correctly. Using default: ESP32-DevKit-V1 (38Pin).");
+    } else {
+      doAlert("info", "Configuration loaded successfully!");
     }
   }
   function initHelp(){
@@ -1765,7 +1252,8 @@
     }
     ii = ii.slice(0, -1);
     vv = vv.slice(0, -1);
-    let out = `r=${rr}&i=${ii}&v=${vv}`;
+    board = document.getElementById('board-select').value;
+    let out = `b=${board}&r=${rr}&i=${ii}&v=${vv}`;
     if(debug) console.log(out);
     let newlink = window.location.href.split('?')[0]+'?'+out;
     if(doreturn) return newlink;
