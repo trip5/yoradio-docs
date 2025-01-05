@@ -619,6 +619,7 @@
 <script>
   var atimeout;
   var isOptionBanPins = false;
+  window.addEventListener('load', onLoad); // this will cause version number to be displayed twice when running locally but only once on Github Pages
   
   // This next section loads various files dynamically, depending on board selected, including default values for script
   document.addEventListener('DOMContentLoaded', () => { // Ensure the DOM is fully loaded
