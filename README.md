@@ -18,7 +18,7 @@ The to-do list:
 #define USE_BUILTIN_LED   false
 #define LED_BUILTIN_S3 255
 ```
-* Zoom on Board Pinout image
+* Zoom on Board Pinout image (errr... it was supposed to fit inside the section but I think CSS might be disobeyed)
 * Add some more ESP32 and ESP32-S3 and ESP32-C3 boards
 * If you have a request for a particular board, leave a comment in issues here, not on `e2002`'s repo... preferably with images!
 * Make a template folder for more boards so users can make their own
