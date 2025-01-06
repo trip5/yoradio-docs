@@ -119,6 +119,13 @@ div.board-select {
   appearance: button;
   outline: none;
 }
+section.board-pinout-area {
+  text-align: center;
+}
+section.board-pinout-area img {
+  width: 800px;
+  height: auto;
+}
 #alert {
   width: 600px;
   box-sizing: border-box;

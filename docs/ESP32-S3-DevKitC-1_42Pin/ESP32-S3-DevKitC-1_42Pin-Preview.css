@@ -1,0 +1,16 @@
+#preview-pins ul li {
+  padding: 0 6px;
+  height: 22.8px;
+  line-height: 22.8px;
+}
+#preview-pins-center {
+  width: 228px;
+  height: 600px;
+  background: #000 url(ESP32-S3-DevKitC-1_42Pin-Preview.png) center center no-repeat;
+}
+.preview-pin {
+  line-height: 16px;
+  font-size: 15px;
+  margin: 0 2px;
+  padding: 0 8px;
+}

@@ -1,0 +1,11 @@
+MUST:
+
+#define ARDUINO_ESP32S3_DEV
+
+#define USE_BUILTIN_LED   false
+#define LED_BUILTIN_S3 255 /* (default is 255). */
+LED_BUILTIN_S3
+
+Tips:  around 600
+
+//#define SDSPISPEED 8000000 /* Default speed 4000000 but try 8000000*/

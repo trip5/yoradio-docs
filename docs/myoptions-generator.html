@@ -14,28 +14,35 @@
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAgVBMVEUAAADXwlPcyVjYw1PYxFTcyVjYxFTbyFfZxlXax1bcyVjax1bbyFfaxlbaxlbbyFfZxVXZxVXbx1fbyFfcyFjbx1fcyVjYxFTZxVXZxVXbx1fcyFfaxlbcyFjcyVjcyVjax1bcyVjcyVjaxlbaxlbbyFfbyFfcyVjax1bbyFfWwVJAMS6TAAAAKnRSTlMA+wv49AXsas+jFp+Cy71T496PTD+IM/Dn2ZpHxzknHbEtDsK5dVwjrF8iY+RUAAAB/UlEQVRYw+2W2ZabMBBE1QgkxA4GjPHu8TLp///ATBxsKcRIzeQhOSdz30qm6ohuqTH7R4kSpeIr0+S9UsmN7JclR0T/bT9o77wERCgSqt/Hn5Snuw7CQfOG5A8EPlD3heSp/R0l4IJPePChvUIvxJSADDX3ANSElIDQErCiBBzGAaD1hhKwwCci0E24Q2vkCh/IUWIXkAJ25aPmw/PNoEXNaBx7AcBX0ht0cA05gFAto+K168XaPDS3D709sf+Qm4yVUnG1/pS7Pi8B8A5A0Xsz7XkB+AuQzYpIAX+DJ2T7domvgIzo/8ZxgpDkX3Cc5EAZ6T5OA5JymW0Ipz+BUe1HW+hdAQIN3mrP8/YxzNhCYzzM62Gg7Dt6FTrUtLqwS2NX5BbGgXGyqe/wjppIL5tb4EdbQKn9pTnBThtiEYx3VZGniSodUNluETd64JsYP7xbAtYc3Wzsx9BNagmo/npAA39YgwslILONcqMLMIGf2D7s3Plfgj4NSu8zASFqaorB1sdix+Zz5GbDt2zMft5M7mQbGDOhzauzM0ACmhS9zBd1vchz2WQdIETOhBJHABfCBxjE1f1d52ijZ06U4xy72aCFkhAQpDiNzygcpuvA96SES4ETQM5IRHEBr+wi2zIiUZN2vun1xSpr2nkXQ8aHNPxBmsWVbNkXr/kONfy904/qMY8AAAAASUVORK5CYII=">
   <title>ёRadio - simple myoptions.h generator</title>
   <link href="stylesheet.css" rel="stylesheet">
-  <link id="board-css" rel="stylesheet" href="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin.css">
+  <link id="board-css" rel="stylesheet" href="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin-Preview.css">
 </head>
 <body>
   <div id="board-area"><!-- preview: dynamic board .css and .html and .jpg inserted here--></div>
-
   <div id="content">
     <div id="alert" class="hidden" onclick="dontAlert();"></div>
     <h1 id="pagetitle">ёRadio - myoptions generator</h1>
     <h2 id="slogan">feel difference</h2>
-    <!-- BOARD SELECT for dynamic insert -->
+    <!-- BOARD SELECT  -->
     <div class="board-select">
 	    <label for="board-select">Select Board:</label>
 	    <select id="board-select">
 	      <option value="ESP32-DevKit-V1_38Pin">ESP32-DevKit-V1 (38 Pin)</option>
-	      <option value="ESP32-S3-DevKitC-1">ESP32-S3-DevKitC-1</option>
-	      <option value="ESP32-S3-Adafruit_Feather">ESP32-S3 Adafruit Feather</option>
+	      <option value="ESP32-S3-DevKitC-1_44Pin">ESP32-S3-DevKitC-1 (44 Pin)</option>
+	      <option value="ESP32-S3-DevKitC-1_42Pin">ESP32-S3-DevKitC-1 (42 Pin)</option>
+        <option value="ESP32-S3-Adafruit_Feather">ESP32-S3 Adafruit Feather</option>
 	    </select>
-    </div>
+    </div><!-- BOARD SELECT -->
     <!-- INFO -->
     <section id="info">
       <div id="esp-board-area"><!-- dynamic ESP board .html inserted here --></div>
     </section><!-- INFO -->
+    <!-- BOARD PINOUT (HIDDEN)-->
+    <div class="evenly">
+      <div class="button apply" title="Show or hide board pinout" id="board-pinout-button" onclick="boardViewClick();">show board pinout</div>
+    </div>
+    <section id="board-pinout-area" class="board-pinout-area hidden">
+      <img id="board-pinout-img" src="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin-Board.jpg" />
+    </section><!-- BOARD PINOUT (HIDDEN)-->
     <!-- MODULE -->
     <hr class="double" />
     <section id="module">
@@ -361,7 +368,7 @@
     </div><!-- ETC -->
     <hr class="double" />
     <div id="submit" class="evenly">
-      <div class="button apply" title="Reset to defaults" onclick="window.scrollTo(0, 0); window.location.href = window.location.href.split('?')[0];">reset</div>
+      <div class="button apply" title="Resets all pins to defaults" onclick="resetGPIOsDefault();">reset pins</div>
       <div class="button apply hlbutton" title="Download myoptions.h" onclick="doExport();">get myoptions.h</div>
       <div class="button apply" title="Show connections" onclick="doPreview();">preview</div>
       <div class="button apply" id="docopy" title="Copy to clipboard" onclick="doExport(true);">copy</div>
@@ -619,141 +626,188 @@
 <script>
   var atimeout;
   var isOptionBanPins = false;
-  window.addEventListener('load', onLoad); // this will cause version number to be displayed twice when running locally but only once on Github Pages
+  var resetGPIOs = false;
+  //window.addEventListener('load', onLoad); // this will cause version number to be displayed twice when running locally but only once on Github Pages
   
-  // This next section loads various files dynamically, depending on board selected, including default values for script
+  // This bit loads various files dynamically, depending on board selected, including default values for script
   document.addEventListener('DOMContentLoaded', () => { // Ensure the DOM is fully loaded
     const boardSelect = document.getElementById('board-select');
-    const boardArea = document.getElementById('board-area');
-    const espBoardArea = document.getElementById('esp-board-area');
-    loadContent('ESP32-DevKit-V1_38Pin'); // Default selection when page loads (you can change this if needed)
-    boardSelect.addEventListener('change', () => {
+    //loadContent('ESP32-DevKit-V1_38Pin'); // Default selection when page loads
+    boardSelect.removeEventListener('change', handleBoardChange); // Cleanup
+    boardSelect.addEventListener('change', handleBoardChange); // Attach listener
+    async function handleBoardChange() {
       const board = boardSelect.value;
       loadContent(board);
-    });
-    // Function to load HTML content dynamically
-    function loadContent(board) {
-      const isESP32S3 = board.includes('ESP32-S3'); // Check if board contains "ESP32-S3"
-      //const isESP32H4 = board.includes('ESP32-H4'); // placeholder for future ESP type
-      if (isESP32S3) { esptype = 'ESP32-S3'; }  // Choose the MCU type
-      //else if (isESP32H4) { esptype = 'ESP32-H4'; } // placeholder for future ESP type
-      else { esptype = 'ESP32'; }
-
-      fetch(`${board}/${board}.html`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Board files error.');
-          }
-          return response.text();
-        })
-        .then(data => {
-          boardArea.innerHTML = data; // Insert HTML content into board-area
-          const newCSS = document.createElement('link');
-          newCSS.rel = 'stylesheet';
-          newCSS.href = `${board}/${board}.css?timestamp=${new Date().getTime()}`; // load css with cache-busting
-          newCSS.id = 'board-css';
-          const oldCSS = document.getElementById('board-css');
-          if (oldCSS) {
-            oldCSS.parentNode.removeChild(oldCSS); // Remove old CSS (if not first load)
-          }
-          document.head.appendChild(newCSS); // Add the new CSS
-
-          const newScript = document.createElement('script'); // add Javascript dynamically
-          newScript.src = `${board}/${board}.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
-          newScript.id = 'board-js';
-          const oldScript = document.getElementById('board-js');
-          if (oldScript) {
-            oldScript.parentNode.removeChild(oldScript); // Remove old JS (if not first load)
-          }
-          newScript.onload = () => { // Wait until the new JS is loaded
-            // Update input values based on defaultValues from the loaded script
-            const inputs = document.querySelectorAll('input[data-define]'); // Select inputs with data-define attribute
-            inputs.forEach(input => {
-              const defineKey = input.getAttribute('data-define'); // Get the key from data-define
-              if (typeof defaultValues !== 'undefined' && defaultValues.hasOwnProperty(defineKey)) { // Check if defaultValues exists and has the key
-                input.value = defaultValues[defineKey]; // Update input value
-              }
-            });
-            // Replace VSPI & HSPI text & pin numbers dynamically
-            updateSPIText('vspi', vspiGPIOs);
-            updateSPIText('hspi', hspiGPIOs);
-            function updateSPIText(spiType, gpioArray) {
-              const spiTextElements = document.querySelectorAll(`[id^='${spiType}-text']`); // Update SPI labels
-              const pinNames = ['sck', 'miso', 'mosi']; // Pin labels
-              if (typeof gpioArray !== 'undefined') {
-                const unavailable = gpioArray.some(pin => pin === 255); // Check for unavailable pins
-                // If unavailable, hide the SPI option or revert to VSPI
-                const spiInputs = document.querySelectorAll(`input.spitype.${spiType}`); // SPI radio buttons
-                spiInputs.forEach(input => {
-                  if (unavailable) {
-                    input.disabled = true; // Disable the input
-                    input.checked = false; // Uncheck if selected
-                    input.closest('label').style.display = 'none'; // Hide the label
-                  } else {
-                    input.disabled = false; // Enable the input
-                    input.closest('label').style.display = ''; // Show the label
-                  }
-                });
-                // Update text for SPI labels
-                const text = unavailable
-                  ? `${spiType.toUpperCase()} (not available)`
-                  : `${spiType.toUpperCase()} (sck-${gpioArray[0]}, miso-${gpioArray[1]}, mosi-${gpioArray[2]})`;
-                  spiTextElements.forEach(el => el.textContent = text);
-                // Update individual pin numbers
-                pinNames.forEach((pin, index) => {
-                  const pinElements = document.querySelectorAll(`[id^='${spiType}-${pin}-pin']`);
-                  pinElements.forEach(el => {
-                    el.textContent = gpioArray[index] === 255 
-                    ? 'n/a' // Replace unavailable pin
-                    : gpioArray[index]; // Replace with the actual pin number
-                  });
-                });
-                // Auto-select VSPI if HSPI is unavailable and currently selected
-                if (unavailable) {
-                  const vspiInput = document.querySelector('input.spitype.vspi');
-                  if (vspiInput) vspiInput.checked = true; // Set VSPI as selected
-                }
-              }
-            }
-          };
-          document.body.appendChild(newScript); // Add new JS
-        })
-        .catch(error => {
-          console.error('Error loading board content:', error);
-          boardArea.innerHTML = '<p>Error loading board content.</p>'; // Display error message
-        });
-      fetch(`${esptype}.html`) // Load board-information content
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Board information files error.');
-          }
-          return response.text();
-        })
-        .then(data => {
-          espBoardArea.innerHTML = data; // Insert HTML into board-information
-          const newEspScript = document.createElement('script'); // Add Javascript dynamically for board-information
-          newEspScript.src = `${esptype}.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
-          newEspScript.id = 'esp-board-js';
-          const oldEspScript = document.getElementById('esp-board-js');
-          if (oldEspScript) {
-            oldEspScript.parentNode.removeChild(oldEspScript); // Remove old JS (if not first load)
-          }
-          newEspScript.onload = () => { // Wait until the new JS is loaded - this section replaces text
-            if (typeof BanPinsInfo !== 'undefined' && noBanPinsLabel !== 'undefined' && typeof BanPinsLabel !== 'undefined') {
-              document.getElementById('ban-pins-info').textContent = BanPinsInfo;
-              document.getElementById('no-ban-pins-label').textContent = noBanPinsLabel;
-              document.getElementById('ban-pins-label').textContent = BanPinsLabel;
-            }
-          };
-          document.body.appendChild(newEspScript); // Add new JS
-        })
-        .catch(error => {
-          console.error('Error loading ESP board content:', error);
-          espBoardArea.innerHTML = '<p>Error loading ESP board content.</p>';
-        });
     }
-  });
-
+    document.title = document.title+" - "+GVERSION;
+    let ttl = document.getElementById("pagetitle");
+    ttl.innerText = document.title;
+    document.getElementById("footer").innerHTML = document.title + '<br /><a href="https://github.com/e2002/yoradio/" target="_blank">project homepage</a>';
+    initCheckboxes();
+    initTextInputs();
+    initHelp();
+    loadConfigFromUrl();
+    loadAlert();
+  })
+  function loadContent(board) {
+    const boardArea = document.getElementById('board-area');
+    const espBoardArea = document.getElementById('esp-board-area');
+    const pinoutImg = document.getElementById('board-pinout-img');
+    if (pinoutImg) {
+    const jpgPath = `${board}/${board}-Board.jpg?timestamp=${new Date().getTime()}`; // load jpg with cache-busting
+    fetch(jpgPath, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          pinoutImg.src = jpgPath; // Use JPG if found
+        } else {
+          console.warn('Pinout image not found.');
+        }
+      })
+      .catch(() => {
+        console.error('Error loading pinout image.');
+      });
+    }
+    const isESP32S3 = board.includes('ESP32-S3'); // Check if board contains "ESP32-S3"
+    //const isESP32H4 = board.includes('ESP32-H4'); // placeholder for future ESP type
+    if (isESP32S3) { esptype = 'ESP32-S3'; }  // Choose the MCU type
+    //else if (isESP32H4) { esptype = 'ESP32-H4'; } // placeholder for future ESP type
+    else { esptype = 'ESP32'; }
+    fetch(`${board}/${board}-Preview.html?timestamp=${new Date().getTime()}`) // load html with cache-busting
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Board files error.');
+        }
+        return response.text();
+      })
+      .then(data => {
+        boardArea.innerHTML = data; // Insert HTML content into board-area
+        const newCSS = document.createElement('link');
+        newCSS.rel = 'stylesheet';
+        newCSS.href = `${board}/${board}-Preview.css?timestamp=${new Date().getTime()}`; // load css with cache-busting
+        newCSS.id = 'board-css';
+        const oldCSS = document.getElementById('board-css');
+        if (oldCSS) {
+          oldCSS.onload = null;  // Clear any pending load handlers
+          oldCSS.onerror = null; // Clear any error handlers
+          oldCSS.remove();       // Remove it cleanly
+        }
+        document.head.appendChild(newCSS); // Add the new CSS
+        const newScript = document.createElement('script'); // add Javascript dynamically
+        newScript.src = `${board}/${board}-Pins.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
+        newScript.id = 'board-js';
+        const oldScript = document.getElementById('board-js');
+        if (oldScript) {
+          oldScript.onload = null;  // Clear any pending load handlers
+          oldScript.onerror = null; // Clear any error handlers
+          oldScript.remove();       // Remove it cleanly
+        }
+        newScript.onload = () => { // Wait until the new JS is loaded
+          // Update input values based on defaultValues from the loaded script
+          const inputs = document.querySelectorAll('input[data-define]'); // Select inputs with data-define attribute
+          inputs.forEach(input => {
+            const defineKey = input.getAttribute('data-define'); // Get the key from data-define
+            if (typeof defaultValues !== 'undefined' && defaultValues.hasOwnProperty(defineKey)) { // Check if defaultValues exists and has the key
+              const newValue = defaultValues[defineKey]; // Get the value from the external script
+              if (resetGPIOs ) { input.value = newValue; } // Update input value if reset flag on (requires a click)
+              //if (newValue !== 255 && resetGPIOs) { input.value = newValue; } // Update input value if reset clicked
+            }
+          });
+          // Replace VSPI & HSPI text & pin numbers dynamically
+          updateSPIText('vspi', vspiGPIOs);
+          updateSPIText('hspi', hspiGPIOs);
+          //resetGPIOs = false;
+          resetGPIOs = true;
+        };
+        document.body.appendChild(newScript); // Add new JS
+      })
+      .catch(error => {
+        console.error('Error loading board content:', error);
+        boardArea.innerHTML = '<p>Error loading board content.</p>'; // Display error message
+      });
+    fetch(`${esptype}.html`) // Load board-information content
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Board information files error.');
+        }
+        return response.text();
+      })
+      .then(data => {
+        espBoardArea.innerHTML = data; // Insert HTML into board-information
+        const newEspScript = document.createElement('script'); // Add Javascript dynamically for board-information
+        newEspScript.src = `${esptype}.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
+        newEspScript.id = 'esp-board-js';
+        const oldEspScript = document.getElementById('esp-board-js');
+        if (oldEspScript) {
+          oldEspScript.onload = null;  // Clear any pending load handlers
+          oldEspScript.onerror = null; // Clear any error handlers
+          oldEspScript.remove();       // Remove it cleanly
+        }
+        newEspScript.onload = () => { // Wait until the new JS is loaded - this section replaces text
+          if (typeof BanPinsInfo !== 'undefined' && noBanPinsLabel !== 'undefined' && typeof BanPinsLabel !== 'undefined') {
+            document.getElementById('ban-pins-info').textContent = BanPinsInfo;
+            document.getElementById('no-ban-pins-label').textContent = noBanPinsLabel;
+            document.getElementById('ban-pins-label').textContent = BanPinsLabel;
+          }
+        };
+        document.body.appendChild(newEspScript); // Add new JS
+      })
+      .catch(error => {
+        console.error('Error loading ESP board content:', error);
+        espBoardArea.innerHTML = '<p>Error loading ESP board content.</p>';
+      });
+  }
+  function updateSPIText(spiType, gpioArray) {
+    const spiTextElements = document.querySelectorAll(`[id^='${spiType}-text']`); // Update SPI labels
+    const pinNames = ['sck', 'miso', 'mosi']; // Pin labels
+    if (typeof gpioArray !== 'undefined') {
+      const unavailable = gpioArray.some(pin => pin === 255); // Check for unavailable pins
+      // If unavailable, hide the SPI option or revert to VSPI
+      const spiInputs = document.querySelectorAll(`input.spitype.${spiType}`); // SPI radio buttons
+      spiInputs.forEach(input => {
+        if (unavailable) {
+          input.disabled = true; // Disable the input
+          input.checked = false; // Uncheck if selected
+          input.closest('label').style.display = 'none'; // Hide the label
+        } else {
+          input.disabled = false; // Enable the input
+          input.closest('label').style.display = ''; // Show the label
+        }
+      });
+      // Update text for SPI labels
+      const text = unavailable
+        ? `${spiType.toUpperCase()} (not available)`
+        : `${spiType.toUpperCase()} (sck-${gpioArray[0]}, miso-${gpioArray[1]}, mosi-${gpioArray[2]})`;
+        spiTextElements.forEach(el => el.textContent = text);
+      // Update individual pin numbers
+      pinNames.forEach((pin, index) => {
+        const pinElements = document.querySelectorAll(`[id^='${spiType}-${pin}-pin']`);
+        pinElements.forEach(el => {
+          el.textContent = gpioArray[index] === 255 
+          ? 'n/a' // Replace unavailable pin
+          : gpioArray[index]; // Replace with the actual pin number
+        });
+      });
+      // Auto-select VSPI if HSPI is unavailable and currently selected
+      if (unavailable) {
+        const vspiInput = document.querySelector('input.spitype.vspi');
+        if (vspiInput) vspiInput.checked = true; // Set VSPI as selected
+      }
+    }
+  }
+  function boardViewClick(){
+    const pinoutArea = document.getElementById("board-pinout-area");
+    const button = document.getElementById("board-pinout-button");
+    const isHidden = pinoutArea.classList.toggle("hidden");
+    button.textContent = isHidden ? "Show Board Pinout" : "Hide Board Pinout";
+  }
+  function resetGPIOsDefault(){
+    resetGPIOs = true;
+    const boardSelect = document.getElementById('board-select');
+    //const board = boardSelect.value;
+    //loadContent(board);
+    //boardSelect.value = board; // Set dropdown value
+    boardSelect.dispatchEvent(new Event('change')); // Simulate a change event
+  }
   function donePreview(){
     document.getElementById('preview').classList.add('hidden');;
     let elements = document.getElementsByClassName('preview-pin');
@@ -1130,11 +1184,11 @@
     let loadedWithErrors = false;
     if (boardSelect) {
       if (!board || ![...boardSelect.options].some(opt => opt.value === board)) {
-        console.warn('Invalid or missing board parameter. Using default.');
         board = 'ESP32-DevKit-V1_38Pin'; // Fallback
         usedDefaultBoard = true;
       }
       boardSelect.value = board; // Set dropdown value
+      loadContent(board);
     }
     let rr = params.get('r');
     let ii = params.get('i');
@@ -1207,17 +1261,6 @@
     for (var i = 0; i < items.length; i++) {
       items[i].classList.add("hidden");
     }
-  }
-  function onLoad(event) {
-    document.title = document.title+" - "+GVERSION;
-    let ttl = document.getElementById("pagetitle");
-    ttl.innerText = document.title;
-    document.getElementById("footer").innerHTML = document.title + '<br /><a href="https://github.com/e2002/yoradio/" target="_blank">project homepage</a>';
-    initCheckboxes();
-    initTextInputs();
-    initHelp();
-    loadConfigFromUrl();
-    loadAlert();
   }
   function topFunction(){
     window.scrollTo({
