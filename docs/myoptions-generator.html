@@ -3,7 +3,7 @@
 <head>
   <script>
     var GVERSION="v0.9.0";
-    var LASTID="r78";
+    var LASTID="r79";
     var debug = false;
   </script>
   <meta charset="UTF-8">
@@ -358,7 +358,8 @@
         </div>
         <hr class="simple" />
         <div class="evenly forexport" data-export="PINS">
-          <div class="inputwrap hidden" id="etc-led"><span class="inputtitle">led indicator</span><input type="text" class="textinput" id="i40" data-define="LED_BUILTIN" data-color="pink" value="2" maxlength="3"></div>
+          <div class="inputwrap hidden" id="etc-led"><span class="inputtitle">led indicator</span><input type="text" class="textinput" id="i40" data-define="LED_BUILTIN" data-color="pink" value="2" maxlength="3">
+            <label class="dsplabel hidden esp32-s3 esp32-c3" style="display: block; margin-top: 10px;"><input type="checkbox" class="checkbox rbox" id="r79"/><span class="checkmark box"></span>RGB NEOPIXEL</label></div>
           <div class="inputwrap hidden" id="etc-ir"><span class="inputtitle">ir</span><input type="text" class="textinput" id="i41" data-define="IR_PIN" data-color="pink" value="255" maxlength="3"></div>
           <div class="inputwrap hidden" id="etc-mute"><span class="inputtitle">mute</span><input type="text" class="textinput" id="i42" data-define="MUTE_PIN" data-color="pink" value="255" maxlength="3"></div>
           <div class="inputwrap hidden" id="etc-wake"><span class="inputtitle">wake</span><input type="text" class="textinput" id="i43" data-define="WAKE_PIN" data-color="pink" value="255" maxlength="3"></div>
@@ -594,12 +595,14 @@
             <p>Settings for built-in LED, IR receiver and other pins.</p>
             <p>Parameters added to myoptions.h (default value specified):</p>
             <code>
-<span>#define LED_BUILTIN   255</span>    /*  Onboard LED Pin */
-<span>#define IR_PIN        255</span>    /* <a href="https://github.com/e2002/yoradio/blob/main/Controls.md#ir-receiver" target="_blank"><u>More about IR Receiver</u></a> */
-<span>#define MUTE_PIN      55</span>     /*  MUTE Pin */
-<span>#define WAKE_PIN      255</span>    /*  Wake Pin (for manual wakeup from sleep mode) */
-/* can match with BTN_XXXX, ENC_BTNB, ENC2_BTNB.  must be one of: 0,2,4,12,13,14,15,25,26,27,32,33,34,35,36,39) */
-<span>#define LIGHT_SENSOR  255</span>    /*  Light sensor  */
+<span>#define LED_BUILTIN     255</span>    /*  Onboard LED Pin */
+<span>#define USE_BUILTIN_LED false</span>  /*  Cancels Onboard LED Pin */
+<span>#define LED_BUILTIN_S3  255</span>    /*  Neopixel RGB LED (must be used with USE_BUILTIN_LED false) */
+<span>#define IR_PIN          255</span>    /* <a href="https://github.com/e2002/yoradio/blob/main/Controls.md#ir-receiver" target="_blank"><u>More about IR Receiver</u></a> */
+<span>#define MUTE_PIN        255</span>    /*  MUTE Pin */
+<span>#define WAKE_PIN        255</span>    /*  Wake Pin (for manual wakeup from sleep mode) */
+/* can match with BTN_XXXX, ENC_BTNB, ENC2_BTNB.  ESP32 must be one of: 0,2,4,12,13,14,15,25,26,27,32,33,34,35,36,39 */
+<span>#define LIGHT_SENSOR    255</span>    /*  Light sensor  */
             </code>
             <p>Settings currently not processed by the generator (you can specify them manually in the finished file myoptions.h:</p>
             <p>Add them only if there is a real need.</p>
@@ -627,6 +630,7 @@
   var atimeout;
   var isOptionBanPins = false;
   var resetGPIOs = false;
+  var esptype = 'ESP32';
   //window.addEventListener('load', onLoad); // this will cause version number to be displayed twice when running locally but only once on Github Pages
   
   // This bit loads various files dynamically, depending on board selected, including default values for script
@@ -667,11 +671,29 @@
         console.error('Error loading pinout image.');
       });
     }
-    const isESP32S3 = board.includes('ESP32-S3'); // Check if board contains "ESP32-S3"
-    //const isESP32H4 = board.includes('ESP32-H4'); // placeholder for future ESP type
-    if (isESP32S3) { esptype = 'ESP32-S3'; }  // Choose the MCU type
-    //else if (isESP32H4) { esptype = 'ESP32-H4'; } // placeholder for future ESP type
-    else { esptype = 'ESP32'; }
+    // Choose the MCU type, esptype variable will be used for generating as well
+    if (board.includes('ESP32-S3')) { esptype = 'ESP32-S3'; }
+      else if (board.includes('ESP32-C3')) { esptype = 'ESP32-C3'; } // use this line if adding new MCU types
+      else { esptype = 'ESP32'; }
+    // Now let's hide/unhide classes for these MCU types
+    const elements = document.querySelectorAll('[class*="esp32"]');
+    elements.forEach(element => {
+    // If the element's class matches the selected esptype, show it
+      if (element.classList.contains(esptype.toLowerCase())) {
+        element.classList.remove('hidden');
+      } else { // otherwise hide it and clear any inputs that might be inside
+        element.classList.add('hidden');
+        element.querySelectorAll('input').forEach(input => {
+          if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = false;
+          } else if (input.type === 'text') {
+            input.value = '';
+          } else if (input.tagName === 'SELECT') {
+            input.selectedIndex = 0;
+          }
+        });
+      }
+    });
     fetch(`${board}/${board}-Preview.html?timestamp=${new Date().getTime()}`) // load html with cache-busting
       .then(response => {
         if (!response.ok) {
@@ -1370,6 +1392,11 @@
     }
     let forexport = document.getElementsByClassName("forexport");
     let outstr = "";
+    if (esptype == 'ESP32-S3') {
+      outstr += "#define ARDUINO_ESP32S3_DEV\n\n";
+    } else if (esptype == 'ESP32-C3') {
+      outstr += "#define ARDUINO_ESP32C3_DEV\n\n";
+    }
     let sdcustom = document.getElementsByClassName("sdcustom")[0];
     let usesdcustom = sdcustom.checked && sdcustom.offsetParent !== null;
     if(usesdcustom) {
@@ -1415,7 +1442,12 @@
               elements[j].scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
               return;
             }
-            if(defaultValues[define]!=dtype) outstr += "#define " + define + "\t\t\t" + dtype + "\n";
+            if (define === "LED_BUILTIN" && document.getElementById("r79")) {
+              outstr += "#define USE_BUILTIN_LED" + "\t\t\tfalse\n";
+              outstr += "#define LED_BUILTIN_S3\t\t\t" + dtype + "\n";
+            } else {
+              if(defaultValues[define]!=dtype) outstr += "#define " + define + "\t\t\t" + dtype + "\n";
+            }
           }
         }
         if(isButtons){
