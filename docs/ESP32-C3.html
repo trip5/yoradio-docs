@@ -1,0 +1,19 @@
+<div class="title"><span>commandments</span></div> 
+<div id="info-content">
+  <ul>
+    <li>ESP32-C3 boards vary on which GPIOs are used by VSPI bus (SCK, MISO, MOSI). Usually, no HSPI bus is available.</li>
+    <li>Do not use GPIOs 33 to 37 on boards with PSRAM.</li>
+    <li>Empty value = error.</li>
+    <li>GPIOs 11-17 are used by flash so if exposed are not usable.</li>
+    <li>GPIOs 18 and 19 are GPIs – input-only pins. They can’t be used as outputs.</li>
+    <li>GPIOs 20 and 21 are usually used by Serial. Some boards may use other GPIOs.  Please double-check.</li>
+    <li>Connect display and VS RST-pin to board's RST/EN pin (value&nbsp;-1).</li>
+    <li>GPIOs 2, 8, and 9 (BOOT) are strapping pins and must be kept HIGH at boot (might be okay for push-buttons).</li>
+  </ul>
+  <ul>
+    <li>Check your Board variant here to verify SPI pins: <a href="https://github.com/espressif/arduino-esp32/tree/master/variants" target="_blank">https://github.com/espressif/arduino-esp32/tree/master/variants</a></li>
+    <li>Some good notes regarding ESP32-C3 modules: <a href="https://www.studiopieters.nl/esp32-c3-pinout/" target="_blank">https://www.studiopieters.nl/esp32-c3-pinout/</a></li>
+    <li>Please check out this article: <a href="https://github.com/e2002/yoradio#hardware-setup" target="_blank">https://github.com/e2002/yoradio#hardware-setup</a></li>
+    <li>Please check out this article: <a href="https://github.com/e2002/yoradio/wiki/How-to-flash" target="_blank">https://github.com/e2002/yoradio/wiki/How-to-flash</a></li>
+  </ul>
+</div>

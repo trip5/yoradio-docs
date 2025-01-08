@@ -1,0 +1,37 @@
+<!-- Preview of Board with pins: To create a new one, look at a few files as examples
+The li id doesn't matter except for gpio pins, but be sure they are unique! 
+SPI, SDA, SDL, and optional banned pins should get class="movable movable-dynamic"
+All other free pins get class="movable" -->
+<div id="preview" class="hidden">
+  <div id="preview-pins">
+    <div id="preview-pins-unused" class="movable">
+      <div class="title"><span>LOST PINS</span></div>
+    </div>
+	  <div id="preview-pins-left">
+      <ul>
+        <li id="gpio-en" class="movable movable-rst"></li>
+        <li id="gpio-0" class="movable"></li>
+        <li id="gpio-1" class="movable"></li>
+        <li id="gpio-2" class="movable movable-dynamic"></li>
+        <li id="gpio-3" class="movable movable-dynamic"></li>
+        <li id="gpio-4" class="movable movable-dynamic"></li>
+        <li id="gpio-5" class="movable"></li>
+        <li id="pwr-3v3"><div class="preview-pin preview-pin-pwr preview-pin-static">3v3</div></li>
+      </ul>
+    </div>
+    <div id="preview-pins-center"></div>
+    <div id="preview-pins-right">
+      <ul>
+        <li id="gpio-tx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-rx"><div class="preview-pin preview-pin-dis preview-pin-static">X</div></li>
+        <li id="gpio-10" class="movable movable-dynamic"></li>
+        <li id="gpio-8" class="movable movable-dynamic"></li>
+        <li id="gpio-7" class="movable"></li>
+        <li id="gpio-6" class="movable"></li>
+        <li id="pwr-gn1"><div class="preview-pin preview-pin-gnd preview-pin-static">GND</div></li>
+        <li id="pwr-5v"><div class="preview-pin preview-pin-pwr preview-pin-static">5v</div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="button apply hlbutton" id="btnpreview" onclick="donePreview();">ок</div>
+</div>

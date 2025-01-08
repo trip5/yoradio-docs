@@ -1,3 +1,7 @@
+#preview-pins ul {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
 #preview-pins ul li {
   padding: 0 6px;
   height: 22.8px;

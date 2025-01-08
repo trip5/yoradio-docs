@@ -18,6 +18,9 @@
 </head>
 <body>
   <div id="board-area"><!-- preview: dynamic board .css and .html and .jpg inserted here--></div>
+  <div id="board-pinout-zoom-area" class="hidden" onclick="boardZoom();">
+    <img id="board-pinout-zoom-img" src="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin-Board.jpg" alt="Board Pinout" />
+  </div>
   <div id="content">
     <div id="alert" class="hidden" onclick="dontAlert();"></div>
     <h1 id="pagetitle">ёRadio - myoptions generator</h1>
@@ -26,9 +29,12 @@
     <div class="board-select">
 	    <label for="board-select">Select Board:</label>
 	    <select id="board-select">
-	      <option value="ESP32-DevKit-V1_38Pin">ESP32-DevKit-V1 (38 Pin)</option>
+	      <option value="ESP32_Module">ESP32 Module (No Board)</option>
+	      <option value="ESP32-DevKit-V1_30Pin">ESP32-DevKit-V1 (30 Pin)</option>
+	      <option value="ESP32-DevKit-V1_38Pin">ESP32-DevKit-V1 (38 Pin)</option> <!--e2002's original, so it's also default in many places-->
+        <option value="ESP32-C3-Mini">ESP32-C3-Mini</option>
+        <option value="ESP32-S3-DevKitC-1_42Pin">ESP32-S3-DevKitC-1 (42 Pin)</option>
 	      <option value="ESP32-S3-DevKitC-1_44Pin">ESP32-S3-DevKitC-1 (44 Pin)</option>
-	      <option value="ESP32-S3-DevKitC-1_42Pin">ESP32-S3-DevKitC-1 (42 Pin)</option>
         <option value="ESP32-S3-Adafruit_Feather">ESP32-S3 Adafruit Feather</option>
 	    </select>
     </div><!-- BOARD SELECT -->
@@ -41,7 +47,8 @@
       <div class="button apply" title="Show or hide board pinout" id="board-pinout-button" onclick="boardViewClick();">show board pinout</div>
     </div>
     <section id="board-pinout-area" class="board-pinout-area hidden">
-      <img id="board-pinout-img" src="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin-Board.jpg" />
+      <img id="board-pinout-img" src="ESP32-DevKit-V1_38Pin/ESP32-DevKit-V1_38Pin-Board.jpg" onclick="boardZoom();" />
+      <p>click the image to zoom</p>
     </section><!-- BOARD PINOUT (HIDDEN)-->
     <!-- MODULE -->
     <hr class="double" />
@@ -608,14 +615,14 @@
             <p>Add them only if there is a real need.</p>
             <p>Parameters added to myoptions.h (default value specified):</p>
             <code>
-<span>#define LED_INVERT    false</span>    /*  Invert Onboard LED? */
-<span>#define MUTE_VAL    HIGH</span>   /*  Write this to MUTE_PIN when player is stopped */
-/*  Autobacklight function. See options.h for exsample  */
-<span>#define AUTOBACKLIGHT(x)  *function*</span>
-/* IR_TIMEOUT. See kTimeout description in <a href="https://github.com/crankyoldgit/IRremoteESP8266/blob/master/examples/IRrecvDumpV2/IRrecvDumpV2.ino" target="_blank">IRremoteESP8266 exsample</a>  */
-<span>#define IR_TIMEOUT      80 </span>        
+<span>#define LED_INVERT      false</span>  /*  Invert Onboard LED? */
+<span>#define MUTE_VAL        HIGH</span>   /*  Write this to MUTE_PIN when player is stopped */
+/*  Autobacklight function. See options.h for example  */
+<span>#define AUTOBACKLIGHT(x) *function*</span>
+/* IR_TIMEOUT. See kTimeout description in <a href="https://github.com/crankyoldgit/IRremoteESP8266/blob/master/examples/IRrecvDumpV2/IRrecvDumpV2.ino" target="_blank">IRremoteESP8266 example</a>  */
+<span>#define IR_TIMEOUT       80 </span>        
 
-<span>#define BTN_LONGPRESS_LOOP_DELAY    200</span>  /*  Delay between calling DuringLongPress event */
+<span>#define BTN_LONGPRESS_LOOP_DELAY  200</span>  /*  Delay between calling DuringLongPress event */
 <span>#define BTN_CLICK_TICKS    300</span> /*  Event Timing https://github.com/mathertel/OneButton#event-timing */
 <span>#define BTN_PRESS_TICKS    500</span> /*  Event Timing https://github.com/mathertel/OneButton#event-timing */
             </code>
@@ -631,16 +638,15 @@
   var isOptionBanPins = false;
   var resetGPIOs = false;
   var esptype = 'ESP32';
-  //window.addEventListener('load', onLoad); // this will cause version number to be displayed twice when running locally but only once on Github Pages
-  
+  var board = 'ESP32-DevKit-V1_38Pin';
+
   // This bit loads various files dynamically, depending on board selected, including default values for script
   document.addEventListener('DOMContentLoaded', () => { // Ensure the DOM is fully loaded
     const boardSelect = document.getElementById('board-select');
-    //loadContent('ESP32-DevKit-V1_38Pin'); // Default selection when page loads
     boardSelect.removeEventListener('change', handleBoardChange); // Cleanup
     boardSelect.addEventListener('change', handleBoardChange); // Attach listener
     async function handleBoardChange() {
-      const board = boardSelect.value;
+      board = boardSelect.value;
       loadContent(board);
     }
     document.title = document.title+" - "+GVERSION;
@@ -657,19 +663,16 @@
     const boardArea = document.getElementById('board-area');
     const espBoardArea = document.getElementById('esp-board-area');
     const pinoutImg = document.getElementById('board-pinout-img');
+    const pinoutZoomImg = document.getElementById('board-pinout-zoom-img')
     if (pinoutImg) {
-    const jpgPath = `${board}/${board}-Board.jpg?timestamp=${new Date().getTime()}`; // load jpg with cache-busting
-    fetch(jpgPath, { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          pinoutImg.src = jpgPath; // Use JPG if found
-        } else {
-          console.warn('Pinout image not found.');
-        }
-      })
-      .catch(() => {
-        console.error('Error loading pinout image.');
-      });
+      const jpgPath = `${board}/${board}-Board.jpg?timestamp=${new Date().getTime()}`; // load jpg with cache-busting
+      fetch(jpgPath, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            pinoutImg.src = jpgPath; // Use JPG if found
+            pinoutZoomImg.src = jpgPath; // Use JPG if found
+          }
+        });
     }
     // Choose the MCU type, esptype variable will be used for generating as well
     if (board.includes('ESP32-S3')) { esptype = 'ESP32-S3'; }
@@ -683,15 +686,6 @@
         element.classList.remove('hidden');
       } else { // otherwise hide it and clear any inputs that might be inside
         element.classList.add('hidden');
-        element.querySelectorAll('input').forEach(input => {
-          if (input.type === 'checkbox' || input.type === 'radio') {
-            input.checked = false;
-          } else if (input.type === 'text') {
-            input.value = '';
-          } else if (input.tagName === 'SELECT') {
-            input.selectedIndex = 0;
-          }
-        });
       }
     });
     fetch(`${board}/${board}-Preview.html?timestamp=${new Date().getTime()}`) // load html with cache-busting
@@ -737,7 +731,6 @@
           // Replace VSPI & HSPI text & pin numbers dynamically
           updateSPIText('vspi', vspiGPIOs);
           updateSPIText('hspi', hspiGPIOs);
-          //resetGPIOs = false;
           resetGPIOs = true;
         };
         document.body.appendChild(newScript); // Add new JS
@@ -822,12 +815,23 @@
     const isHidden = pinoutArea.classList.toggle("hidden");
     button.textContent = isHidden ? "Show Board Pinout" : "Hide Board Pinout";
   }
+  function boardZoom(){
+    const pinoutZoomArea = document.getElementById("board-pinout-zoom-area");
+    const isHidden = pinoutZoomArea.classList.toggle("hidden");
+  }
   function resetGPIOsDefault(){
+    document.querySelectorAll('input, select').forEach(input => {
+      if (input.id === 'board-select') { return; }
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        input.checked = false;
+      } else if (input.type === 'text') {
+        input.value = '';
+      } else if (input.tagName === 'SELECT') {
+         input.selectedIndex = 0;
+      }
+    });
     resetGPIOs = true;
     const boardSelect = document.getElementById('board-select');
-    //const board = boardSelect.value;
-    //loadContent(board);
-    //boardSelect.value = board; // Set dropdown value
     boardSelect.dispatchEvent(new Event('change')); // Simulate a change event
   }
   function donePreview(){

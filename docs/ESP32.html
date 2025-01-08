@@ -1,12 +1,13 @@
 <div class="title"><span>commandments</span></div>
 <div id="info-content">
   <ul>
-    <li>Do not use 16-17 GPIOs on WROVER module.</li>
-    <li>Do not pullup the 12th GPIO from the outside.</li>
+    <li>Do not use GPIO 16-17 on WROVER module.</li>
     <li>Empty value = error.</li>
-    <li>GPIOs 34 to 39 are GPIs – input only pins. These pins don’t have internal pull-up or pull-down resistors. They can’t be used as outputs, so use these pins only as inputs.</li>
-    <li>Connect display and VS RST-pin to EN ESP32 pin (value&nbsp;-1).</li>
+    <li>GPIOs 34 to 39 are GPIs – input-only pins. They can’t be used as outputs.</li>
+    <li>Connect display and VS RST-pin to board's RST/EN pin (value&nbsp;-1).</li>
     <li>Try not to use GPIO 0 unnecessarily.</li>
+    <li>GPIOs 0 (BOOT) and 2 (LED) and 12 (MTDI) are strapping pins and must be kept HIGH at boot (might be okay for push-buttons).</li>
+    <li>Do not pullup GPIO 12 from the outside.</li>
   </ul>
   <ul>
     <li>Please check out this article: <a href="https://randomnerdtutorials.com/esp32-pinout-reference-gpios/" target="_blank">https://randomnerdtutorials.com/esp32-pinout-reference-gpios/</a></li>

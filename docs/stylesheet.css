@@ -122,9 +122,38 @@ div.board-select {
 section.board-pinout-area {
   text-align: center;
 }
+section.board-pinout-area p {
+  color: #e3d25f;
+  margin: 0 0 5px 0;
+  padding-bottom: 2px;
+  display: inline-block
+  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace, setif;
+  font-size: 16px;
+}
+
 section.board-pinout-area img {
   width: 800px;
   height: auto;
+}
+#board-pinout-zoom-area {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 105;
+  display: flex;
+  align-items: center;
+}
+#board-pinout-zoom-img {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 95vw;           /* Dynamic width based on viewport */
+  max-height: 95vh;          /* Dynamic height based on viewport */
+  border: #e3d25f 3px solid;
+  border-radius: 16px;
+  box-shadow: 0 15px 15px #000;
 }
 #alert {
   width: 600px;

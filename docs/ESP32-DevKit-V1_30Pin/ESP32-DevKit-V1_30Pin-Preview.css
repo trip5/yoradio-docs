@@ -1,6 +1,6 @@
 #preview-pins ul {
   padding-top: 0px;
-  padding-bottom: 7px;
+  padding-bottom: 35px;
 }
 #preview-pins ul li {
   padding: 0 6px;
@@ -8,9 +8,9 @@
   line-height: 29.5px;
 }
 #preview-pins-center {
-  width: 265px;
+  width: 327px;
   height: 600px;
-  background: #000 url(ESP32-S3-Adafruit_Feather-Preview.png) center center no-repeat;
+  background: #000 url(ESP32-DevKit-V1_30Pin-Preview.png) center center no-repeat;
 }
 .preview-pin {
   line-height: 20px;

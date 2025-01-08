@@ -1,0 +1,20 @@
+#preview-pins ul {
+  padding-top: 0px;
+  padding-bottom:18px;
+}
+#preview-pins ul li {
+  padding: 0 6px;
+  height: 44.5px;
+  line-height: 44.5px;
+}
+#preview-pins-center {
+  width: 444px;
+  height: 600px;
+  background: #000 url(ESP32-C3-Mini-Preview.png) center center no-repeat;
+}
+.preview-pin {
+  line-height: 15px;
+  font-size: 20px;
+  margin: 0 2px;
+  padding: 0 8px;
+}

@@ -1,19 +1,19 @@
 #preview-pins ul {
-  padding-top: 0px;
+  padding-top: 118px;
   padding-bottom: 0px;
 }
 #preview-pins ul li {
   padding: 0 6px;
-  height: 27.5px;
-  line-height: 27.5px;
+  height: 23.3px;
+  line-height: 23.3px;
 }
 #preview-pins-center {
-  width: 306px;
+  width: 555px;
   height: 600px;
-  background: #000 url(ESP32-DevKit-V1_38Pin-Preview.png) center center no-repeat;
+  background: #000 url(ESP32_Module-Preview.png) center center no-repeat;
 }
 .preview-pin {
-  line-height: 20px;
+  line-height: 16px;
   font-size: 15px;
   margin: 0 2px;
   padding: 0 8px;
