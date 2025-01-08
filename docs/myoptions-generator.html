@@ -665,7 +665,7 @@
     const pinoutImg = document.getElementById('board-pinout-img');
     const pinoutZoomImg = document.getElementById('board-pinout-zoom-img')
     if (pinoutImg) {
-      const jpgPath = `${board}/${board}-Board.jpg?timestamp=${new Date().getTime()}`; // load jpg with cache-busting
+      const jpgPath = `${board}/${board}-Board.jpg`;
       fetch(jpgPath, { method: 'HEAD' })
         .then(response => {
           if (response.ok) {
@@ -688,7 +688,7 @@
         element.classList.add('hidden');
       }
     });
-    fetch(`${board}/${board}-Preview.html?timestamp=${new Date().getTime()}`) // load html with cache-busting
+    fetch(`${board}/${board}-Preview.html`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Board files error.');
@@ -699,7 +699,7 @@
         boardArea.innerHTML = data; // Insert HTML content into board-area
         const newCSS = document.createElement('link');
         newCSS.rel = 'stylesheet';
-        newCSS.href = `${board}/${board}-Preview.css?timestamp=${new Date().getTime()}`; // load css with cache-busting
+        newCSS.href = `${board}/${board}-Preview.css`;
         newCSS.id = 'board-css';
         const oldCSS = document.getElementById('board-css');
         if (oldCSS) {
@@ -709,7 +709,7 @@
         }
         document.head.appendChild(newCSS); // Add the new CSS
         const newScript = document.createElement('script'); // add Javascript dynamically
-        newScript.src = `${board}/${board}-Pins.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
+        newScript.src = `${board}/${board}-Pins.js`;
         newScript.id = 'board-js';
         const oldScript = document.getElementById('board-js');
         if (oldScript) {
@@ -749,7 +749,7 @@
       .then(data => {
         espBoardArea.innerHTML = data; // Insert HTML into board-information
         const newEspScript = document.createElement('script'); // Add Javascript dynamically for board-information
-        newEspScript.src = `${esptype}.js?timestamp=${new Date().getTime()}`; // load js with cache-busting
+        newEspScript.src = `${esptype}.js`;
         newEspScript.id = 'esp-board-js';
         const oldEspScript = document.getElementById('esp-board-js');
         if (oldEspScript) {
