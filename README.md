@@ -10,12 +10,28 @@ As of now, I think I've got the dynamic part handled.  It seems to load board pr
 
 Exporting should mostly work but there may be some issues with some of ESP32-S3s "hidden pins," like the GPIOs that control onboard LEDs or RGBs and do not have exposed pins.
 
+### Features Added:
+
+* Dropdown selector to change boards (includes ESP32, ESP32-S3, ESP32-C3 boards including modules in case no board is appropriate)
+
+* Adds correct MCU type to options export
+
+* Previews of all boards available in selector
+
+* A board pinout now included so you can see which pins are available (click to zoom)
+
+* Dynamic Javascript / HTML so that certain text is shown / hidden according to board or MCU type
+
+* Handles HSPI which is default of ESP32-S3 and ESP32-C3 boards correctly (both for selecting and exporting)
+
+* Adds Neopixel pin and option under LED to use a neopixel - also exports correctly
+
+* 100% compatible (probably) with current options
+
 ### The to-do list:
 
 * Add some more ESP32 and ESP32-S3 and ESP32-C3 boards (especially the modules)
 _If you have a request for a particular board, leave a comment in issues here, not on `e2002`'s repo... preferably with images!_
-
-* Make a template folder for more boards so users can make their own
 
 * Probably more bugs to squash as I discover them
 
