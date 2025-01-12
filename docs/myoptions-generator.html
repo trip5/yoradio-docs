@@ -32,7 +32,9 @@
 	      <option value="ESP32_Module">ESP32 Module (No Board)</option>
 	      <option value="ESP32-DevKit-V1_30Pin">ESP32-DevKit-V1 (30 Pin)</option>
 	      <option value="ESP32-DevKit-V1_38Pin">ESP32-DevKit-V1 (38 Pin)</option> <!--e2002's original, so it's also default in many places-->
+	      <option value="ESP32-C3_Module">ESP32-C3 Module (No Board)</option>
         <option value="ESP32-C3-Mini">ESP32-C3-Mini</option>
+	      <option value="ESP32-S3_Module">ESP32-S3 Module (No Board)</option>
         <option value="ESP32-S3-DevKitC-1_42Pin">ESP32-S3-DevKitC-1 (42 Pin)</option>
 	      <option value="ESP32-S3-DevKitC-1_44Pin">ESP32-S3-DevKitC-1 (44 Pin)</option>
         <option value="ESP32-S3-Adafruit_Feather">ESP32-S3 Adafruit Feather</option>
@@ -416,18 +418,22 @@
           </div>
           <div class="helpitem hidden" id="help-display-pins">
             <p>Depending on the selected display type above, its connection options are displayed here.</p>
-            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <span class="esp32"><p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p></span>
+            <span class="esp32-s3 esp32-c3"><p>ESP32-S3 and ESP32-C3 board have only one SPI to choose from, which is HSPI - but do not set DSP_HSPI to true in your config because it will cause compilation errors.</p></span>
+            <p>If you are using a module to create a configuration, the board definition will set the pins for SCK, MISO, MOSI.  You can check your board definition <a href="https://github.com/espressif/arduino-esp32/blob/master/variants/" target="_blank">here</a>. Do not use those 3 pins for other purposes.</p>
             <p>Parameters added to myoptions.h (default value specified):</p>
             <p class="title">SPI Displays</p>
-            <code>
+            <code><span class="esp32">
 /*  VSPI PINS.
     SCL(SCK, CLK) must be connected to pin <span id="vspi-sck-pin1">18</span>
     SDA(MOSI, DIN, SDI) must be connected to pin <span id="vspi-mosi-pin1">23</span>  */
-/*  HSPI PINS. Set DSP_HSPI to true
+/*  HSPI PINS. Set DSP_HSPI to true</span><span class="esp32-s3 esp32-c3">
+/*  HSPI PINS.</span>
     SCL(SCK, CLK) must be connected to pin <span id="hspi-sck-pin1">14</span>
     SDA(MOSI, DIN, SDI) must be connected to pin <span id="hspi-mosi-pin1">13</span>  */
-<span>#define DSP_HSPI        false</span>    /*  Use HSPI for display  */
-<span>#define TFT_CS          5</span>        /*  SPI CS pin  */
+<span class="esp32"><span>#define DSP_HSPI        false</span>    /*  Use HSPI for display  */
+</span><span class="esp32-s3 esp32-c3"><span>#define DSP_HSPI        false</span>    /*  must be false for ESP32-S3/C3 boards  */
+</span><span>#define TFT_CS          5</span>        /*  SPI CS pin  */
 <span>#define TFT_RST         -1</span>       /*  SPI RST pin */
 <span>#define TFT_DC          4</span>        /*  SPI DC/RS pin  */
 <span>#define BRIGHTNESS_PIN  255</span>      /* BRIGHTNESS Pin  */
@@ -466,20 +472,24 @@
           </div>
           <div class="helpitem hidden" id="help-audio-pins">
             <p>Depending on the selected audio decoder type above, its connection options are displayed here.</p>
-            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <span class="esp32"><p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p></span>
+            <span class="esp32-s3 esp32-c3"><p>ESP32-S3 and ESP32-C3 board have only one SPI to choose from, which is HSPI - but do not set DSP_HSPI to true in your config because it will cause compilation errors.</p></span>
+            <p>If you are using a module to create a configuration, the board definition will set the pins for SCK, MISO, MOSI.  You can check your board definition <a href="https://github.com/espressif/arduino-esp32/blob/master/variants/" target="_blank">here</a>. Do not use those 3 pins for other purposes.</p>
             <p>Parameters added to myoptions.h (default value specified):</p>
             <p class="title">VS1053B</p>
-            <code>
+            <code><span class="esp32">
 /*  VS1053 VSPI PINS.
     VS1053 SCK must be connected to pin <span id="vspi-sck-pin2">18</span>
     VS1053 MISO must be connected to pin <span id="vspi-miso-pin2">19</span>
     VS1053 MOSI must be connected to pin <span id="vspi-mosi-pin2">23</span>  */
-/*  VS1053 HSPI PINS.
+/*  VS1053 HSPI PINS. Set VS_HSPI to true</span><span class="esp32-s3 esp32-c3">
+/*  VS1053 HSPI PINS.</span>
     VS1053 SCK must be connected to pin <span id="hspi-sck-pin2">14</span>
     VS1053 MISO must be connected to pin <span id="hspi-miso-pin2">12</span>
     VS1053 MOSI must be connected to pin <span id="hspi-mosi-pin2">13</span>  */
-<span>#define VS_HSPI       false</span>  /*  Use HSPI for VS  */
-<span>#define VS1053_CS     255</span>    /*  XCS pin */
+<span class="esp32"><span>#define VS_HSPI       false</span>  /*  Use HSPI for VS  */
+</span><span class="esp32-s3 esp32-c3"><span>#define VS_HSPI       false</span>  /*  must be false for ESP32-S3/C3 boards  */
+</span><span>#define VS1053_CS     255</span>    /*  XCS pin */
 <span>#define VS1053_DCS    25</span>     /*  XDCS pin.  */
 <span>#define VS1053_DREQ   26</span>     /*  DREQ pin.  */
 <span>#define VS1053_RST    -1</span>     /*  XRESET pin. */
@@ -541,21 +551,26 @@
           </div>
           <div class="helpitem hidden" id="help-touchscreen">
             <p>Currently two touchscreen controllers are supported - XPT2046 and GT911</p>
-            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <span class="esp32"><p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p></span>
+            <span class="esp32-s3 esp32-c3"><p>ESP32-S3 and ESP32-C3 board have only one SPI to choose from, which is HSPI - but do not set DSP_HSPI to true in your config because it will cause compilation errors.</p></span>
+            <p>If you are using a module to create a configuration, the board definition will set the pins for SCK, MISO, MOSI.  You can check your board definition <a href="https://github.com/espressif/arduino-esp32/blob/master/variants/" target="_blank">here</a>. Do not use those 3 pins for other purposes.</p>
             <p>Parameters added to myoptions.h (default value specified):</p>
             <p class="title">Resistive SPI touch screen (XPT2046)</p>
-            <code>
+            <code><span class="esp32">
 /*  TS VSPI PINS.
     CLK must be connected to pin <span id="vspi-sck-pin3">18</span>
     DIN must be connected to pin <span id="vspi-mosi-pin3">23</span>
     DO  must be connected to pin <span id="vspi-miso-pin3">19</span>
     IRQ - not connected */
-/*  TS HSPI PINS.
+/*  TS HSPI PINS. Set TS_HSPI to true</span><span class="esp32-s3 esp32-c3">
+/*  TS HSPI PINS</span>
     CLK must be connected to pin <span id="hspi-sck-pin3">14</span>
     DIN must be connected to pin <span id="hspi-mosi-pin3">13</span>
     DO  must be connected to pin <span id="hspi-miso-pin3">12</span>
     IRQ - not connected */
-<span>#define TS_CS     255</span>    /*  Touch screen CS pin  */
+<span class="esp32"><span>#define TS_HSPI   false</span>  /*  Use HSPI for Touch screen  */
+</span><span class="esp32-s3 esp32-c3"><span>#define TS_HSPI   false</span>  /*  must be false for ESP32-S3/C3 boards  */
+</span><span>#define TS_CS     255</span>    /*  Touch screen CS pin  */
 <span>#define TS_HSPI   false</span>  /*  Use HSPI for Touch screen  */
             </code>
             <p class="title">Capacitive I2C touch screen (GT911)</p>
@@ -571,22 +586,26 @@
             </code>
           </div>
           <div class="helpitem hidden" id="help-sdcard">
-            <p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p>
+            <span class="esp32"><p>If you have any questions about choosing VSPI vs HSPI, please read <a href="https://randomnerdtutorials.com/esp32-spi-communication-arduino/#esp32-spi-pins" target="_blank">this</a> article or leave the default value of this setting.</p></span>
+            <span class="esp32-s3 esp32-c3"><p>ESP32-S3 and ESP32-C3 board have only one SPI to choose from, which is HSPI - but do not set DSP_HSPI to true in your config because it will cause compilation errors.</p></span>
+            <p>If you are using a module to create a configuration, the board definition will set the pins for SCK, MISO, MOSI.  You can check your board definition <a href="https://github.com/espressif/arduino-esp32/blob/master/variants/" target="_blank">here</a>. Do not use those 3 pins for other purposes.</p>
             <p>Parameters added to myoptions.h (default value specified):</p>
             <code>
-/*  MISO is the same as D0, MOSI is the same as D1 */
+/*  MISO is the same as D0, MOSI is the same as D1 */<span class="esp32">
 /*  SD VSPI PINS.
     SD SCK must be connected to pin <span id="vspi-sck-pin4">18</span>
     SD MISO must be connected to pin <span id="vspi-miso-pin4">19</span>
     SD MOSI must be connected to pin <span id="vspi-mosi-pin4">23</span>  */
-/*  SD HSPI PINS.
+/*  SD HSPI PINS. Set SD_HSPI to true</span><span class="esp32-s3 esp32-c3">
+/*  SD HSPI PINS.</span>
     SD SCK must be connected to pin <span id="hspi-sck-pin4">14</span>
     SD MISO must be connected to pin <span id="hspi-miso-pin4">12</span>
     SD MOSI must be connected to pin <span id="hspi-mosi-pin4">13</span>  */
 /*  SD CUSTOM SPI.
-    #define SD_SPIPINS	PIN, PIN, PIN	/* SCK, MISO, MOSI  */
-<span>#define SD_HSPI       false</span>
-<span>#define SDC_CS        255</span>    /* SDCARD CS pin */
+<span>#define SD_SPIPINS    PIN, PIN, PIN</span>  /*  SCK, MISO, MOSI  */
+<span class="esp32"><span>#define SD_HSPI       false</span>      /*  Use HSPI for SD Card  */
+</span><span class="esp32-s3 esp32-c3"><span>#define SD_HSPI       false</span>          /*  must be false for ESP32-S3/C3 boards  */
+</span><span>#define SDC_CS        255</span>            /*  SDCARD CS pin  */
             </code>
           </div>
           <div class="helpitem hidden" id="help-rtc">
@@ -639,6 +658,8 @@
   var resetGPIOs = false;
   var esptype = 'ESP32';
   var board = 'ESP32-DevKit-V1_38Pin';
+  var vspiUnavailable = false;
+  var hspiUnavailable = false;
 
   // This bit loads various files dynamically, depending on board selected, including default values for script
   document.addEventListener('DOMContentLoaded', () => { // Ensure the DOM is fully loaded
@@ -775,7 +796,13 @@
     const spiTextElements = document.querySelectorAll(`[id^='${spiType}-text']`); // Update SPI labels
     const pinNames = ['sck', 'miso', 'mosi']; // Pin labels
     if (typeof gpioArray !== 'undefined') {
-      const unavailable = gpioArray.some(pin => pin === 255); // Check for unavailable pins
+      // Set availability flags
+      if (spiType === 'vspi') {
+        vspiUnavailable = true;
+      } else if (spiType === 'hspi') {
+        hspiUnavailable = true;
+      }
+      const unavailable = gpioArray.some(pin => pin === -1); // Check for unavailable pins
       // If unavailable, hide the SPI option or revert to VSPI
       const spiInputs = document.querySelectorAll(`input.spitype.${spiType}`); // SPI radio buttons
       spiInputs.forEach(input => {
@@ -797,16 +824,26 @@
       pinNames.forEach((pin, index) => {
         const pinElements = document.querySelectorAll(`[id^='${spiType}-${pin}-pin']`);
         pinElements.forEach(el => {
-          el.textContent = gpioArray[index] === 255 
+          el.textContent = gpioArray[index] === -1 
           ? 'n/a' // Replace unavailable pin
           : gpioArray[index]; // Replace with the actual pin number
         });
       });
-      // Auto-select VSPI if HSPI is unavailable and currently selected
+      // Auto-select the preferred SPI type
+      const vspiInput = document.querySelector('input.spitype.vspi');
+      const hspiInput = document.querySelector('input.spitype.hspi');
       if (unavailable) {
-        const vspiInput = document.querySelector('input.spitype.vspi');
-        if (vspiInput) vspiInput.checked = true; // Set VSPI as selected
+        // If the current SPI type is unavailable, switch to the other available type
+        if (spiType === 'hspi' && vspiInput && !vspiInput.disabled) {
+          vspiInput.checked = true; // Select VSPI
+        } else if (spiType === 'vspi' && hspiInput && !hspiInput.disabled) {
+          hspiInput.checked = true; // Select HSPI
+        }
+      } else if (vspiInput && !vspiInput.disabled && hspiInput && !hspiInput.disabled) {
+        // If both are available, prefer VSPI
+        vspiInput.checked = true;
       }
+
     }
   }
   function boardViewClick(){
@@ -1421,6 +1458,7 @@
           if(elements[j].checked && elements[j].offsetParent !== null){
             let dtype = elements[j].getAttribute('data-type');
             if(dtype=="default" || usesdcustom) break;
+            if (vspiUnavailable && define.includes('HSPI') && dtype=="true" ) break; // need to handle HSPI is default on certain boards
             outstr += "#define " + define + "\t\t\t" + dtype + "\n";
             break;
           }

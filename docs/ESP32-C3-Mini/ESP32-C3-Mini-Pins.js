@@ -10,5 +10,5 @@ var defaultValues = {
   "BTN_LEFT":    255, "BTN_CENTER": 255, "BTN_RIGHT":   255, "BTN_UP":       255, "BTN_DOWN":  255, "BTN_MODE":  255,
 };
 var validGPIOs = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 20, 21, 255];
-var vspiGPIOs = [2, 3, 4]; // SCK, MISO, MOSI
-var hspiGPIOs = [255, 255, 255]; // SCK, MISO, MOSI - use all 255 if not available
+var vspiGPIOs = [-1, -1, -1]; // SCK, MISO, MOSI - use all -1 if not available (ESP32-S3/C3 use HSPI only)
+var hspiGPIOs = [2, 3, 4]; // SCK, MISO, MOSI - use 255 if unknown (modules only)

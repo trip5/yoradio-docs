@@ -658,7 +658,7 @@ code::-webkit-scrollbar-thumb {
 code span {
   color: #e3d25f;
 }
-code span[id^="vspi-"], code span[id^="hspi-"] {
+code span[id^="vspi-"], code span[id^="hspi-"], code span[class^="esp"] {
   color: #777;
 }
 #helpfooter {

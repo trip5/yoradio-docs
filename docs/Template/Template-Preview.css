@@ -1,0 +1,20 @@
+#preview-pins ul {
+  padding-top: 0px;  /* Pushes the lists down */
+  padding-bottom: 0px;  /* Pushes the lists up */
+}
+#preview-pins ul li {
+  padding: 0 6px;
+  height: 27.5px;  /* Increase/decrease the space between pin names */
+  line-height: 27.5px;  /* Keep these 2 numbers the same */
+}
+#preview-pins-center {
+  width: 306px;  /* Image width - 400 or less is ideal, 500 is too much  */
+  height: 600px;  /* resize the Preview image to 600 pixels high */
+  background: #000 url(Template-Preview.png) center center no-repeat;  /* You must edit this to match the file name */
+}
+.preview-pin {
+  line-height: 20px;  /* 20 pixel line height is good, only make less if necessary (not more)  */
+  font-size: 15px;  /* 15 pixel font is good, only make less if necessary  (not more)  */
+  margin: 0 2px;  /* Shouldn't need to edit but here if needed */
+  padding: 0 8px;  /* Shouldn't need to edit but here if needed */
+}

@@ -1,0 +1,11 @@
+You can see the naming scheme by other folders. The folder and file prefixes must match!
+Three files have -Preview as a suffix.  They help display the board and pin preview.
+The preview graphic must be a .png file with a transparency layer (256 colors will save disk space).
+The board graphic must be a .jpg file and has -Board as a suffix.
+Finally the -Pins suffix is a javascript file loaded by the main webpage to show which pins are valid and defaults.
+
+I recommend hosting the page locally with the VSCode Studio extension called "Live Preview".
+
+Add your board name to the board-select in myoptions-generator.html and then you can do a live preview.
+Especially with the preview graphic and while checking pins, it is useful to first select your board,
+and click >> link to this configuration << on the bottom so your board loads by default with every edit.
