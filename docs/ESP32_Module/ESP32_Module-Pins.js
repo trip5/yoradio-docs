@@ -1,4 +1,3 @@
-// MOSI, MISO, SCK mandatory, SDA & SCL from board profile, LED if exists, recommended pins for some, all others 255
 var defaultValues = {
   "TFT_DC":        4, "TFT_CS":       5, "TFT_RST":      -1, "BRIGHTNESS_PIN": 255,
   "I2C_SDA":      21, "I2C_SCL":     22, 
