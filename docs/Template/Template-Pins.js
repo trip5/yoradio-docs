@@ -9,7 +9,9 @@ var defaultValues = {
   "ENC_BTNR":    255, "ENC_BTNL":   255, "ENC_BTNB":    255, "ENC2_BTNR":    255, "ENC2_BTNL": 255, "ENC2_BTNB": 255,
   "BTN_LEFT":    255, "BTN_CENTER": 255, "BTN_RIGHT":   255, "BTN_UP":       255, "BTN_DOWN":  255, "BTN_MODE":  255,
 };
-var validGPIOs = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 35, 36, 37, 38, 39, 40, 41, 42, 45, 46, 47, 48, 255]; // all valid pins (even if can't be used)
+
+// include all usable pins (including optionally banned pins like 35 to 37 on ESP32-S3 with PSRAM 8MB+) - do not include any with X in the html
+var validGPIOs = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 21, 35, 36, 37, 38, 39, 40, 41, 42, 47, 48, 255];
 
 // use 255 if unknown (modules only) // use all -1 if not available (ESP32-S3/C3 use HSPI only) 
 var vspiGPIOs = [-1, -1, -1]; // SCK, MISO, MOSI Not available
