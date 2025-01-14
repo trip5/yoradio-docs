@@ -754,6 +754,14 @@
           // Replace VSPI & HSPI text & pin numbers dynamically
           updateSPIText('vspi', vspiGPIOs);
           updateSPIText('hspi', hspiGPIOs);
+          // might as well change selections to HSPI if VSPI is unavailable, and default to VSPI if it is available (but only if resetGPIOs is true - otherwise it does this with loadConfigFromUrl)
+          if (vspiUnavailable && !hspiUnavailable && resetGPIOs) {
+            const hspiRadios = document.querySelectorAll('input.radio.hspi');
+            hspiRadios.forEach(radio => { radio.checked = true; });
+          } else if (!vspiUnavailable && resetGPIOs) {
+            const vspiRadios = document.querySelectorAll('input.radio.vspi');
+            vspiRadios.forEach(radio => { radio.checked = true; });
+          }
           resetGPIOs = true;
         };
         document.body.appendChild(newScript); // Add new JS
@@ -800,7 +808,7 @@
     if (typeof gpioArray !== 'undefined') {
 
       const unavailable = gpioArray.some(pin => pin === -1); // Check for unavailable pins
-      // If unavailable, hide the SPI option or revert to VSPI
+      // If unavailable, hide the SPI option
       const spiInputs = document.querySelectorAll(`input.spitype.${spiType}`); // SPI radio buttons
       spiInputs.forEach(input => {
         if (unavailable) {
@@ -810,7 +818,7 @@
         } else {
           input.disabled = false; // Enable the input
           input.closest('label').style.display = ''; // Show the label
-          // Set availability flags
+          // Set availability flags for later use
           if (spiType === 'vspi') {
             vspiUnavailable = false;
           } else if (spiType === 'hspi') {
