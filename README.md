@@ -6,7 +6,7 @@ This is a tool to help you set up and flash the [ёRadio](https://github.com/e20
 
 This is a dynamic html page that runs in a browser (chrome, firefox, opera) or online. After some actions, using the mouse and keyboard, the output is the configuration file **myoptions.h**, completely ready for use in the project.
 
-[Click here to use the tool!](https://e2002.github.io/docs/myoptions-generator.html)
+[Click here to use the tool!](docs/myoptions-generator.html)
 
 ## Notes
 
@@ -34,6 +34,7 @@ Original Layout and format and coding by e2002 (for ESP32), made dynamic by Trip
 
 * Add some more ESP32 and ESP32-S3 and ESP32-C3 boards
 
-### Trip5
+### Trip5's modifications
 
-Trip5's version online [here](https://trip5.github.io/yoradio-docs/docs/myoptions-generator.html). Trip5's repo [here](https://github.com/trip5/yoradio-docs).
+Trip5 made a lot of modifications to make this more dynamic.  In case his is more up-to-date you can check it out
+[here](https://trip5.github.io/yoradio-docs/docs/myoptions-generator.html). His repo is [here](https://github.com/trip5/yoradio-docs).
